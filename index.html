@@ -87,7 +87,26 @@ body{padding:0 0 76px;min-height:100vh}
 .epcard-mean{font-size:13px;color:var(--txt2)}
 .epcard-r{flex:none;text-align:right;font-size:11.5px;color:var(--txt2);line-height:1.45}
 .epcard-r b{display:block;font-size:23px;color:var(--pink-d);font-weight:700;line-height:1.15}
-.season-h{font-size:13px;color:var(--pink-d);letter-spacing:1.5px;margin:26px 0 10px;padding-left:9px;border-left:3px solid var(--pink)}
+
+/* ===== 目录页季 Tab（第一季～第五季横排） ===== */
+.seasons{display:flex;gap:7px;overflow-x:auto;padding:14px 0 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.seasons::-webkit-scrollbar{display:none}
+.stab{flex:none;background:var(--card);border:1.5px solid var(--pink-l);color:var(--pink-d);border-radius:999px;
+  padding:8px 15px;font-size:13.5px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.16s}
+.stab.on{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:600}
+.stab.off{opacity:.38;cursor:default}
+.stab:not(.off):not(.on):hover{background:var(--pink-xl)}
+.season-sum{font-size:12.5px;color:var(--txt2);margin:0 2px 12px}
+
+/* ===== 章节导航（上一期 / 下一期，24 期连着翻） ===== */
+.chnav{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:rgba(253,248,250,.95);padding:10px 0 9px;border-bottom:1px solid var(--line);margin:0 0 14px}
+.cnav-btn{flex:none;background:var(--card);border:1.5px solid var(--pink-l);color:var(--pink-d);border-radius:999px;
+  padding:8px 13px;font-size:13.5px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.16s}
+.cnav-btn:hover{background:var(--pink-xl)}
+.cnav-btn:disabled{opacity:.35;cursor:default;background:var(--card)}
+.chnav .cur{min-width:0;background:#fff;border:1.5px solid var(--pink-l);border-radius:999px;padding:8px 16px;
+  font-size:13.5px;font-weight:700;color:var(--pink-d);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
 
 /* ========== ▶ 演播模式（纯字幕，无人声） ========== */
 body.playing{padding-bottom:0;overflow:hidden}
@@ -4968,7 +4987,7 @@ EPS.push({
 
 var EP = null, FAM = {}, WORDS = [], RECALL = [], MIGRATE = [], ROOTS = [];
 var QUESTS = [], TOTALQ = 0, NP = 0, NREC = 0, NMIG = 0;
-var S = { phase:"home", i:0, score:0, wrong:[], picked:{} };
+var S = { phase:"home", season:1, i:0, score:0, wrong:[], picked:{} };
 var app = document.getElementById("app");
 
 function shuffle(a){
@@ -5012,7 +5031,12 @@ function render(){
   if (S.phase === "intro"){ renderIntro(); return; }
   renderQ();
 }
+var SEASON_NAME = { 1:"第一季", 2:"第二季", 3:"第三季", 4:"第四季", 5:"第五季" };
 function renderHome(){
+  if (!S.season) S.season = 1;
+  var maxSeason = 1;
+  EPS.forEach(function(e){ var se = e.season || 1; if (se > maxSeason) maxSeason = se; });
+  var tabMax = Math.max(5, maxSeason);
   var s = "";
   s += '<div class="center">';
   s += '<div class="intro-kicker">词 根 拆 解</div>';
@@ -5022,27 +5046,48 @@ function renderHome(){
   s += '<div class="intro-card"><h3>先看一遍，再做一遍</h3>';
   s += '<p>每一期拆一个词根家族。<b>▶ 先看一遍</b>是像视频那样自动播给你看；<b>✍️ 开始闯关</b>是自己动手做。</p>';
   s += '<p>按真题频次从高到低排——越靠前，考到的次数越多。</p></div>';
-  var curSeason = 0;
+  // 季 Tab：第一季～第五季横排，没上线的季置灰
+  s += '<div class="seasons">';
+  for (var se = 1; se <= tabMax; se++){
+    var has = EPS.some(function(e){ return (e.season || 1) === se; });
+    s += '<button class="stab' + (S.season === se ? ' on' : '') + (has ? '' : ' off') + '" data-season="' + se + '">' +
+         (SEASON_NAME[se] || ('第 ' + se + ' 季')) + '</button>';
+  }
+  s += '</div>';
+  // 当前季的期列表
+  var list = [], tw = 0, tf = 0;
   EPS.forEach(function(e, i){
-    var se = e.season || 1;
-    if (se !== curSeason){
-      curSeason = se;
-      var st = se === 1 ? "第一季 · 高频核心族" : (se === 2 ? "第二季 · 高频进阶族" : ("第 " + se + " 季"));
-      s += '<div class="season-h">' + st + '</div>';
-    }
-    s += '<div class="epcard" data-ep="' + i + '">';
-    s += '<div class="epcard-l">';
-    s += '<div class="epcard-no">第 ' + e.id + ' 期　·　真题频次 ' + e.freq + ' 次</div>';
-    s += '<div class="epcard-root">' + esc(e.root) + '</div>';
-    s += '<div class="epcard-mean">' + esc(e.mean) + '</div>';
-    s += '</div>';
-    s += '<div class="epcard-r"><b>' + e.words.length + '</b>词　拆解<br>' + e.words.length + ' 题</div>';
-    s += '</div>';
+    if ((e.season || 1) === S.season){ list.push(i); tw += e.words.length; tf += e.freq; }
   });
+  if (list.length){
+    s += '<div class="season-sum">' + SEASON_NAME[S.season] + ' · ' + list.length + ' 期 · ' + tw + ' 词形 · 真题命中 ' + tf + ' 次</div>';
+    list.forEach(function(i){
+      var e = EPS[i];
+      s += '<div class="epcard" data-ep="' + i + '">';
+      s += '<div class="epcard-l">';
+      s += '<div class="epcard-no">第 ' + e.id + ' 期　·　真题频次 ' + e.freq + ' 次</div>';
+      s += '<div class="epcard-root">' + esc(e.root) + '</div>';
+      s += '<div class="epcard-mean">' + esc(e.mean) + '</div>';
+      s += '</div>';
+      s += '<div class="epcard-r"><b>' + e.words.length + '</b>词　拆解<br>' + e.words.length + ' 题</div>';
+      s += '</div>';
+    });
+  } else {
+    s += '<p style="text-align:center;color:#8A7A81;font-size:13.5px;margin:34px 0">这一季还在路上 · 敬请期待 ✨</p>';
+  }
   s += '<p style="font-size:12.5px;color:#8A7A81;text-align:center;margin:20px 0 0">' +
        '词根词缀法 · 内容来自考研英语 5500 词真题母库</p>';
   app.innerHTML = s;
   document.getElementById("foot").innerHTML = "词根拆解 · 考研 5500 词 · 已上线 " + EPS.length + " 期";
+  Array.prototype.forEach.call(app.querySelectorAll(".stab"), function(el){
+    el.onclick = function(){
+      var se = Number(el.getAttribute("data-season"));
+      var has = EPS.some(function(e){ return (e.season || 1) === se; });
+      if (!has) return;
+      S.season = se;
+      renderHome();
+    };
+  });
   Array.prototype.forEach.call(app.querySelectorAll(".epcard"), function(el){
     el.onclick = function(){
       loadEP(Number(el.getAttribute("data-ep")));
@@ -5053,9 +5098,30 @@ function renderHome(){
   });
 }
 
+/* ================= 章节导航 ================= */
+function jumpEP(idx){
+  loadEP(idx); resetRun(); S.phase = "intro"; render();
+}
+function chnavHTML(){
+  var i = EPS.indexOf(EP);
+  var s = '<div class="chnav">';
+  s += '<button class="cnav-btn" id="cprev"' + (i > 0 ? '' : ' disabled') + '>← 上一期</button>';
+  s += '<span class="cur">第 ' + EP.id + ' 期 · ' + esc(EP.root) + '</span>';
+  s += '<button class="cnav-btn" id="cnext"' + (i < EPS.length - 1 ? '' : ' disabled') + '>下一期 →</button>';
+  s += '</div>';
+  return s;
+}
+function bindChnav(){
+  var i = EPS.indexOf(EP);
+  var p = document.getElementById("cprev"), n = document.getElementById("cnext");
+  if (p) p.onclick = function(){ if (i > 0) jumpEP(i - 1); };
+  if (n) n.onclick = function(){ if (i < EPS.length - 1) jumpEP(i + 1); };
+}
+
 /* ================= 本期开场 ================= */
 function renderIntro(){
   var s = "";
+  s += chnavHTML();
   s += '<div class="center">';
   s += '<div class="intro-kicker">词 根 拆 解 · 第 ' + EP.id + ' 期</div>';
   s += '<div class="intro-h1">' + esc(EP.root) + '</div>';
@@ -5075,6 +5141,7 @@ function renderIntro(){
   s += '<button class="btn ghost" id="go">✍️ 直接开始闯关（做题）</button>';
   s += '<button class="btn ghost" id="home">← 回到期目录</button>';
   app.innerHTML = s;
+  bindChnav();
   document.getElementById("go").onclick = function(){ resetRun(); S.phase = "quiz"; render(); };
   document.getElementById("play").onclick = playBoot;
   document.getElementById("home").onclick = function(){ S.phase = "home"; render(); };
@@ -5260,8 +5327,11 @@ function stageName(i){
 }
 function head(){
   var s = "";
+  var ei = EPS.indexOf(EP);
   s += '<div class="topbar">';
-  s += '<div class="tleft"><span class="back" id="backhome">←</span>';
+  s += '<div class="tleft"><span class="back" id="backhome" title="回目录">←</span>';
+  s += '<span class="back" id="eprev" title="上一期"' + (ei > 0 ? '' : ' style="opacity:.35"') + '>‹</span>';
+  s += '<span class="back" id="epnext" title="下一期"' + (ei < EPS.length - 1 ? '' : ' style="opacity:.35"') + '>›</span>';
   s += '<span class="badge">第 ' + EP.id + ' 期　' + esc(EP.root) + '（' + esc(EP.mean) + '）</span></div>';
   s += '<span class="counter">第 ' + Math.min(S.i + 1, TOTALQ) + ' / ' + TOTALQ + ' 题 · ' + stageName(Math.min(S.i, TOTALQ - 1)) + '</span>';
   s += '</div>';
@@ -5271,6 +5341,10 @@ function head(){
 function bindHead(){
   var bh = document.getElementById("backhome");
   if (bh) bh.onclick = function(){ S.phase = "home"; render(); };
+  var ei = EPS.indexOf(EP);
+  var p = document.getElementById("eprev"), n = document.getElementById("epnext");
+  if (p) p.onclick = function(){ if (ei > 0) jumpEP(ei - 1); };
+  if (n) n.onclick = function(){ if (ei < EPS.length - 1) jumpEP(ei + 1); };
 }
 function nextQ(){
   S.picked = {};
@@ -5415,10 +5489,16 @@ function renderResult(){
     WORDS.map(function(w){ return '<span>' + esc(w.w) + '<i>' + w.f + '</i></span>'; }).join("") +
     '</div></div>';
   if (EP.next) s += '<p style="font-size:13px;color:#8A7A81;text-align:center;margin:18px 0 0">' + esc(EP.next) + '</p>';
+  var ei = EPS.indexOf(EP);
+  if (ei < EPS.length - 1){
+    s += '<button class="btn" id="nexp">下一期 →　第 ' + EPS[ei + 1].id + ' 期 · ' + esc(EPS[ei + 1].root) + '</button>';
+  }
   s += '<button class="btn ghost" id="again">重做一遍</button>';
   s += '<button class="btn ghost" id="home">← 回到期目录</button>';
   app.innerHTML = s;
   bindHead();
+  var nx = document.getElementById("nexp");
+  if (nx) nx.onclick = function(){ jumpEP(ei + 1); };
   document.getElementById("again").onclick = function(){ resetRun(); render(); };
   document.getElementById("home").onclick = function(){ S.phase = "home"; render(); };
 }
