@@ -89,6 +89,14 @@ body{padding:0 0 76px;min-height:100vh}
 .epcard-r b{display:block;font-size:23px;color:var(--pink-d);font-weight:700;line-height:1.15}
 
 /* ===== 目录页季 Tab（第一季～第五季横排） ===== */
+.chapters{display:flex;gap:9px;margin:18px 0 0}
+.ctab{flex:1;padding:12px 8px;border-radius:15px;border:1.5px solid var(--pink-l);background:var(--card);
+      color:var(--pink-d);font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.5px;
+      transition:all .18s}
+.ctab.on{background:linear-gradient(135deg,var(--pink),var(--pink-d));border-color:var(--pink);color:#fff;
+         box-shadow:0 5px 16px rgba(194,112,140,.3)}
+.ctab.off{opacity:.4;cursor:default}
+.chap-note{font-size:12px;color:var(--txt2);text-align:center;margin:8px 2px 0}
 .seasons{display:flex;gap:7px;overflow-x:auto;padding:14px 0 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .seasons::-webkit-scrollbar{display:none}
 .stab{flex:none;background:var(--card);border:1.5px solid var(--pink-l);color:var(--pink-d);border-radius:999px;
@@ -10574,10 +10582,782 @@ EPS.push({
  ]
 });
 
+/* ===== epA01_er.js ===== */
+EPS.push({
+ id:"A01",
+ chapter:"affix",
+ season:1,
+ tag:"词缀 01",
+ root:"-er / -or",
+ mean:"表「做这件事的人或物」",
+ freq:110,
+ sub:"英语最勤快的两个尾巴 · 全期 15 词 · 真题频次 110 次",
+ story:{
+  h3:"动词后面加个尾巴，就长出了一个人",
+  p:["<b>-er</b> 和 <b>-or</b> 是英语里最勤快的两个尾巴：<b>在动作后面加一个，那个动作就变成了做这件事的人</b>。work（干活）→ worker（干活的<b>人</b>），teach（教）→ teacher（教的<b>人</b>），write（写）→ writer（写的<b>人</b>）。",
+     "更妙的是它连「物」也能造：compute（计算）+ -er → computer（负责计算的那台<b>机器</b>）；hold（握住）+ -er → holder（握着它的那个支架）。同一个尾巴，人也能装，物也能装。",
+     "-or 是 -er 的拉丁表亲（edit → editor、govern → governor），意思完全一样，认出来就是多送一个词。"],
+  rope:[["work + -er　工人","干活的那个「人」"],
+        ["teach + -er　教师","教书的那个人"],
+        ["edit + -or　编辑","-or 是 -er 的拉丁表亲，还是「人」"],
+        ["compute + -er　计算机","同一个尾巴，这次装的是「物」"]]
+ },
+ next:"下一期：-ly —— 副词工厂，和它的三个坑 · 15 词",
+ words:[
+ { w:"worker", f:19, parts:[["-er","表人/物"],["work","干活"]], mean:"工人；工作者",
+   opts:["工人；工作者","雇主；老板","客户；顾客","管理者；经理"],
+   ask:"「干活的那个人」——意思是？",
+   why:"work（干活）+ -er（表人）→ 干活的人 → <b>工人</b>。同样是「动作 + -er」：teach → teacher、write → writer、farm → farmer——认出这个尾巴，一串词一起认识。",
+   juan:[["-er（表人）+ work（干活）→ 干活的那个人 → 工人；工作者",1],
+         ["-er（表人）+ employ（雇用）→ 雇人的那一方 → 雇主",0],
+         ["-er（表人）+ manage（管理）→ 管事的那个 → 经理",0],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0]] },
+
+ { w:"customer", f:15, parts:[["-er","表人/物"],["custom","习惯；惯常"]], mean:"顾客；客户",
+   opts:["顾客；客户","习惯；惯例","海关；关税","消费者权益"],
+   ask:"「习惯了常来买的那个人」——意思是？",
+   why:"custom（习惯）+ -er（表人）→ 有「常来」这个习惯的人 → <b>顾客</b>。custom 本来是「惯例、老规矩」，常来照顾你生意的那位，就成了 customer。",
+   juan:[["-er（表人）+ custom（常来的习惯）→ 常来的那个人 → 顾客；客户",1],
+         ["-er（表人）+ work（干活）→ 干活的那个人 → 工人",0],
+         ["-er（表人）+ farm（农场）→ 种那块地的人 → 农民",0],
+         ["-or（表人）+ govern（统治）→ 治理一方的人 → 州长",0]] },
+
+ { w:"editor", f:12, parts:[["-or","表人（-er 的拉丁表亲）"],["edit","编校；剪辑"]], mean:"编辑；主编",
+   opts:["编辑；主编","版本；版次","出版；发行","编辑工作"],
+   ask:"「负责编校的那个人」——意思是？",
+   why:"edit（编校）+ -or（表人）→ 编校的人 → <b>编辑</b>。注意 -or 只是 -er 的拉丁写法：edit → editor、govern → governor、visit → visitor，作用一模一样。",
+   juan:[["-or（表人）+ edit（编校）→ 编校的那个人 → 编辑；主编",1],
+         ["-er（表人）+ write（写）→ 写东西的人 → 作家",0],
+         ["-er（表物）+ compute（计算）→ 干计算的机器 → 计算机",0],
+         ["-er（表人）+ hold（握住）→ 握着它的那个 → 持有者",0]] },
+
+ { w:"manager", f:12, parts:[["-er","表人/物"],["manage","管理"]], mean:"经理；管理者",
+   opts:["经理；管理者","管理；经营","小技巧；手法","管理层的"],
+   ask:"「管事的那个」——意思是？",
+   why:"manage（管理）+ -er（表人）→ 管事的 → <b>经理</b>。同一家族换个尾巴就是另一类词：management（管理，抽象名词）——-ment 一上来，人就不见了。",
+   juan:[["-er（表人）+ manage（管理）→ 管事的那个 → 经理；管理者",1],
+         ["-er（表人）+ own（拥有）→ 东西归他名下的人 → 所有者",0],
+         ["-er（表人）+ employ（雇用）→ 雇人的那一方 → 雇主",0],
+         ["-er（表人）+ read（读）→ 读的那个人 → 读者",0]] },
+
+ { w:"reader", f:9, parts:[["-er","表人/物"],["read","读"]], mean:"读者；读物",
+   opts:["读者；读物","阅读；朗读","可读的；易读的","读书会"],
+   ask:"「读的那个（人或东西）」——意思是？",
+   why:"read（读）+ -er（表人/物）→ 读的人 → <b>读者</b>；指物时是「读物」（a graded reader 分级读物）——同一个尾巴，人和物都能装。",
+   juan:[["-er（表人/物）+ read（读）→ 读的那个 → 读者；读物",1],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0],
+         ["-er（表人）+ farm（农场）→ 种那块地的人 → 农民",0],
+         ["-er（表物）+ compute（计算）→ 干计算的机器 → 计算机",0]] },
+
+ { w:"teacher", f:9, parts:[["-er","表人/物"],["teach","教"]], mean:"教师；老师",
+   opts:["教师；老师","教学；教导","教训；教诲","教得好的"],
+   ask:"「教书的那个人」——意思是？",
+   why:"teach（教）+ -er（表人）→ 教的人 → <b>教师</b>。这是 -er 最标准的用法：动作一变，做动作的人就出来了。",
+   juan:[["-er（表人）+ teach（教）→ 教书的那个人 → 教师；老师",1],
+         ["-er（表人）+ read（读）→ 读的那个人 → 读者",0],
+         ["-er（表人）+ write（写）→ 写东西的人 → 作家",0],
+         ["-er（表人）+ drive（驾驶）→ 开车的那个 → 司机",0]] },
+
+ { w:"employer", f:7, parts:[["-er","表人/物"],["employ","雇用"]], mean:"雇主；老板",
+   opts:["雇主；老板","雇员；职工","雇用；就业","失业的"],
+   ask:"「雇人的那一方」——意思是？",
+   why:"employ（雇用）+ -er（表人）→ 雇人的人 → <b>雇主</b>。<b>-er 主动、-ee 被动</b>：employee 是被雇的那个（雇员）——一对好搭档，考试最爱在这里设陷阱。",
+   juan:[["-er（表人）+ employ（雇用）→ 雇人的那一方 → 雇主；老板",1],
+         ["-er（表人）+ manage（管理）→ 管事的那个 → 经理",0],
+         ["-er（表人）+ own（拥有）→ 东西归他名下的人 → 所有者",0],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0]] },
+
+ { w:"writer", f:7, parts:[["-er","表人/物"],["write","写"]], mean:"作家；作者",
+   opts:["作家；作者","写作；作品","文字；笔迹","书写工具"],
+   ask:"「写东西的那个人」——意思是？",
+   why:"write（写）+ -er（表人）→ 写的人 → <b>作家</b>。注意 write 变成 writer 时只加了一个 t——拼写的小机关，也是考场上最容易丢分的点。",
+   juan:[["-er（表人）+ write（写）→ 写东西的那个人 → 作家；作者",1],
+         ["-er（表人）+ read（读）→ 读的那个人 → 读者",0],
+         ["-or（表人）+ edit（编校）→ 编校的人 → 编辑",0],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0]] },
+
+ { w:"computer", f:5, parts:[["-er","表人/物"],["compute","计算"]], mean:"计算机；电脑",
+   opts:["计算机；电脑","计算；估算","算盘；计算器","可计算的"],
+   ask:"「负责计算的那台机器」——意思是？",
+   why:"compute（计算）+ -er（表物）→ 干计算的机器 → <b>计算机</b>。这是 -er 最妙的一手：同一个「做这件事的东西」，不一定是人，机器也能装这个尾巴。",
+   juan:[["-er（表物）+ compute（计算）→ 干计算的机器 → 计算机；电脑",1],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0],
+         ["-er（表人）+ farm（农场）→ 种那块地的人 → 农民",0],
+         ["-or（表人）+ govern（统治）→ 治理一方的人 → 州长",0]] },
+
+ { w:"governor", f:5, parts:[["-or","表人（-er 的拉丁表亲）"],["govern","统治；治理"]], mean:"州长；总督",
+   opts:["州长；总督","政府；统治","统治的；受控的","治理；管理"],
+   ask:"「治理一方的那个长官」——意思是？",
+   why:"govern（治理）+ -or（表人）→ 治理的人 → <b>州长</b>。同一个词干换尾巴：government 是「政府」（-ment 名词），governor 是「管政府的那个长官」（-or 人）。",
+   juan:[["-or（表人）+ govern（治理）→ 治理一方的长官 → 州长；总督",1],
+         ["-er（表人）+ manage（管理）→ 管事的那个 → 经理",0],
+         ["-ment（名词）+ govern（治理）→ 治理这件事 → 政府",0],
+         ["-er（表人）+ employ（雇用）→ 雇人的那一方 → 雇主",0]] },
+
+ { w:"owner", f:3, parts:[["-er","表人/物"],["own","拥有"]], mean:"所有者；物主",
+   opts:["所有者；物主","所有权；所有制","拥有；承认","自己的；本人的"],
+   ask:"「东西归他名下的那个人」——意思是？",
+   why:"own（拥有）+ -er（表人）→ 拥有的人 → <b>所有者</b>。ownership 是「所有权」（-ship 名词）——-er 是那个人，-ship 是那件事。",
+   juan:[["-er（表人）+ own（拥有）→ 东西归他名下的人 → 所有者；物主",1],
+         ["-ship（名词）+ owner（所有者）→ 所有者这个身份 → 所有权",0],
+         ["-er（表人）+ hold（握住）→ 握着它的那个 → 持有者",0],
+         ["-er（表人）+ farm（农场）→ 种那块地的人 → 农民",0]] },
+
+ { w:"engineer", f:2, parts:[["-er","表人/物"],["engine","机械；引擎"]], mean:"工程师；技师",
+   opts:["工程师；技师","发动机；引擎","工程；工程学","机械的；机动的"],
+   ask:"「跟机械打交道的那个人」——意思是？",
+   why:"engine（机械）+ -er（表人）→ 摆弄机械的人 → <b>工程师</b>。最早 engineer 就是「造军用机械的人」，后来造桥的、造软件的都叫 engineer。",
+   juan:[["-er（表人）+ engine（机械）→ 跟机械打交道的人 → 工程师；技师",1],
+         ["-er（表人）+ drive（驾驶）→ 开车的那个 → 司机",0],
+         ["-er（表人）+ work（干活）→ 干活的那个人 → 工人",0],
+         ["-er（表物）+ compute（计算）→ 干计算的机器 → 计算机",0]] },
+
+ { w:"farmer", f:2, parts:[["-er","表人/物"],["farm","农场；耕种"]], mean:"农民；农场主",
+   opts:["农民；农场主","农场；农田","农业；耕作","务农的；农用的"],
+   ask:"「侍弄那块地的人」——意思是？",
+   why:"farm（农场）+ -er（表人）→ 种那块地的人 → <b>农民</b>。中文里「农场主」和「农民」是两个词，英文里一个 farmer 全包了——这就是词缀的省力之处。",
+   juan:[["-er（表人）+ farm（农场）→ 种那块地的人 → 农民；农场主",1],
+         ["-er（表人）+ teach（教）→ 教书的那个人 → 教师",0],
+         ["-er（表人）+ drive（驾驶）→ 开车的那个 → 司机",0],
+         ["-er（表人）+ read（读）→ 读的那个人 → 读者",0]] },
+
+ { w:"holder", f:2, parts:[["-er","表人/物"],["hold","握住；持有"]], mean:"持有者；支架",
+   opts:["持有者；支架","持有；握有","握住；举行","全部的；整体的"],
+   ask:"「握着它的那个（人或物）」——意思是？",
+   why:"hold（握住）+ -er（表人/物）→ 握着的人或物 → <b>持有者</b>；指物时是「支架、容器」（a pen holder 笔筒）——人跟物又共用了一个尾巴。",
+   juan:[["-er（表人/物）+ hold（握住）→ 握着它的那个 → 持有者；支架",1],
+         ["-er（表人）+ own（拥有）→ 东西归他名下的人 → 所有者",0],
+         ["-er（表人）+ employ（雇用）→ 雇人的那一方 → 雇主",0],
+         ["-er（表人）+ write（写）→ 写东西的那个人 → 作家",0]] },
+
+ { w:"driver", f:1, parts:[["-er","表人/物"],["drive","驾驶"]], mean:"司机；驾驶员",
+   opts:["司机；驾驶员","驾车；驱使","车道；驱动器","驾驶技术"],
+   ask:"「开车的那个」——意思是？",
+   why:"drive（驾驶）+ -er（表人）→ 开车的人 → <b>司机</b>。顺带一提，电脑里的 driver 是「驱动程序」——驱着硬件跑的那个「东西」，还是同一个尾巴在干活。",
+   juan:[["-er（表人）+ drive（驾驶）→ 开车的那个 → 司机；驾驶员",1],
+         ["-er（表人）+ work（干活）→ 干活的那个人 → 工人",0],
+         ["-er（表人）+ farm（农场）→ 种那块地的人 → 农民",0],
+         ["-er（表物）+ compute（计算）→ 干计算的机器 → 计算机",0]] }
+ ],
+ recall:[
+ { ask:"「干活的那个人」——是哪个词？",
+   truth:"worker", opts:["worker","teacher","writer","customer"],
+   why:"work（干活）+ -er → <b>worker 工人</b>。动作 + -er，做这个动作的人就出来了。" },
+ { ask:"「雇人的那一方」——是哪个词？",
+   truth:"employer", opts:["employer","employee","computer","owner"],
+   why:"employ（雇用）+ -er → <b>employer 雇主</b>。记住这一对：-er 主动（雇人的），-ee 被动（被雇的 employee）。" },
+ { ask:"「负责计算的那台机器」——是哪个词？",
+   truth:"computer", opts:["computer","governor","editor","holder"],
+   why:"compute（计算）+ -er → <b>computer 计算机</b>。这个尾巴不只装人，也能装物。" },
+ { ask:"「治理一方的那个长官」——是哪个词？",
+   truth:"governor", opts:["governor","government","manager","engineer"],
+   why:"govern（治理）+ -or → <b>governor 州长</b>。government 是政府（-ment），governor 是管政府的那个长官（-or）。" },
+ { ask:"「写东西的那个人」——是哪个词？",
+   truth:"writer", opts:["writer","reader","editor","farmer"],
+   why:"write（写）+ -er → <b>writer 作家</b>。注意拼写：write 加尾巴时多了一个 t。" }
+ ],
+ migrate:[
+ { ask:"下面哪个词<b>不是</b>「动作 + -er / -or 造出来的人或物」？",
+   truth:"number", opts:["number","worker","editor","computer"],
+   why:"<b>number</b>（数字）来自拉丁 numerus「数」，跟「麻木的 numb + 人」毫无关系——它的 -er 是长在词根里的，不是造人的尾巴。worker / editor / computer 才是真造出来的。" },
+ { ask:"employer 和 employee，哪个是「被雇的那个人」？",
+   truth:"employee", opts:["employee","employer","employment","employ"],
+   why:"<b>employee</b> 是 -ee（被动、被雇的 × 雇员）；employer 是 -er（主动、雇人的 × 雇主）。一个尾巴决定谁听谁的。" },
+ { ask:"下面哪个词是「物」，不是「人」？",
+   truth:"computer", opts:["computer","teacher","farmer","driver"],
+   why:"<b>computer</b> = compute（计算）+ -er，装的是「机器」；teacher / farmer / driver 装的都是人。同一个尾巴，看词干是「计算」还是「教、种地、开车」。" },
+ { ask:"「这条街上的房子都属于他，他是 owner」——owner 是哪种人？",
+   truth:"东西归他名下的那个人", opts:["东西归他名下的那个人","替他看房子的人","住在房子里的人","卖房子的人"],
+   why:"own 是「拥有」不是「看管」——<b>owner 是所有者、物主</b>。看房子的是 keeper，住里面的是 resident，都不是 owner。" },
+ { ask:"-er 除了表示「人」，还能表示什么？",
+   truth:"做同一件事的物或工具", opts:["做同一件事的物或工具","动作本身","动作发生的地点","动作的结果"],
+   why:"<b>-er 还能造物</b>：computer（计算机）、holder（支架）、driver（驱动程序）——凡是「干这件事的那个东西」，都能装这个尾巴。" }
+ ]
+});
+
+/* ===== epA02_ly.js ===== */
+EPS.push({
+ id:"A02",
+ chapter:"affix",
+ season:1,
+ tag:"词缀 02",
+ root:"-ly",
+ mean:"把形容词变成「……地」",
+ freq:106,
+ sub:"副词工厂与它的三个坑 · 全期 15 词 · 真题频次 106 次",
+ story:{
+  h3:"形容词加个尾巴，就成了「怎么样地」",
+  p:["<b>-ly</b> 是这个系列里最省力的一个尾巴：<b>形容词 + -ly = 副词</b>。real（真实的）→ really（真正地），final（最后的）→ finally（终于），rare（稀少的）→ rarely（很少）。看见它是怎么长的，做题时连猜带推就省了一半力气。",
+     "但它有三个坑，个个都在考场上见过。① 有些词天生带着 -ly，却不是副词而是<b>形容词</b>：likely（可能的）、costly（昂贵的）。② 有些 -ly 副词的意思跟词干差得很远：hardly 不是「努力地」而是「几乎不」，nearly 不是「靠近地」而是「几乎」。③ early 本身就是副词，不用再加尾巴——没有 earlily 这个词。",
+     "所以这一期记两件事：公式是「形容词 + -ly = 副词」，例外是那三个坑。分清了，看尾巴就知道这个词该放在哪儿。"],
+  rope:[["real + -ly　真正地","形容词 → 副词，最标准的一条公式"],
+        ["hard + -ly　几乎不","⚠️ 不是「努力地」，「努力地」是 work hard"],
+        ["cost + -ly　昂贵的","⚠️ 带着 -ly 却是形容词"],
+        ["early　早的；早地","⚠️ 本身就是副词，没有 earlily"]]
+ },
+ next:"下一期：-ment / -ion —— 名词化的两条老路 · 15 词",
+ words:[
+ { w:"likely", f:22, parts:[["like","像；相似"],["-ly","副词/形容词后缀"]], mean:"可能的；很可能",
+   opts:["可能的；很可能","令人喜欢的；可爱的","同样的；相似的","轻松地；容易地"],
+   ask:"「看起来像那么回事」——意思是？",
+   why:"like（像）+ -ly → 看起来像真的 → <b>可能的</b>。⚠️ 它是这一期最狡猾的一个：尾巴是 -ly，身份却是<b>形容词</b>（a likely result 一个可能的结果）。同款卧底还有 costly（昂贵的）。",
+   juan:[["-ly 但是形容词：like（像）+ -ly → 可能的；很可能",1],
+         ["-ly 副词：real（真实的）+ -ly → 真正地；确实",0],
+         ["-ly 但是形容词：cost（代价）+ -ly → 昂贵的",0],
+         ["-ly 副词：near（近）+ -ly → 几乎；差不多",0]] },
+
+ { w:"early", f:14, parts:[["ear","早（古英语词干）"],["-ly","自古带来的尾巴"]], mean:"早的；早地",
+   opts:["早的；早地","迟的；晚地","每年的；年度的","大部分地；主要地"],
+   ask:"「时间靠前」——意思是？",
+   why:"early 里的 ear- 是古英语的「早」，-ly 从那时就跟着它了——所以它<b>形容词、副词一身兼</b>（an early bird 早起的人 / get up early 起得早）。⚠️ 它不能再加 -ly：没有 earlily 这个词。",
+   juan:[["ear（早）+ -ly → 形容词副词一身兼：早的；早地",1],
+         ["-ly 副词：real（真实的）+ -ly → 真正地；确实",0],
+         ["-ly 副词：final（最后的）+ -ly → 最后；终于",0],
+         ["-ly 但是形容词：like（像）+ -ly → 可能的",0]] },
+
+ { w:"really", f:11, parts:[["real","真实的"],["-ly","副词后缀"]], mean:"真正地；确实",
+   opts:["真正地；确实","现实的；真实的","现实；实际情况","实现；意识到"],
+   ask:"「真实地」——意思是？",
+   why:"real（真实的）+ -ly → <b>真正地</b>。这一期最标准的一条公式就是它：形容词 + -ly = 副词。real / really、final / finally、usual / usually 都是照这条公式长的。",
+   juan:[["real（真实的）+ -ly → 真正地；确实",1],
+         ["final（最后的）+ -ly → 最后；终于",0],
+         ["rare（稀少的）+ -ly → 很少；难得",0],
+         ["high（高的）+ -ly → 高度地；非常",0]] },
+
+ { w:"nearly", f:10, parts:[["near","近"],["-ly","副词后缀"]], mean:"几乎；差不多",
+   opts:["几乎；差不多","靠近地；邻近地","最近；近来","接近的；附近的"],
+   ask:"「差一点点就到了」——意思是？",
+   why:"near（近）+ -ly → 接近到某个程度 → <b>几乎、差不多</b>。⚠️ 别按字面理解成「靠近地」——它说的是「差一点点」：nearly finished 快做完了、nearly 100 people 将近一百人。",
+   juan:[["near（近）+ -ly → 差一点点就到了 → 几乎；差不多",1],
+         ["near（近）+ -ly → 字面理解的「靠近地」",0],
+         ["real（真实的）+ -ly → 真正地；确实",0],
+         ["rare（稀少的）+ -ly → 很少；难得",0]] },
+
+ { w:"largely", f:9, parts:[["large","大的"],["-ly","副词后缀"]], mean:"主要地；大部分地",
+   opts:["主要地；大部分地","巨大地；庞大地","宽广的；广阔的","大量；大批"],
+   ask:"「占了大部分」——意思是？",
+   why:"large（大）+ -ly → 从「大份」变成「占大部分」→ <b>主要地、大部分地</b>。⚠️ 它不表示「巨大地」，说的是「大体上、主要是」：largely because 主要是因为。",
+   juan:[["large（大的）+ -ly → 占了大部分 → 主要地；大部分地",1],
+         ["part（部分）+ -ly → 部分地；在一定程度上",0],
+         ["-ly 但是形容词：cost（代价）+ -ly → 昂贵的",0],
+         ["-ly 副词：whole（全部的）+ -ly → 完全地；全部地",0]] },
+
+ { w:"finally", f:6, parts:[["final","最后的"],["-ly","副词后缀"]], mean:"最后；终于",
+   opts:["最后；终于","最终目标；决赛","结束；结尾","最后的；最终的"],
+   ask:"「在最后」——意思是？",
+   why:"final（最后的）+ -ly → <b>最后、终于</b>。同一组公式看词性：final 是形容词（the final answer 最终的答案），finally 是副词（Finally, he agreed 他终于同意了）。考试最爱考这对。",
+   juan:[["final（最后的）+ -ly → 最后；终于",1],
+         ["usual（通常的）+ -ly → 通常；平常",0],
+         ["real（真实的）+ -ly → 真正地；确实",0],
+         ["-ment 名词：govern（治理）+ -ment → 政府",0]] },
+
+ { w:"usually", f:6, parts:[["usual","通常的"],["-ly","副词后缀"]], mean:"通常；平常",
+   opts:["通常；平常","不寻常的；罕见的","使用；用法","习惯；惯例"],
+   ask:"「按老规矩来的」——意思是？",
+   why:"usual（通常的）+ -ly → <b>通常</b>。词干不是 use 而是 usual——它来自 use（用）+ -al（…的）→「用惯了的」→ 通常的，再加 -ly 成副词。",
+   juan:[["usual（通常的）+ -ly → 通常；平常",1],
+         ["use（使用）+ -al（…的）→ 通常的（形容词）",0],
+         ["whole（全部的）+ -ly → 完全地；全部地",0],
+         ["most（大多数）+ -ly → 主要地；大多",0]] },
+
+ { w:"daily", f:5, parts:[["day","天"],["-ly","每…一次的尾巴"]], mean:"每日的；每日",
+   opts:["每日的；每日","白天的；明亮的","日子；约会","今天的；当天的"],
+   ask:"「一天一次」——意思是？",
+   why:"day（天）+ -ly → <b>每日的（形容词）／每日（副词）</b>。⚠️ 拼写机关：day 变 daily，y 换成了 i。同款还有 week → weekly（每周的）、month → monthly（每月的）。",
+   juan:[["day（天）+ -ly → 一天一次的 → 每日的；每日",1],
+         ["day（天）+ -ly → 白天的；明亮的",0],
+         ["real（真实的）+ -ly → 真正地；确实",0],
+         ["-ly 但是形容词：like（像）+ -ly → 可能的",0]] },
+
+ { w:"costly", f:4, parts:[["cost","代价；花费"],["-ly","形容词后缀"]], mean:"昂贵的；代价高的",
+   opts:["昂贵的；代价高的","花费；成本","花钱地；昂贵地","节约的；省钱的"],
+   ask:"「要付出大价钱的」——意思是？",
+   why:"cost（代价）+ -ly → 要付出大代价的 → <b>昂贵的</b>。⚠️ 又一个「带 -ly 却是形容词」的卧底：a costly mistake 是「代价高昂的错误」，它在说「这件事很贵」，不是「贵地做」。",
+   juan:[["-ly 但是形容词：cost（代价）+ -ly → 昂贵的；代价高的",1],
+         ["-ly 副词：large（大的）+ -ly → 主要地；大部分地",0],
+         ["-ly 副词：high（高的）+ -ly → 高度地；非常",0],
+         ["-ly 副词：rare（稀少的）+ -ly → 很少；难得",0]] },
+
+ { w:"highly", f:4, parts:[["high","高的"],["-ly","副词后缀"]], mean:"高度地；非常",
+   opts:["高度地；非常","高地；高原","高的；高度的","最高的；顶点"],
+   ask:"「程度很高」——意思是？",
+   why:"high（高的）+ -ly → <b>高度地、非常</b>。high 说的是位置高，highly 说的是程度高：highly likely 极有可能、speak highly of 高度评价。",
+   juan:[["high（高的）+ -ly → 程度很高地 → 高度地；非常",1],
+         ["high（高的）+ -er → 更高的那一个",0],
+         ["rare（稀少的）+ -ly → 很少；难得",0],
+         ["real（真实的）+ -ly → 真正地；确实",0]] },
+
+ { w:"merely", f:4, parts:[["mere","仅仅的；只不过"],["-ly","副词后缀"]], mean:"仅仅；只不过",
+   opts:["仅仅；只不过","纯粹的；仅仅的","海洋；大批","功绩；优点"],
+   ask:"「只有这么多，没别的」——意思是？",
+   why:"mere（仅仅的）+ -ly → <b>仅仅、只不过</b>。mere 是形容词（a mere child 不过是个孩子），加 -ly 变副词（merely a child）——又是一对「形容词 / 副词」的搭档。",
+   juan:[["mere（仅仅的）+ -ly → 仅仅；只不过",1],
+         ["mere（仅仅的）+ -ly → 海洋一般地（把 mere 当成海）",0],
+         ["most（大多数）+ -ly → 主要地；大多",0],
+         ["final（最后的）+ -ly → 最后；终于",0]] },
+
+ { w:"hardly", f:3, parts:[["hard","努力；硬"],["-ly","副词后缀"]], mean:"几乎不；简直不",
+   opts:["几乎不；简直不","努力地；用力地","困难的；艰难的","坚硬地；牢固地"],
+   ask:"⚠️ 别答成「努力地」——它其实是？",
+   why:"hard（努力）+ -ly → 字面像「努力地」，实际是 <b>几乎不</b>：hardly any 几乎没有、I can hardly believe it 我几乎不能相信。⚠️ 想说「努力地」就直接用 hard（work hard）——一加 -ly，意思整个拐弯。",
+   juan:[["hard（努力）+ -ly → 意思拐弯了：几乎不；简直不",1],
+         ["hard（努力）+ -ly → 字面理解的「努力地」",0],
+         ["near（近）+ -ly → 几乎；差不多",0],
+         ["rare（稀少的）+ -ly → 很少；难得",0]] },
+
+ { w:"partly", f:3, parts:[["part","部分"],["-ly","副词后缀"]], mean:"部分地；在一定程度上",
+   opts:["部分地；在一定程度上","完全地；全部地","部分；份额","参加者；伙伴"],
+   ask:"「只占一部分」——意思是？",
+   why:"part（部分）+ -ly → <b>部分地、在一定程度上</b>。它和 largely（大部分地）正好是一对：partly 占一点，largely 占大半。",
+   juan:[["part（部分）+ -ly → 部分地；在一定程度上",1],
+         ["part（部分）+ -ly → 完全地；全部地",0],
+         ["large（大的）+ -ly → 主要地；大部分地",0],
+         ["-ly 但是形容词：cost（代价）+ -ly → 昂贵的",0]] },
+
+ { w:"rarely", f:3, parts:[["rare","稀少的"],["-ly","副词后缀"]], mean:"很少；难得",
+   opts:["很少；难得","稀有的；罕见的","真正地；确实","频繁地；经常"],
+   ask:"「很少发生」——意思是？",
+   why:"rare（稀少的）+ -ly → <b>很少、难得</b>。看词性：rare 是形容词（a rare bird 稀有的鸟），rarely 是副词（rarely seen 很少被见到）。",
+   juan:[["rare（稀少的）+ -ly → 很少；难得",1],
+         ["real（真实的）+ -ly → 真正地；确实",0],
+         ["near（近）+ -ly → 几乎；差不多",0],
+         ["high（高的）+ -ly → 高度地；非常",0]] },
+
+ { w:"mostly", f:2, parts:[["most","大多数"],["-ly","副词后缀"]], mean:"主要地；大多",
+   opts:["主要地；大多","最多的；大多数的","几乎；差不多","仅仅；只不过"],
+   ask:"「占了大多数」——意思是？",
+   why:"most（大多数）+ -ly → <b>主要地、大多</b>。它和 partly（部分地）、largely（大部分地）是一家人——都回答「占多少份」这个问题。",
+   juan:[["most（大多数）+ -ly → 主要地；大多",1],
+         ["most（大多数）+ -ly → 误解成最高级「最」",0],
+         ["near（近）+ -ly → 几乎；差不多",0],
+         ["-ly 但是形容词：cost（代价）+ -ly → 昂贵的",0]] }
+ ],
+ recall:[
+ { ask:"「几乎不」——是哪个词？",
+   truth:"hardly", opts:["hardly","nearly","rarely","partly"],
+   why:"hard（努力）+ -ly → <b>hardly 几乎不</b>。别按字面答「努力地」——那个是 work hard，副词形容词同形。" },
+ { ask:"下面哪个词虽然带 -ly，却是<b>形容词</b>「昂贵的」？",
+   truth:"costly", opts:["costly","really","finally","highly"],
+   why:"<b>costly 昂贵的</b> = cost（代价）+ -ly。它跟 really / finally / highly 不一样：那三个是副词，它是形容词——a costly mistake 代价高昂的错误。" },
+ { ask:"「每日的」——是哪个词？",
+   truth:"daily", opts:["daily","likely","mostly","merely"],
+   why:"day（天）+ -ly → <b>daily 每日的</b>。拼写注意：day 变 daily 时 y 换成了 i。" },
+ { ask:"「主要地、大部分地」——是哪个词？",
+   truth:"largely", opts:["largely","partly","mostly","rarely"],
+   why:"large（大的）+ -ly → <b>largely 主要地</b>。它和 partly（部分地）正好相反：一个占大半，一个占一点。" },
+ { ask:"「早的」和「早地」都是它，不按 -ly 的常规公式——是哪个词？",
+   truth:"early", opts:["early","really","nearly","daily"],
+   why:"<b>early 早的；早地</b>——形容词、副词一身兼，没有 earlily 这个词。" }
+ ],
+ migrate:[
+ { ask:"下面哪个词<b>不是</b>副词？",
+   truth:"friendly", opts:["friendly","really","finally","usually"],
+   why:"<b>friendly 友好的</b>是形容词——它的 -ly 来自古英语「像朋友那样」，收编成了形容词；really / finally / usually 才是真副词。同类卧底还有 lovely（可爱的）、likely（可能的）。" },
+ { ask:"「形容词 + -ly」这个公式，造出来的是什么词性？",
+   truth:"副词", opts:["副词","形容词","名词","动词"],
+   why:"<b>形容词 + -ly = 副词</b>：real → really、rare → rarely。这是英语里最省力的一条公式，但记得躲开三个坑（likely/costly 是形容词、hardly 不是「努力地」、early 不用再加）。" },
+ { ask:"「他工作很努力」——这里「努力」该用哪个词？",
+   truth:"hard", opts:["hard","hardly","hardness","hardy"],
+   why:"work <b>hard</b> 才是「努力工作」；hardly 是「几乎不」——work hardly 变成「几乎不干活」，意思整个反过来。" },
+ { ask:"「这件事<b>主要</b>是因为他」——用哪个词？",
+   truth:"largely", opts:["largely","partly","rarely","hardly"],
+   why:"<b>largely because 主要是因为</b>（占了大半原因）；partly because 只是「部分是因为」。选错就把主因说成次因了。" },
+ { ask:"day（天）加 -ly 变成「每日的」，拼写是？",
+   truth:"daily", opts:["daily","dayly","dayley","daylly"],
+   why:"<b>daily</b>——y 换成 i 再加 -ly。同款：week → weekly、month → monthly、year → yearly。" }
+ ]
+});
+
+/* ===== epA03_ment.js ===== */
+EPS.push({
+ id:"A03",
+ chapter:"affix",
+ season:1,
+ tag:"词缀 03",
+ root:"-ment / -ion",
+ mean:"把动作变成「一件事」",
+ freq:93,
+ sub:"名词化的两条老路 · 全期 15 词 · 真题频次 93 次",
+ story:{
+  h3:"动作后面接 -ment 或 -ion，那个动作就变成了一件事",
+  p:["-er 造人（work → worker）、-ly 造副词（real → really）；这两个尾巴不一样——它们把「做某事」变成一个<b>可以谈论的东西</b>：move（移动）→ movement（运动），act（行动）→ action（行为）。动词一旦变成名词，它就能当主语、当宾语，句子才铺得开。",
+     "两条路意思完全一样，只是来源不同：<b>-ment</b> 多从法语来（government、payment），<b>-ion</b> 多从拉丁语来（action、situation）。哪条不用背，看见尾巴认得出来就行。",
+     "两个坑得记住：① 拼写会掉字母——argue → argu<b>ment</b>（掉了 e）、communicate → communic<b>ation</b>（掉 e 又加 a）、suggest → sugge<b>stion</b>（t 变 ss）；② -ment 造出来的常常是<b>不可数名词</b>，equipment（设备）没有 equipments，说一件要 a piece of equipment。"],
+  rope:[["act + -ion　行动","动作 → 一件事"],
+        ["argue + -ment　争论","⚠️ 拼写掉 e：argument，不是 arguement"],
+        ["equip + -ment　设备","⚠️ 不可数，没有 equipments 这个词"],
+        ["govern → government　政府","同一个词干：-ment 是事，-or 是人"]]
+ },
+ next:"下一期：-ity / -ness —— 形容词变「一种性质」· 15 词",
+ words:[
+ { w:"government", f:26, parts:[["govern","治理"],["-ment","名词后缀（动作→事物）"]], mean:"政府；统治；管理",
+   opts:["政府；统治；管理","州长；总督","治理地；管理地","可管理的"],
+   ask:"「治理这件事，和干这件事的一群人」——意思是？",
+   why:"govern（治理）+ -ment（名词）→ 治理这件事 → <b>政府</b>。同一词干三个身份：govern 动词（治理）、government 名词（政府）、governor 人（州长，-or）——一个动作，三种尾巴，三种词性。",
+   juan:[["govern（治理）+ -ment → 治理这件事 → 政府；统治；管理",1],
+         ["govern（治理）+ -or → 治理的那个人 → 州长；总督",0],
+         ["manage（管理）+ -ment → 管理这件事 → 管理",0],
+         ["employ（雇用）+ -ment → 雇用这件事 → 就业",0]] },
+
+ { w:"action", f:11, parts:[["act","行动"],["-ion","名词后缀（动作→事物）"]], mean:"行动；行为；作用",
+   opts:["行动；行为；作用","演员；行动者","活跃的；积极的","活动；活力"],
+   ask:"「做这件事」——意思是？",
+   why:"act（行动）+ -ion（名词）→ <b>行动；行为</b>。看这一串就懂尾巴的威力了：act（动词）→ action（名词）→ active（形容词）→ activity（名词）→ actor（人）——同一个 act，五种尾巴五种词性。",
+   juan:[["act（行动）+ -ion → 做这件事 → 行动；行为；作用",1],
+         ["act（行动）+ -or → 做这件事的人 → 演员",0],
+         ["act（行动）+ -ive → 爱动的 → 活跃的；积极的",0],
+         ["act（行动）+ -ivity → 活动这件事 → 活动；活力",0]] },
+
+ { w:"communication", f:10, parts:[["communicate","交流；传达"],["-ion","名词后缀（动作→事物）"]], mean:"交流；通信；传达",
+   opts:["交流；通信；传达","社区；共同体","爱交流的；健谈的","可交流的"],
+   ask:"「互相传达」——意思是？",
+   why:"communicate（交流）+ -ion → <b>交流；通信</b>。⚠️ 拼写机关：去掉了 e，又多出一个 a。-ate 结尾的动词走 -ion 这条路几乎都这样：educate → education、situate → situation。",
+   juan:[["communicate（交流）+ -ion → 交流这件事 → 交流；通信；传达",1],
+         ["commune（公社）+ -ity → 共同体 → 社区",0],
+         ["communicate（交流）+ -ive → 爱交流的 → 健谈的",0],
+         ["situate（使位于）+ -ion → 所处的位置 → 情况",0]] },
+
+ { w:"investment", f:9, parts:[["invest","投资"],["-ment","名词后缀（动作→事物）"]], mean:"投资；投入",
+   opts:["投资；投入","调查；研究","投资者；投资机构","投资的；可投的"],
+   ask:"「把钱投进去这件事」——意思是？",
+   why:"invest（投资）+ -ment → <b>投资</b>。注意区分这对兄弟：investor 是投资<b>人</b>（-or），investment 是投资这<b>件事、这笔钱</b>（-ment）。",
+   juan:[["invest（投资）+ -ment → 投资这件事 → 投资；投入",1],
+         ["invest（投资）+ -or → 投资的那个人 → 投资者",0],
+         ["investigate（调查）+ -ion → 调查这件事 → 调查",0],
+         ["employ（雇用）+ -ment → 雇用这件事 → 就业",0]] },
+
+ { w:"situation", f:7, parts:[["situate","使位于"],["-ion","名词后缀（动作→事物）"]], mean:"情况；形势；位置",
+   opts:["情况；形势；位置","地点；场所","位于；坐落于","合适的；恰当的"],
+   ask:"「所处的位置」——意思是？",
+   why:"situate（使位于）+ -ion → 所处的那个位置 → <b>情况；形势</b>。从「地理位置」引申到「处境」——中文说「你现在处在什么位置」，说的也是 situation。",
+   juan:[["situate（使位于）+ -ion → 所处的处境 → 情况；形势；位置",1],
+         ["situate（使位于）+ -d → 位于…的（形容词）",0],
+         ["communicate（交流）+ -ion → 交流这件事 → 交流",0],
+         ["express（表达）+ -ion → 表达这件事 → 表达",0]] },
+
+ { w:"employment", f:6, parts:[["employ","雇用"],["-ment","名词后缀（动作→事物）"]], mean:"就业；雇用；工作",
+   opts:["就业；雇用；工作","雇主；老板","雇员；职工","解雇；失业"],
+   ask:"「被雇这件事」——意思是？",
+   why:"employ（雇用）+ -ment → <b>就业；雇用</b>。这个家族三个身份一次记全：employer 雇主（-er 雇人的一方）、employee 雇员（-ee 被雇的一方）、employment 就业这件事（-ment）。",
+   juan:[["employ（雇用）+ -ment → 就业这件事 → 就业；雇用；工作",1],
+         ["employ（雇用）+ -er → 雇人的那一方 → 雇主",0],
+         ["employ（雇用）+ -ee → 被雇的那个人 → 雇员",0],
+         ["govern（治理）+ -ment → 治理这件事 → 政府",0]] },
+
+ { w:"management", f:6, parts:[["manage","管理"],["-ment","名词后缀（动作→事物）"]], mean:"管理；经营；管理层",
+   opts:["管理；经营；管理层","经理；管理者","可管理的；易处理的","小技巧；手法"],
+   ask:"「管理这件事」——意思是？",
+   why:"manage（管理）+ -ment → <b>管理；经营</b>。⚠️ 拼写：manage 里的 e 要保住（manage<b>ment</b>），不是 managment。它也能指「管理层」——干这件事的那一群人。",
+   juan:[["manage（管理）+ -ment → 管理这件事 → 管理；经营；管理层",1],
+         ["manage（管理）+ -er → 管事的那个 → 经理；管理者",0],
+         ["manage（管理）+ -able → 能管住的 → 可管理的",0],
+         ["govern（治理）+ -ment → 治理这件事 → 政府",0]] },
+
+ { w:"argument", f:5, parts:[["argue","争论；论证"],["-ment","名词后缀（动作→事物）"]], mean:"争论；论据；论点",
+   opts:["争论；论据；论点","同意；协议","争论的；好辩的","有理地；论证地"],
+   ask:"「争这件事，也指拿出来的那条理由」——意思是？",
+   why:"argue（争论）+ -ment → <b>争论；论点</b>。⚠️ 拼写机关：argue 的 e 掉了，是 argu<b>ment</b> 不是 arguement——考场上最常见的错拼之一。写作文时说「我的论据」，用的就是这个词。",
+   juan:[["argue（争论）+ -ment → 争这件事 → 争论；论据；论点",1],
+         ["argue（争论）+ -ment → 误解成 arguement 这个拼写",0],
+         ["agree（同意）+ -ment → 同意这件事 → 协议",0],
+         ["pay（支付）+ -ment → 付这件事 → 付款",0]] },
+
+ { w:"payment", f:5, parts:[["pay","支付"],["-ment","名词后缀（动作→事物）"]], mean:"付款；支付；款项",
+   opts:["付款；支付；款项","薪水；工资","付款人；收款人","可支付的；值得的"],
+   ask:"「付钱这件事，和付出去的那笔钱」——意思是？",
+   why:"pay（支付）+ -ment → <b>付款；款项</b>。别和 salary（薪水）弄混：salary 是你领的钱，payment 是你付出去或收到的那笔钱——一进一出。",
+   juan:[["pay（支付）+ -ment → 付这件事 → 付款；支付；款项",1],
+         ["pay（支付）+ -er → 付钱的那个人 → 付款人",0],
+         ["salary（薪水）→ 你领的钱",0],
+         ["employ（雇用）+ -ment → 就业这件事 → 就业",0]] },
+
+ { w:"transition", f:3, parts:[["transit","通过；过渡"],["-ion","名词后缀（动作→事物）"]], mean:"过渡；转变；转换",
+   opts:["过渡；转变；转换","交通；运输","翻译；译本","短暂的；转瞬的"],
+   ask:"「从一个状态走到另一个」——意思是？",
+   why:"transit（通过、过渡）+ -ion → <b>过渡；转变</b>。这一族共用 trans-（穿过）：transit 通过 → transition 过渡 → translate 翻译（把意思搬过去）。",
+   juan:[["transit（过渡）+ -ion → 走过去这件事 → 过渡；转变；转换",1],
+         ["transit（通过）→ 交通；运输（同一个词的另一层意思）",0],
+         ["translate（翻译）+ -ion → 翻译这件事 → 翻译",0],
+         ["situate（使位于）+ -ion → 处境 → 情况",0]] },
+
+ { w:"expression", f:2, parts:[["express","表达"],["-ion","名词后缀（动作→事物）"]], mean:"表达；表情；词语",
+   opts:["表达；表情；词语","快递；快速的","印象；感想","压力；压迫"],
+   ask:"「把心里的话说出来」——意思是？",
+   why:"express（表达）+ -ion → <b>表达；表情</b>。✅ 顺带记一个同款：impress（往里压）→ impression 印象——印在心上的那一下。",
+   juan:[["express（表达）+ -ion → 表达这件事 → 表达；表情；词语",1],
+         ["express（快递）→ 快递；快运",0],
+         ["impress（印入）+ -ion → 印在心上 → 印象",0],
+         ["suggest（建议）+ -ion → 建议这件事 → 建议",0]] },
+
+ { w:"suggestion", f:2, parts:[["suggest","建议；暗示"],["-ion","名词后缀（动作→事物）"]], mean:"建议；暗示；一点迹象",
+   opts:["建议；暗示；一点迹象","建议者；提议人","建议的；暗示的","可口可乐的广告词"],
+   ask:"「提出来给你参考」——意思是？",
+   why:"suggest（建议）+ -ion → <b>建议</b>。⚠️ 拼写机关：结尾的 t 升级成 ss 再连 -ion（sugge<b>stion</b>）——因为 -ion 前的 t 会变音，英语干脆改了拼写。",
+   juan:[["suggest（建议）+ -ion → 建议这件事 → 建议；暗示",1],
+         ["suggest（建议）+ -ion → 误解成 suggesttion",0],
+         ["express（表达）+ -ion → 表达这件事 → 表达",0],
+         ["distinct（不同的）+ -ion → 区别开来 → 区别；卓越",0]] },
+
+ { w:"equipment", f:1, parts:[["equip","装备"],["-ment","名词后缀（不可数）"]], mean:"设备；装备；器材",
+   opts:["设备；装备；器材","装备；配备（动词）","一整套行头","可装备的"],
+   ask:"「装备起来的那些东西」——意思是？",
+   why:"equip（装备）+ -ment → <b>设备；器材</b>。⚠️ 大坑：它是<b>不可数名词</b>——没有 equipments，说一件要 a piece of equipment。同类不可数的 -ment 名词还有 information（信息）、furniture（家具）。",
+   juan:[["equip（装备）+ -ment → 装备起来的那些东西 → 设备；器材（不可数）",1],
+         ["equip（装备）+ -ment → 加 s 的 equipments",0],
+         ["equip（装备）+ -ed → 装备好了的",0],
+         ["govern（治理）+ -ment → 治理这件事 → 政府",0]] },
+
+ { w:"pollution", f:0, parts:[["pollute","污染"],["-ion","名词后缀（动作→事物）"]], mean:"污染；污染物",
+   opts:["污染；污染物","净化；提纯","有礼貌的；文雅的","肮脏地；污染地"],
+   ask:"「把环境弄脏这件事」——意思是？",
+   why:"pollute（污染）+ -ion → <b>污染</b>。⚠️ 拼写机关：pollute 去 e 再加 -ion。同款三个高频词：contribute → contribution、distribute → distribution、pollute → pollution。",
+   juan:[["pollute（污染）+ -ion → 污染这件事 → 污染；污染物",1],
+         ["pollute（污染）+ -ion → 净化；提纯",0],
+         ["polite（有礼貌的）+ -ness → 有礼貌这件事 → 礼貌",0],
+         ["communicate（交流）+ -ion → 交流这件事 → 交流",0]] },
+
+ { w:"connection", f:0, parts:[["connect","连接"],["-ion","名词后缀（动作→事物）"]], mean:"连接；联系；关系",
+   opts:["连接；联系；关系","联络；接触（动词）","能连上的；可接的","连接器；联络人"],
+   ask:"「连在一起」——意思是？",
+   why:"connect（连接）+ -ion → <b>连接；联系</b>。这一群都是「-ct 结尾的动词 + -ion」：connect → connection、collect → collection、inspect → inspection。",
+   juan:[["connect（连接）+ -ion → 连在一起 → 连接；联系；关系",1],
+         ["connect（连接）+ -ion → 误解成动词用法",0],
+         ["connect（连接）+ -or → 连接的那个东西 → 连接器",0],
+         ["express（表达）+ -ion → 表达这件事 → 表达",0]] }
+ ],
+ recall:[
+ { ask:"「政府」和「州长」，哪个是 -ment 造的「这件事」？",
+   truth:"government", opts:["government","governor","employer","management"],
+   why:"<b>government 政府</b> = govern（治理）+ -ment（名词，这件事）；governor 是治理的那个人（-or）。" },
+ { ask:"argue（争论）加 -ment，正确拼写是？",
+   truth:"argument", opts:["argument","arguement","arguementt","argmente"],
+   why:"<b>argument</b>——argue 里的 e 掉了。这个错拼在考场上出现频率极高，记住「argue 变名词要脱一只鞋」。" },
+ { ask:"「一台设备」哪个说法对？",
+   truth:"a piece of equipment", opts:["a piece of equipment","an equipment","equipments","a equipment"],
+   why:"equipment 是<b>不可数名词</b>——只能 a piece of equipment。information（信息）、furniture（家具）也是这一类。" },
+ { ask:"communicate（交流）的名词是？",
+   truth:"communication", opts:["communication","communicateion","communicationn","communicasion"],
+   why:"<b>communication</b>——去 e、补一个 a。-ate 结尾的动词几乎都这样：educate → education、situate → situation。" },
+ { ask:"-ment 和 -ion 这两个尾巴，造出来的是什么词性？",
+   truth:"名词", opts:["名词","形容词","副词","动词"],
+   why:"<b>都造名词</b>——把动词变成「一件事」。区别不在词性而在来源：-ment 多从法语来，-ion 多从拉丁语来。" }
+ ],
+ migrate:[
+ { ask:"下面哪个词<b>不是</b>「动词 + -ment / -ion」造出来的？",
+   truth:"million", opts:["million","action","payment","government"],
+   why:"<b>million</b>（百万）来自意大利语 milione「一大千」，那个 -ion 长在词根里，跟「做某事」没关系；action / payment / government 才是真造出来的。" },
+ { ask:"「雇员」是 employ 家族的哪一个？",
+   truth:"employee", opts:["employee","employer","employment","employ"],
+   why:"employ（雇用）→ <b>employee 雇员</b>（-ee 被雇的一方）；employer 雇主（-er 雇人的一方）、employment 就业这件事（-ment）。" },
+ { ask:"「活跃的」——act 家族的哪个？",
+   truth:"active", opts:["active","action","activity","actor"],
+   why:"<b>active 活跃的</b>（-ive 形容词）；action 行动（-ion 名词）、activity 活动（-ity 名词）、actor 演员（-or 人）。同一个 act，尾巴决定词性。" },
+ { ask:"suggest（建议）变名词，正确的是？",
+   truth:"suggestion", opts:["suggestion","suggesttion","sugestion","suggestian"],
+   why:"<b>suggestion</b>——结尾的 t 先变 ss 再连 -ion。" },
+ { ask:"作文里要写「我的论据是」，「论据」用哪个词？",
+   truth:"argument", opts:["argument","argue","arguement","arguing"],
+   why:"<b>argument</b>——argue 是动词（争论、论证），argument 是名词（论点、论据）。作文里要名词，拼写还别掉 e。" }
+ ]
+});
+
+/* ===== epA04_ity.js ===== */
+EPS.push({
+ id:"A04",
+ chapter:"affix",
+ season:1,
+ tag:"词缀 04",
+ root:"-ity / -ness",
+ mean:"把形容词变成「一种性质」",
+ freq:81,
+ sub:"形容词变「一种性质」 · 全期 15 词 · 真题频次 81 次",
+ story:{
+  h3:"形容词后面加 -ity 或 -ness，就长出了「那种性质」本身",
+  p:["real（真实的）→ reality（现实）；kind（善良的）→ kindness（善良）。这两个尾巴干的是同一件事：把一个形容词，变成「那种性质本身」——形容词只能形容别人，<b>变成名词才能自己当主角</b>（当主语、当宾语）。",
+     "分工有讲究：<b>拉丁血统的形容词配 -ity</b>（real → reality、active → activity、dense → density），<b>英语本族语的普通形容词配 -ness</b>（good → goodness、ill → illness、busy → business）。一个是「洋气」的尾巴，一个是「家常」的尾巴，记住这句分工，哪个词用哪个尾巴就不用背了。",
+     "两个坑：① 拼写常要动手术（active → acti<b>vity</b> 的 ve 变 vity、dense → den<b>sity</b>、busy → busi<b>ness</b> 的 y 变 i、ill → il<b>lness</b> 要双写）；② 不是所有 -ity 词都是形容词变的——authority（权威）来自 author（作者），morality（道德）和 morale（士气）只差一个 e。"],
+  rope:[["real + -ity　现实","拉丁形容词 → 抽象名词"],
+        ["busy + -ness　生意","本族语形容词 → 抽象名词；y 换成 i"],
+        ["active → activity　活动","⚠️ ve 要变成 vity"],
+        ["author + -ity　权威","⚠️ 词干不是形容词，是「作者」"]]
+ },
+ next:"下一期：-al / -ic —— 名词变形容词，尾巴定「……的」· 15 词",
+ words:[
+ { w:"humanity", f:12, parts:[["human","人的；人类"],["-ity","名词后缀（性质）"]], mean:"人性；人类；人道",
+   opts:["人性；人类；人道","人的；人类的","有人情味地","人道主义的"],
+   ask:"「人之所以为人」——意思是？",
+   why:"human（人的）+ -ity（性质）→ <b>人性</b>；也能指「全人类」（crimes against humanity 反人类罪）。⚠️ 跟 human 分工：human 是「一个人」（可数），humanity 是「人性／全人类」（不可数）。",
+   juan:[["human（人的）+ -ity → 人之所以为人 → 人性；人类；人道",1],
+         ["human（人的）→ 人的；人类的（形容词）",0],
+         ["real（真实的）+ -ity → 现实这件事 → 现实",0],
+         ["moral（道德的）+ -ity → 道德这件事 → 道德",0]] },
+
+ { w:"authority", f:11, parts:[["author","作者；创始人"],["-ity","名词后缀（性质）"]], mean:"权威；当局；权限",
+   opts:["权威；当局；权限","出版社；发行商","权威的；专断的","授权；许可"],
+   ask:"「说话算数的那个位置」——意思是？",
+   why:"author（作者、创始人）+ -ity → 有「创始、说了算」这个身份 → <b>权威；当局</b>。⚠️ 它的词干不是形容词——这是 -ity 家族里最容易被误拆的一个。the authorities 就是「当局」。",
+   juan:[["author（作者；创始人）+ -ity → 说了算的那个身份 → 权威；当局",1],
+         ["author（作者）→ 作者；创始人（名词）",0],
+         ["author（作者）+ -ity → 误解成形容词「作者的」",0],
+         ["real（真实的）+ -ity → 现实这件事 → 现实",0]] },
+
+ { w:"reality", f:10, parts:[["real","真实的"],["-ity","名词后缀（性质）"]], mean:"现实；现实情况；真实",
+   opts:["现实；现实情况；真实","真实的；实际的","实现；意识到","现实主义"],
+   ask:"「真实这件事」——意思是？",
+   why:"real（真实的）+ -ity → <b>现实</b>。in reality 事实上、become a reality 成为现实——形容词只能形容别人，变成名词才轮到自己当主角。",
+   juan:[["real（真实的）+ -ity → 真实这件事 → 现实；现实情况",1],
+         ["real（真实的）+ -ize → 使成为真的 → 实现；意识到",0],
+         ["real（真实的）+ -ism → 现实主义",0],
+         ["active（活跃的）+ -ity → 活动这件事 → 活动",0]] },
+
+ { w:"activity", f:5, parts:[["active","活跃的"],["-ity","名词后缀（性质）"]], mean:"活动；活跃；行动",
+   opts:["活动；活跃；行动","活跃的；积极的","行动；行为","演员；行动者"],
+   ask:"「动起来这件事」——意思是？",
+   why:"active（活跃的）+ -ity → <b>活动</b>。⚠️ 拼写机关：active 的 ve 在 -ity 前变成 vity（activi<b>ty</b>）——同类还有 creative → creativity、productive → productivity。",
+   juan:[["active（活跃的）+ -ity → 动起来这件事 → 活动；活跃；行动",1],
+         ["act（行动）+ -ion → 行动这件事 → 行动；行为",0],
+         ["act（行动）+ -or → 做这件事的人 → 演员",0],
+         ["real（真实的）+ -ity → 现实这件事 → 现实",0]] },
+
+ { w:"priority", f:3, parts:[["prior","在先的；优先的"],["-ity","名词后缀（性质）"]], mean:"优先；优先事项；重点",
+   opts:["优先；优先事项；重点","特权；优待","先前；事先","优越；优势"],
+   ask:"「排在前面这件事」——意思是？",
+   why:"prior（在先的）+ -ity → <b>优先；优先事项</b>。⚠️ 别跟长得很像的 superiority（优越）弄混——那个的词干是 superior（更高的）。",
+   juan:[["prior（在先的）+ -ity → 排前面这件事 → 优先；优先事项",1],
+         ["prior（在先的）→ 在先的；优先的（形容词）",0],
+         ["superior（更高的）+ -ity → 更高这件事 → 优越；优势",0],
+         ["minor（较小的）+ -ity → 少数这件事 → 少数；少数派",0]] },
+
+ { w:"prosperity", f:3, parts:[["prosper","繁荣；兴旺"],["-ity","名词后缀（性质）"]], mean:"繁荣；兴旺；成功",
+   opts:["繁荣；兴旺；成功","繁荣的；兴旺的","使繁荣；使兴旺","前途；展望"],
+   ask:"「兴旺这件事」——意思是？",
+   why:"prosper（兴旺）+ -ity → <b>繁荣</b>。prosper 是动词，加 -ity 变成「兴旺这个状态」。经济类阅读里 prosperity 常跟 depression（萧条）配成一对反义。",
+   juan:[["prosper（兴旺）+ -ity → 兴旺这件事 → 繁荣；兴旺；成功",1],
+         ["prosper（兴旺）+ -ous → 兴旺的 → 繁荣的",0],
+         ["prospect（展望）→ 前途；前景",0],
+         ["human（人的）+ -ity → 人性 → 人性；人类",0]] },
+
+ { w:"electricity", f:1, parts:[["electric","电的"],["-ity","名词后缀（性质）"]], mean:"电；电力；电学",
+   opts:["电；电力；电学","电的；带电的","电气化；通电","电子；电子的"],
+   ask:"「电这个东西」——意思是？",
+   why:"electric（电的）+ -ity → <b>电；电力</b>。分工记清楚：electric 形容「带电的」（an electric car），electrical 是「与电有关的」，electricity 才是「电」这个东西本身。",
+   juan:[["electric（电的）+ -ity → 电这个东西 → 电；电力；电学",1],
+         ["electric（电的）+ -al → 与电有关的；电气的",0],
+         ["electric（电的）→ 电的；带电的（形容词）",0],
+         ["dense（稠密的）+ -ity → 密这件事 → 密度",0]] },
+
+ { w:"minority", f:1, parts:[["minor","较小的；次要的"],["-ity","名词后缀（性质）"]], mean:"少数；少数派；少数民族",
+   opts:["少数；少数派；少数民族","未成年人；小调","多数；大多数","少数地；很少"],
+   ask:"「人数少的那一边」——意思是？",
+   why:"minor（小的、次要的）+ -ity → <b>少数；少数派</b>。它的反义词是同一套做法：major（大的）+ -ity → majority（多数）——两兄弟只差一个字母。",
+   juan:[["minor（较小的）+ -ity → 少的那一边 → 少数；少数派；少数民族",1],
+         ["major（较大的）+ -ity → 多的那一边 → 多数；大多数",0],
+         ["minor（较小的）→ 较小的；次要的（形容词）",0],
+         ["prior（在先的）+ -ity → 排前面这件事 → 优先；优先事项",0]] },
+
+ { w:"personality", f:0, parts:[["personal","个人的"],["-ity","名词后缀（性质）"]], mean:"个性；人格；名人",
+   opts:["个性；人格；名人","个人的；私人的","全体员工；人员","亲自地；当面"],
+   ask:"「让这个人跟别人不一样的那一整套」——意思是？",
+   why:"personal（个人的）+ -ity → <b>个性；人格</b>。person 是「人」，personal 是「个人的」，personality 是「这个人的整套性格」。口语里它还指「名人」（a TV personality 电视名人）。",
+   juan:[["personal（个人的）+ -ity → 一个人独有的那套 → 个性；人格；名人",1],
+         ["person（人）+ -al → 个人的；私人的",0],
+         ["person（人）+ -nel → 全体员工 → 人员",0],
+         ["moral（道德的）+ -ity → 道德这件事 → 道德",0]] },
+
+ { w:"morality", f:0, parts:[["moral","道德的"],["-ity","名词后缀（性质）"]], mean:"道德；道德观；伦理",
+   opts:["道德；道德观；伦理","道德的；有德行的","士气；斗志","不道德地；败坏地"],
+   ask:"「讲不讲道德这件事」——意思是？",
+   why:"moral（道德的）+ -ity → <b>道德</b>。⚠️ 别和 morale 弄混——两个词只差一个 e：morale 是「士气、斗志」，morality 才是「道德」。",
+   juan:[["moral（道德的）+ -ity → 讲道德这件事 → 道德；道德观；伦理",1],
+         ["moral（道德的）→ 道德的；有德行的（形容词）",0],
+         ["morale（士气）→ 士气；斗志",0],
+         ["human（人的）+ -ity → 人性 → 人性；人类",0]] },
+
+ { w:"density", f:0, parts:[["dense","稠密的"],["-ity","名词后缀（性质）"]], mean:"密度；稠密；浓度",
+   opts:["密度；稠密；浓度","稠密的；浓密的","使变密；使变浓","密封；封住"],
+   ask:"「挤得多密」——意思是？",
+   why:"dense（稠密的）+ -ity → <b>密度</b>。⚠️ 拼写机关：dense 的 se 在 -ity 前变成 sity（den<b>sity</b>）——跟 active → activity 是同一套变化。population density 人口密度，是社会类阅读的高频词。",
+   juan:[["dense（稠密的）+ -ity → 有多密 → 密度；稠密；浓度",1],
+         ["dense（稠密的）→ 稠密的；浓密的（形容词）",0],
+         ["dense（稠密的）+ -ly → 稠密地",0],
+         ["active（活跃的）+ -ity → 活动这件事 → 活动",0]] },
+
+ { w:"business", f:35, parts:[["busy","忙的"],["-ness","名词后缀（性质）"]], mean:"生意；事务；商业",
+   opts:["生意；事务；商业","忙的；繁忙的","忙碌地；急忙地","空闲；无事可做"],
+   ask:"「要忙的那些事」——意思是？",
+   why:"busy（忙的）+ -ness → 先是「忙这件事」，再引申成「要忙的<b>事务</b>」→ <b>生意；商业</b>。⚠️ 拼写机关：busy 的 y 变 i（busi<b>ness</b>），读音也被压成一个音节（/ˈbɪznəs/）。",
+   juan:[["busy（忙的）+ -ness → 要忙的事务 → 生意；事务；商业",1],
+         ["busy（忙的）→ 忙的；繁忙的（形容词）",0],
+         ["busy（忙的）+ -ly → 忙碌地；急忙地",0],
+         ["kind（善良的）+ -ness → 善良这件事 → 仁慈",0]] },
+
+ { w:"illness", f:0, parts:[["ill","生病的"],["-ness","名词后缀（性质）"]], mean:"疾病；生病",
+   opts:["疾病；生病","生病的；不适的","致病的；病态的","药店；药物"],
+   ask:"「生病这件事」——意思是？",
+   why:"ill（生病的）+ -ness → <b>疾病</b>。⚠️ 拼写机关：ill 的 l 要双写（il<b>lness</b>）——单音节形容词加 -ness，末尾常要双写字母。",
+   juan:[["ill（生病的）+ -ness → 生病这件事 → 疾病；生病",1],
+         ["ill（生病的）→ 生病的；不适的（形容词）",0],
+         ["ill（生病的）+ -ness → 误解成 ilness",0],
+         ["dense（稠密的）+ -ity → 密度 → 密度",0]] },
+
+ { w:"kindness", f:0, parts:[["kind","善良的"],["-ness","名词后缀（性质）"]], mean:"仁慈；善意；亲切",
+   opts:["仁慈；善意；亲切","善良的；亲切的","仁慈地；善意地","种类；类型"],
+   ask:"「善良这件事」——意思是？",
+   why:"kind（善良的）+ -ness → <b>仁慈；善意</b>。⚠️ 顺带避坑：kind 当名词是「种类」（a kind of），当形容词才是「善良的」——kindness 只跟「善良」这一层走。",
+   juan:[["kind（善良的）+ -ness → 善良这件事 → 仁慈；善意；亲切",1],
+         ["kind（种类）→ 种类；类型",0],
+         ["kind（善良的）→ 善良的；亲切的（形容词）",0],
+         ["good（好的）+ -ness → 好这件事 → 善良；美德",0]] },
+
+ { w:"goodness", f:0, parts:[["good","好的"],["-ness","名词后缀（性质）"]], mean:"善良；美德；（感叹）天哪",
+   opts:["善良；美德；（感叹）天哪","好的；良好的","好处；利益","货物；商品"],
+   ask:"「好这件事」——意思是？",
+   why:"good（好的）+ -ness → <b>善良；美德</b>。还有个生活用法：My goodness! 就是「天哪！」——同一个词，从「好的性质」变成了惊叹。",
+   juan:[["good（好的）+ -ness → 好这件事 → 善良；美德；（感叹）天哪",1],
+         ["good（好的）+ -s → 货物；商品",0],
+         ["good（好的）→ 好的；良好的（形容词）",0],
+         ["ill（生病的）+ -ness → 疾病 → 疾病",0]] }
+ ],
+ recall:[
+ { ask:"「生意；事务」——是哪个词？",
+   truth:"business", opts:["business","busyness","goodness","kindness"],
+   why:"<b>business 生意</b> = busy（忙的）+ -ness，从「忙这件事」变成「要忙的事」——就是生意。拼写要把 y 换成 i。" },
+ { ask:"active（活跃的）变名词，正确的是？",
+   truth:"activity", opts:["activity","activety","activeness","action"],
+   why:"<b>activity 活动</b>——active 的 ve 在 -ity 前变成 vity。同款：creative → creativity、productive → productivity。" },
+ { ask:"dense（稠密的）变名词，正确的是？",
+   truth:"density", opts:["density","densety","densness","denseness"],
+   why:"<b>density 密度</b>——se 变 sity，跟 active → activity 是同一套变化。" },
+ { ask:"「反人类罪」里的「人类」，用哪个词？",
+   truth:"humanity", opts:["humanity","human","humane","humanely"],
+   why:"crimes against <b>humanity</b>——humanity 是「全人类／人性」（不可数）；human 是「一个人」（可数）；humane 是「人道的」。" },
+ { ask:"-ity / -ness 加在形容词后面，造出来的是什么词？",
+   truth:"抽象名词", opts:["抽象名词","形容词","副词","动词"],
+   why:"<b>抽象名词</b>——把形容词变成「那种性质本身」：real → reality、kind → kindness。形容词只能描述，名词才能当主语。" }
+ ],
+ migrate:[
+ { ask:"下面哪个词<b>不是</b>「形容词 + -ity / -ness」造出来的？",
+   truth:"authority", opts:["authority","reality","activity","kindness"],
+   why:"<b>authority 权威</b>的词干是 author（作者、创始人）——名词加 -ity，不是形容词；reality / activity / kindness 才是形容词变的。" },
+ { ask:"「拉丁形容词配 -ity，本族语形容词配 -ness」——按这个规律，good 该配哪个？",
+   truth:"-ness", opts:["-ness","-ity","-ion","-ment"],
+   why:"<b>good + -ness = goodness 善良</b>。good 是英语本族词，配家常的 -ness；real、active 这些拉丁来的配洋气的 -ity（reality、activity）。" },
+ { ask:"minority（少数派）的反义词是？",
+   truth:"majority", opts:["majority","minor","minorly","majorly"],
+   why:"major（较大的）+ -ity → <b>majority 多数派</b>。两兄弟只差一个字母：minor / major。" },
+ { ask:"「这是当务之急」——用 priority 怎么说？",
+   truth:"This is a top priority", opts:["This is a top priority","This is a top prior","This is top prioritying","This is a top prioritize"],
+   why:"priority 是名词——a top priority 头等大事。prior 是形容词（在先的），prioritize 是动词（把…排前面），三个别混用。" },
+ { ask:"「部队士气高涨」里的「士气」是哪个词？",
+   truth:"morale", opts:["morale","moral","morality","morally"],
+   why:"<b>morale 士气</b>——只差一个 e 的两兄弟：morale 是「斗志」，moral 是「道德的」，morality 是「道德这件事」。" }
+ ]
+});
+
 
 var EP = null, FAM = {}, WORDS = [], RECALL = [], MIGRATE = [], ROOTS = [];
 var QUESTS = [], TOTALQ = 0, NP = 0, NREC = 0, NMIG = 0;
-var S = { phase:"home", season:1, i:0, score:0, wrong:[], picked:{} };
+var S = { phase:"home", chapter:"root", season:1, i:0, score:0, wrong:[], picked:{} };
 var app = document.getElementById("app");
 
 function shuffle(a){
@@ -10622,40 +11402,67 @@ function render(){
   renderQ();
 }
 var SEASON_NAME = { 1:"第一季", 2:"第二季", 3:"第三季", 4:"第四季", 5:"第五季" };
+var AFFIX_SEASON_NAME = { 1:"后缀季", 2:"前缀季" };
+function chapOf(e){ return e.chapter || "root"; }
+function seasonName(ch, se){
+  if (ch === "affix") return AFFIX_SEASON_NAME[se] || ("第 " + se + " 季");
+  return SEASON_NAME[se] || ("第 " + se + " 季");
+}
 function renderHome(){
-  if (!S.season) S.season = 1;
+  var CH = S.chapter || "root";
+  var pool = EPS.filter(function(e){ return chapOf(e) === CH; });
   var maxSeason = 1;
-  EPS.forEach(function(e){ var se = e.season || 1; if (se > maxSeason) maxSeason = se; });
-  var tabMax = Math.max(5, maxSeason);
+  pool.forEach(function(e){ var se = e.season || 1; if (se > maxSeason) maxSeason = se; });
+  var maxAll = 1;
+  EPS.forEach(function(e){ var se = e.season || 1; if (se > maxAll) maxAll = se; });
+  var tabMax = (CH === "affix") ? Math.max(1, maxSeason) : Math.max(5, maxAll);
+  if (!pool.some(function(e){ return (e.season || 1) === S.season; })){
+    S.season = pool.length ? (pool[0].season || 1) : 1;
+  }
   var s = "";
   s += '<div class="center">';
-  s += '<div class="intro-kicker">词 根 拆 解</div>';
+  s += '<div class="intro-kicker">' + (CH === "affix" ? "词 缀 拆 解" : "词 根 拆 解") + '</div>';
   s += '<div class="intro-h1">考研 5500 词</div>';
-  s += '<div class="intro-sub">186 个词根家族 · 已上线 ' + EPS.length + ' 期</div>';
+  s += '<div class="intro-sub">' + (CH === "affix"
+       ? "51 个常用词缀 · 已上线 " + pool.length + " 期"
+       : "186 个词根家族 · 已上线 " + pool.length + " 期") + '</div>';
   s += '</div>';
-  s += '<div class="intro-card"><h3>先看一遍，再做一遍</h3>';
-  s += '<p>每一期拆一个词根家族。<b>▶ 先看一遍</b>是像视频那样自动播给你看；<b>✍️ 开始闯关</b>是自己动手做。</p>';
-  s += '<p>按真题频次从高到低排——越靠前，考到的次数越多。</p></div>';
-  // 季 Tab：第一季～第五季横排，没上线的季置灰
+  var nRoot = EPS.filter(function(e){ return chapOf(e) === "root"; }).length;
+  var nAff = EPS.filter(function(e){ return chapOf(e) === "affix"; }).length;
+  s += '<div class="chapters">';
+  s += '<button class="ctab' + (CH === "root" ? ' on' : '') + (nRoot ? '' : ' off') + '" data-chap="root">词根篇</button>';
+  s += '<button class="ctab' + (CH === "affix" ? ' on' : '') + (nAff ? '' : ' off') + '" data-chap="affix">词缀篇</button>';
+  s += '</div>';
+  s += '<div class="chap-note">' + (CH === "affix" ? "后缀定词性 · 前缀定方向" : "一个家族一串词 · 按真题频次排") + '</div>';
+  s += '<div class="intro-card"><h3>' + (CH === "affix" ? "看尾巴，看脑袋" : "先看一遍，再做一遍") + '</h3>';
+  if (CH === "affix"){
+    s += '<p>每一期拆一个词缀（或一族近义词缀）。<b>▶ 先看一遍</b>是像视频那样自动播给你看；<b>✍️ 开始闯关</b>是自己动手做。</p>';
+    s += '<p>后缀告诉你<b>这是什么词性</b>，前缀告诉你<b>往哪个方向</b>——认出一个词缀，就是认出一串词。</p>';
+  } else {
+    s += '<p>每一期拆一个词根家族。<b>▶ 先看一遍</b>是像视频那样自动播给你看；<b>✍️ 开始闯关</b>是自己动手做。</p>';
+    s += '<p>按真题频次从高到低排——越靠前，考到的次数越多。</p>';
+  }
+  s += '</div>';
+  // 季 Tab：按当前篇章显示（词根篇＝第一季～第五季；词缀篇＝后缀季／前缀季）
   s += '<div class="seasons">';
   for (var se = 1; se <= tabMax; se++){
-    var has = EPS.some(function(e){ return (e.season || 1) === se; });
-    s += '<button class="stab' + (S.season === se ? ' on' : '') + (has ? '' : ' off') + '" data-season="' + se + '">' +
-         (SEASON_NAME[se] || ('第 ' + se + ' 季')) + '</button>';
+    var hasSe = pool.some(function(e){ return (e.season || 1) === se; });
+    s += '<button class="stab' + (S.season === se ? ' on' : '') + (hasSe ? '' : ' off') + '" data-season="' + se + '">' +
+         seasonName(CH, se) + '</button>';
   }
   s += '</div>';
   // 当前季的期列表
   var list = [], tw = 0, tf = 0;
   EPS.forEach(function(e, i){
-    if ((e.season || 1) === S.season){ list.push(i); tw += e.words.length; tf += e.freq; }
+    if (chapOf(e) === CH && (e.season || 1) === S.season){ list.push(i); tw += e.words.length; tf += e.freq; }
   });
   if (list.length){
-    s += '<div class="season-sum">' + SEASON_NAME[S.season] + ' · ' + list.length + ' 期 · ' + tw + ' 词形 · 真题命中 ' + tf + ' 次</div>';
+    s += '<div class="season-sum">' + seasonName(CH, S.season) + ' · ' + list.length + ' 期 · ' + tw + ' 词形 · 真题命中 ' + tf + ' 次</div>';
     list.forEach(function(i){
       var e = EPS[i];
       s += '<div class="epcard" data-ep="' + i + '">';
       s += '<div class="epcard-l">';
-      s += '<div class="epcard-no">第 ' + e.id + ' 期　·　真题频次 ' + e.freq + ' 次</div>';
+      s += '<div class="epcard-no">' + (e.tag || ('第 ' + e.id + ' 期')) + '　·　真题频次 ' + e.freq + ' 次</div>';
       s += '<div class="epcard-root">' + esc(e.root) + '</div>';
       s += '<div class="epcard-mean">' + esc(e.mean) + '</div>';
       s += '</div>';
@@ -10669,11 +11476,18 @@ function renderHome(){
        '词根词缀法 · 内容来自考研英语 5500 词真题母库</p>';
   app.innerHTML = s;
   document.getElementById("foot").innerHTML = "词根拆解 · 考研 5500 词 · 已上线 " + EPS.length + " 期";
+  Array.prototype.forEach.call(app.querySelectorAll(".ctab"), function(el){
+    el.onclick = function(){
+      var ch = el.getAttribute("data-chap");
+      if (!EPS.some(function(e){ return chapOf(e) === ch; })) return;
+      S.chapter = ch; S.season = 1; renderHome();
+    };
+  });
   Array.prototype.forEach.call(app.querySelectorAll(".stab"), function(el){
     el.onclick = function(){
       var se = Number(el.getAttribute("data-season"));
-      var has = EPS.some(function(e){ return (e.season || 1) === se; });
-      if (!has) return;
+      var hasSe = pool.some(function(e){ return (e.season || 1) === se; });
+      if (!hasSe) return;
       S.season = se;
       renderHome();
     };
@@ -10696,7 +11510,7 @@ function chnavHTML(){
   var i = EPS.indexOf(EP);
   var s = '<div class="chnav">';
   s += '<button class="cnav-btn" id="cprev"' + (i > 0 ? '' : ' disabled') + '>← 上一期</button>';
-  s += '<span class="cur">第 ' + EP.id + ' 期 · ' + esc(EP.root) + '</span>';
+  s += '<span class="cur">' + (EP.tag ? EP.tag : ('第 ' + EP.id + ' 期')) + ' · ' + esc(EP.root) + '</span>';
   s += '<button class="cnav-btn" id="cnext"' + (i < EPS.length - 1 ? '' : ' disabled') + '>下一期 →</button>';
   s += '</div>';
   return s;
@@ -10860,7 +11674,7 @@ function playRender(){
     var h = "";
     w.parts.forEach(function(p, i){
       var bare = p[0].replace(/-/g, "");
-      var isRoot = ROOTS.some(function(r){ return bare === r || bare.indexOf(r) >= 0; });
+      var isRoot = ROOTS.some(function(r){ var rb = String(r).replace(/-/g, ""); return bare === rb || bare.indexOf(rb) >= 0; });
       h += '<b class="' + (isRoot ? "rt" : "") + '" style="animation-delay:' + (i * 300) + 'ms">' +
            esc(p[0]) + '<i>' + esc(p[1]) + '</i></b>';
     });
