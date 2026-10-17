@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>词根拆解 · 考研 5500 词</title>
+<title>词根词缀拆解 · 考研核心词</title>
 <style>
 :root{
   --pink:#c2708c; --pink-d:#a75a75; --pink-l:#EDD1D8; --pink-xl:#FBEFF3;
@@ -183,7 +183,7 @@ body.playing .foot{display:none}
 </head>
 <body>
 <div class="wrap" id="app"></div>
-<div class="foot" id="foot">词根拆解 · 考研 5500 词</div>
+<div class="foot" id="foot">词根词缀拆解 · 考研核心词</div>
 <script>
 "use strict";
 var EPS = [];
@@ -14216,9 +14216,10 @@ function loadEP(idx){
   NP = WORDS.length; NREC = RECALL.length; NMIG = MIGRATE.length;
   ROOTS = EP.root.split("/").map(function(x){ return x.trim(); });
   buildQuests();
-  document.title = "词根拆解 · " + EP.root + "（" + EP.mean + "）· 第 " + EP.id + " 期";
+  var chName = (chapOf(EP) === "affix") ? "词缀拆解" : "词根拆解";
+  document.title = chName + " · " + EP.root + "（" + EP.mean + "）· 第 " + EP.id + " 期";
   var f = document.getElementById("foot");
-  if (f) f.innerHTML = "词根拆解 · <b>" + esc(EP.root) + "</b>（" + esc(EP.mean) + "）· 第 " + EP.id + " 期 · 真题频次 " + EP.freq + " 次";
+  if (f) f.innerHTML = chName + " · <b>" + esc(EP.root) + "</b>（" + esc(EP.mean) + "）· 第 " + EP.id + " 期 · 真题频次 " + EP.freq + " 次";
 }
 function resetRun(){
   WORDS.forEach(function(w){ w.cache = null; w.jcache = null; });
@@ -14254,10 +14255,11 @@ function renderHome(){
   var s = "";
   s += '<div class="center">';
   s += '<div class="intro-kicker">' + (CH === "affix" ? "词 缀 拆 解" : "词 根 拆 解") + '</div>';
-  s += '<div class="intro-h1">考研 5500 词</div>';
+  s += '<div class="intro-h1">考研核心词</div>';
   s += '<div class="intro-sub">' + (CH === "affix"
        ? "51 个常用词缀 · 已上线 " + pool.length + " 期"
-       : "186 个词根家族 · 已上线 " + pool.length + " 期") + '</div>';
+       : "186 个词根家族 · 1060 个核心词") + '</div>';
+  s += '<div style="font-size:13.5px;color:#8A7A81;margin:10px 0 0;letter-spacing:.5px">拆得动，就猜得出剩下的</div>';
   s += '</div>';
   var nRoot = EPS.filter(function(e){ return chapOf(e) === "root"; }).length;
   var nAff = EPS.filter(function(e){ return chapOf(e) === "affix"; }).length;
@@ -14306,9 +14308,9 @@ function renderHome(){
     s += '<p style="text-align:center;color:#8A7A81;font-size:13.5px;margin:34px 0">这一季还在路上 · 敬请期待 ✨</p>';
   }
   s += '<p style="font-size:12.5px;color:#8A7A81;text-align:center;margin:20px 0 0">' +
-       '词根词缀法 · 内容来自考研英语 5500 词真题母库</p>';
+       '词根词缀法 · 1060 个核心词串成 186 个家族，覆盖考研大纲高频部分</p>';
   app.innerHTML = s;
-  document.getElementById("foot").innerHTML = "词根拆解 · 考研 5500 词 · 已上线 " + EPS.length + " 期";
+  document.getElementById("foot").innerHTML = "词根词缀拆解 · 考研核心词 · 已上线 " + EPS.length + " 期";
   Array.prototype.forEach.call(app.querySelectorAll(".ctab"), function(el){
     el.onclick = function(){
       var ch = el.getAttribute("data-chap");
@@ -14500,7 +14502,7 @@ function playRender(){
   playClear();
   var st = document.getElementById("pstage");
   if (!st) return;
-  document.getElementById("ptag").textContent = "词根拆解 · " + EP.root + "（" + EP.mean + "）";
+  document.getElementById("ptag").textContent = (chapOf(EP) === "affix" ? "词缀拆解 · " : "词根拆解 · ") + EP.root + "（" + EP.mean + "）";
   var num = document.getElementById("pnum");
   var bar = document.getElementById("pbar");
   if (P.wi >= WORDS.length){
