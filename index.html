@@ -126,6 +126,19 @@ body.playing .foot{display:none}
   font-size:12.5px;color:var(--txt2);letter-spacing:.4px;white-space:nowrap;overflow:hidden}
 .pw-prog{height:3px;background:rgba(194,112,140,.14);border-radius:99px;margin:9px 0 0;overflow:hidden;flex:none}
 .pw-prog>i{display:block;height:100%;width:0;background:var(--pink);border-radius:99px;transition:width .3s ease}
+.pdots{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:10px 0 0;flex:none}
+.pdots i{width:7px;height:7px;border-radius:99px;background:rgba(194,112,140,.18);transition:background .3s ease,transform .3s ease}
+.pdots i.done{background:#5E9E72}
+.pdots i.cur{background:var(--pink);transform:scale(1.55)}
+.phook{font-size:29px;line-height:1.75;font-weight:700;color:var(--txt);max-width:94%;
+  word-break:break-word;padding:0 2px;animation:pop .55s cubic-bezier(.2,.8,.3,1.25)}
+@media (max-width:430px){.phook{font-size:23px;line-height:1.8}}
+.phook b{color:var(--pink-d);font-weight:700}
+.phooksub{margin-top:16px;font-size:14.5px;color:var(--txt2);letter-spacing:.5px}
+.intro-hook{margin:0 4px 18px;padding:16px 18px;border-radius:14px;
+  background:var(--pink-xl);border:1px solid var(--pink-l);
+  font-size:17.5px;line-height:1.75;font-weight:700;color:var(--txt);text-align:center}
+.intro-hook b{color:var(--pink-d)}
 .pstage{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:14px;text-align:center;padding:10px 0}
 .pword{font-size:44px;font-weight:700;letter-spacing:.4px;color:var(--txt);word-break:break-word;
@@ -14091,6 +14104,89 @@ migrate:[
 });
 
 
+/* ===== 开场提问（每期一个，来自视频版做法） ===== */
+var HOOKS = {
+"01":"produce 和 reduce，一个往前一个往回，凭什么同一个根？",
+"02":"college 和 legal，一个学校一个法律，怎么会拆出同一个根？",
+"03":"information 和 reform，一个是消息一个是改革，共用一个 form？",
+"04":"serve 是“服务”，deserve 是“活该得到”，它们为什么是一家人？",
+"05":"support 和 report，一个是支持一个是报告，都藏着“搬运”？",
+"06":"perfect 和 affect，一个完美一个影响，凭什么同根？",
+"07":"efficient 和 sufficient，一个效率一个足够，差在哪？",
+"08":"institution 和 establish，一个是机构一个是建立，都在“站住”？",
+"09":"insist 和 assist，一个坚持一个帮忙，为什么要“站”？",
+"10":"science 和 question，一个是科学一个是提问，同根在哪？",
+"11":"offer 和 suffer，一个给出去一个受着，凭什么同根？",
+"12":"access 和 process，一个能进去一个往前走，都在“走”？",
+"13":"university 和 advertise，一个是大学一个是广告，都来自“转”？",
+"14":"contain 和 continue，一个是装下一个是继续，都藏着“拿住”？",
+"15":"social 和 public，为什么是同一批人？",
+"16":"propose 和 oppose，一个提案一个反对，差在哪？",
+"17":"deposit 和 dispose，一字之差，一个是存一个是扔？",
+"18":"respect 和 suspect，一个尊敬一个怀疑，差别只在一个前缀？",
+"19":"accept 和 except，只差一个字母，为什么意思完全相反？",
+"20":"president 和 resident，为什么总统就是“坐在前面的人”？",
+"21":"advise 和 revise，一个是建议一个是修改，都藏着“看”？",
+"22":"generation 和 national，一个是代一个是国，同根在哪？",
+"23":"apply 和 complex，一个申请一个复杂，凭什么同根？",
+"24":"submit 和 dismiss，一个上交一个打发走，差在哪？",
+"25":"congress 和 progress，都藏着“走”，方向为什么相反？",
+"26":"invent 和 prevent，一个发明一个阻止，同根是“来”？",
+"27":"record 和 accord，一个记录一个一致，都藏着“心”？",
+"28":"subject 和 object，主体和客体，只差一个前缀？",
+"29":"success 和 consequence，一个成功一个后果，都在“跟着”？",
+"30":"direct 和 regular，一个直接一个规律，同根是“直”？",
+"31":"include 和 exclude，一字之差，一个装进去一个关外面？",
+"32":"current 和 curious，一个当下一个好奇，都藏着“跑”？",
+"33":"respond 和 responsible，一个回应一个负责，其实是同一件事？",
+"34":"decide 和 precise，一个决定一个精确，都在“切”？",
+"35":"promote 和 remove，一个推一个挪走，差在方向？",
+"36":"define 和 finance，一个定义一个钱，凭什么同根？",
+"37":"compare 和 separate，一个比较一个分开，凭什么同根？",
+"38":"result 和 consult，一个结果一个咨询，都藏着“跳”？",
+"39":"influence 和 fluent，一个影响一个流利，都在“流”？",
+"40":"design 和 signal，一个设计一个信号，都在“记号”？",
+"41":"depend 和 expensive，一个依赖一个贵，都藏着“挂”？",
+"42":"consensus 和 sensitive，一个共识一个敏感，同在“感觉”？",
+"43":"protect 和 detect，一个保护一个发现，都藏着“盖”？",
+"44":"concern 和 secret，一个关心一个秘密，都来自“筛”？",
+"45":"available 和 valuable，一个可用一个值钱，凭什么同根？",
+"46":"involve 和 revolution，一个卷入一个革命，都在“转”？",
+"47":"demand 和 recommend，一个要求一个推荐，都在“命令”？",
+"48":"surprise 和 attract，一个惊讶一个吸引，都在“抓”？",
+"49":"private 和 deprive，一个私人一个剥夺，只差一个前缀？",
+"50":"operate 和 cooperate，多一个 co 到底差在哪？",
+"51":"majority 和 magnificent，一个是多数一个是宏大，都在“大”？",
+"52":"describe 和 predict，一个描述一个预测，一个写一个说，为什么同组？",
+"53":"contribute 和 distribute，一个贡献一个分发，差在一个前缀？",
+"54":"department 和 section，一个是部门一个是部分，凭什么同根？",
+"55":"decline 和 reflect，一个下降一个反射，都在“弯”？",
+"56":"consume 和 assume，一个消费一个假设，都藏着“拿”？",
+"57":"survive 和 revive，一个活下来一个复活，差在哪？",
+"58":"compete 和 appetite，一个竞争一个食欲，都在“求”？",
+"59":"instruction 和 restriction，一个是说明一个是限制，同根在哪？",
+"60":"extend 和 intense，一个伸展一个紧张，凭什么同根？",
+"A01":"teacher 和 actor，为什么加个尾巴就变成“人”？",
+"A02":"一个 -ly，怎么把形容词全变成“……地”？",
+"A03":"government 是“政府”，为什么它其实来自动词 govern？",
+"A04":"reality 和 happiness，一个现实一个幸福，后缀为什么不一样？",
+"A05":"approval 是名词，political 是形容词，同一个 al 还能变词性？",
+"A06":"useful 和 dangerous，一个有用一个危险，都来自“装满”？",
+"A07":"possible 和 reasonable，为什么一个用 ible 一个用 able？",
+"A08":"friendship 和 childhood，一个友谊一个童年，为什么要换后缀？",
+"A09":"pressure 和 insurance，一个压力一个保险，都是“状态”？",
+"A10":"identify 和 justify，一个认出一个证明，都是变出来的动词？",
+"A11":"unhappy、invisible、impossible、dishonest，四个“不”为什么要换着用？",
+"A12":"research 里的 re，是“再一次”还是“往回”？",
+"A13":"account、attention、appear，ad 为什么会变成 ac、at、ap？",
+"A14":"decrease 和 develop，一个减少一个发展，de 到底是哪个意思？",
+"A15":"ex- 是“向外”，那 encourage 的 en- 为什么是“往里”？",
+"A16":"connect、collect、correct，con 为什么会变成 col 和 cor？",
+"A17":"overlook 是“俯视”，还是“忽略”？",
+"A18":"translate、transport、transplant，同一个 trans 为什么三种意思？"
+};
+EPS.forEach(function(e){ e.hook = HOOKS[e.id] || ""; });
+
 var EP = null, FAM = {}, WORDS = [], RECALL = [], MIGRATE = [], ROOTS = [];
 var QUESTS = [], TOTALQ = 0, NP = 0, NREC = 0, NMIG = 0;
 var S = { phase:"home", chapter:"root", season:1, i:0, score:0, wrong:[], picked:{} };
@@ -14202,7 +14298,8 @@ function renderHome(){
       s += '<div class="epcard-root">' + esc(e.root) + '</div>';
       s += '<div class="epcard-mean">' + esc(e.mean) + '</div>';
       s += '</div>';
-      s += '<div class="epcard-r"><b>' + e.words.length + '</b>词　拆解<br>' + e.words.length + ' 题</div>';
+      var estMin = Math.max(1, Math.round((e.words.length * 10.6) / 60));
+      s += '<div class="epcard-r"><b>' + e.words.length + '</b>词<br>约 ' + estMin + ' 分钟</div>';
       s += '</div>';
     });
   } else {
@@ -14262,11 +14359,13 @@ function bindChnav(){
 function renderIntro(){
   var s = "";
   s += chnavHTML();
+  var isAff = chapOf(EP) === "affix";
   s += '<div class="center">';
-  s += '<div class="intro-kicker">词 根 拆 解 · 第 ' + EP.id + ' 期</div>';
+  s += '<div class="intro-kicker">' + (isAff ? "词 缀 拆 解" : "词 根 拆 解") + ' · ' + (EP.tag ? EP.tag : ('第 ' + EP.id + ' 期')) + '</div>';
   s += '<div class="intro-h1">' + esc(EP.root) + '</div>';
   s += '<div class="intro-sub">' + esc(EP.sub) + '</div>';
   s += '</div>';
+  if (EP.hook) s += '<div class="intro-hook">' + esc(EP.hook) + '</div>';
   s += '<div class="intro-card"><h3>' + esc(EP.story.h3) + '</h3>';
   EP.story.p.forEach(function(t){ s += '<p>' + t + '</p>'; });
   s += '<div class="rope">';
@@ -14276,9 +14375,10 @@ function renderIntro(){
   s += '</div></div>';
   s += '<div class="intro-card"><h3>这一期你要做的</h3>';
   s += '<p>' + NP + ' 个族内词（按真题频次从高到低）+ ' + NREC + ' 题重点词回顾 + ' + NMIG + ' 题迁移辨析，共 ' + TOTALQ + ' 题。</p>';
+  s += '<p>看一遍约 ' + playMin() + ' 分钟，闯关约 ' + quizMin() + ' 分钟。</p>';
   s += '<p>每题先答拆解，答完还有一刀「趁热一刀」——不计分，但那一刀才是真的记住。</p></div>';
-  s += '<button class="btn" id="play">▶ 先看一遍（像视频那样自动播）</button>';
-  s += '<button class="btn ghost" id="go">✍️ 直接开始闯关（做题）</button>';
+  s += '<button class="btn" id="play">▶ 先看一遍 · ' + playMin() + ' 分钟拆完 ' + NP + ' 个词</button>';
+  s += '<button class="btn ghost" id="go">✍️ 已经会了？直接考我（' + TOTALQ + ' 题）</button>';
   s += '<button class="btn ghost" id="home">← 回到期目录</button>';
   app.innerHTML = s;
   bindChnav();
@@ -14288,8 +14388,10 @@ function renderIntro(){
 }
 
 /* ================= ▶ 演播模式：纯字幕，无人声 ================= */
-var ACTNAME = ["word","split","story","mean","family"];
-var ACTMS = { word:900, split:2000, story:3600, mean:1700, family:2400 };
+var ACTNAME = ["hook","word","split","story","mean","family"];
+var ACTMS = { hook:4200, word:900, split:2000, story:3600, mean:1700, family:2400 };
+function playMin(){ return Math.max(1, Math.round((NP * 10.6) / 60)); }
+function quizMin(){ return Math.max(1, Math.round((TOTALQ * 15) / 60)); }
 var P = { wi:0, act:0, t:null, typer:null, speed:1, paused:false, sound:false };
 
 function playClear(){
@@ -14303,8 +14405,15 @@ function playSchedule(ms){
 function playStep(){
   P.act++;
   if (P.act >= ACTNAME.length){ P.act = 0; P.wi++; }
+  if (P.wi > 0 && P.act === 0) P.act = 1;
   playRender();
   if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]]);
+}
+function playDots(cur){
+  var ds = document.querySelectorAll("#pdots i");
+  for (var i = 0; i < ds.length; i++){
+    ds[i].className = (cur < 0) ? "" : (i < cur ? "done" : (i === cur ? "cur" : ""));
+  }
 }
 function playBoot(){
   playClear();
@@ -14315,6 +14424,7 @@ function playBoot(){
     '<div class="pw" id="pw">' +
       '<div class="pw-top"><span id="ptag"></span><span id="pnum"></span></div>' +
       '<div class="pw-prog"><i id="pbar"></i></div>' +
+      '<div class="pdots" id="pdots"></div>' +
       '<div class="pstage" id="pstage"></div>' +
       '<div class="pctl">' +
         '<button id="pprev">◀ 上一词</button>' +
@@ -14327,11 +14437,11 @@ function playBoot(){
     '</div>');
   document.getElementById("ppause").onclick = playToggle;
   document.getElementById("pprev").onclick = function(){
-    playClear(); P.act = 0; P.wi = Math.max(0, P.wi - 1); playRender(); playSchedule(ACTMS.word);
+    playClear(); P.act = 1; P.wi = Math.max(0, P.wi - 1); playRender(); playSchedule(ACTMS[ACTNAME[P.act]]);
   };
   document.getElementById("pnext").onclick = function(){
-    playClear(); P.act = 0; P.wi++; playRender();
-    if (P.wi < WORDS.length) playSchedule(ACTMS.word);
+    playClear(); P.act = 1; P.wi++; playRender();
+    if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]]);
   };
   document.getElementById("pspeed").onclick = function(){
     P.speed = P.speed === 1 ? 1.6 : 1;
@@ -14342,8 +14452,11 @@ function playBoot(){
     this.textContent = P.sound ? "🔊" : "🔇";
   };
   document.getElementById("pexit").onclick = function(){ playClose(); S.phase = "intro"; render(); };
+  var dh = "";
+  for (var di = 0; di < WORDS.length; di++) dh += "<i></i>";
+  var pdEl = document.getElementById("pdots"); if (pdEl) pdEl.innerHTML = dh;
   playRender();
-  playSchedule(ACTMS.word);
+  playSchedule(ACTMS[ACTNAME[P.act]]);
 }
 function playClose(){
   playClear(); P.paused = false;
@@ -14397,8 +14510,17 @@ function playRender(){
     return;
   }
   var w = WORDS[P.wi], act = ACTNAME[P.act];
+  if (act === "hook"){
+    num.textContent = "提问";
+    bar.style.width = "0%";
+    playDots(-1);
+    st.innerHTML = '<div class="phook">' + esc(EP.hook || "") + '</div>' +
+      '<div class="phooksub">' + WORDS.length + ' 个词，都藏在同一个根里</div>';
+    return;
+  }
   num.textContent = ("0" + (P.wi + 1)).slice(-2) + " / " + WORDS.length;
-  bar.style.width = Math.round((P.wi * ACTNAME.length + P.act) / (WORDS.length * ACTNAME.length) * 100) + "%";
+  bar.style.width = Math.round((P.wi * 5 + P.act) / (WORDS.length * 5 + 1) * 100) + "%";
+  playDots(P.wi);
 
   if (act === "word"){
     st.innerHTML = '<div class="pword">' + esc(w.w) + '</div>' +
