@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>发音自检</title>
+<style>
+body{margin:0;padding:20px 16px 50px;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:#FDF8FA;color:#3A2E33;font-size:16px;line-height:1.7}
+h1{font-size:20px;margin:0 0 6px;color:#a75a75}
+.hint{font-size:13px;color:#8A7A81;margin:0 0 18px}
+.btn{display:block;width:100%;padding:18px;margin:10px 0;font-size:18px;font-family:inherit;
+background:#c2708c;color:#fff;border:none;border-radius:14px;font-weight:600}
+.btn.g{background:#fff;color:#a75a75;border:2px solid #EDD1D8}
+#out{background:#fff;border:2px solid #F0DDE5;border-radius:14px;padding:16px;
+font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.9;white-space:pre-wrap;
+min-height:200px;word-break:break-all;margin-top:16px}
+</style></head><body>
+
+<h1>发音自检</h1>
+<p class="hint">点下面的按钮，把结果截图发我。这个页面只做检查，不改任何东西。</p>
+
+<button class="btn" id="b1">① 播放 education（标准发音）</button>
+<button class="btn g" id="b2">② 检查播放器状态</button>
+<button class="btn g" id="b3">③ 清空缓存并重试</button>
+
+<div id="out">等待操作…</div>
+
+<script>
+var out = document.getElementById("out");
+var lines = [];
+function w(t){ lines.push(t); out.textContent = lines.join("\n"); }
+
+var A = new Audio();
+var cur = "";
+A.onloadeddata = function(){ w("  ✓ 加载完成，时长 " + A.duration.toFixed(2) + " 秒"); };
+A.onplay      = function(){ w("  ▶ 开始播放"); };
+A.onended     = function(){ w("  ■ 播完"); };
+A.onerror     = function(){ w("  ✗ 错误码 " + (A.error ? A.error.code : "?") ); };
+
+var UA = navigator.userAgent;
+w("浏览器标识：");
+w(UA);
+w("");
+w("是否微信/QQ： " + (/MicroMessenger|QQ\//i.test(UA) ? "是 —— 这会导致音频受限" : "否"));
+w("是否 iOS： " + (/iPhone|iPad|iPod/i.test(UA) ? "是" : "否"));
+w("");
+
+document.getElementById("b1").onclick = function(){
+  cur = "education";
+  w("— 播放 " + cur + " —");
+  A.src = "https://dict.youdao.com/dictvoice?audio=" + cur + "&type=2";
+  var pr = A.play();
+  w("  调用 play() …");
+  if (pr && pr.then){
+    pr.then(function(){ w("  ✓ play() 被接受"); })
+      .catch(function(e){ w("  ✗ play() 被拒绝：" + e.name + " — " + e.message); });
+  }
+  setTimeout(function(){
+    w("  1.5秒后：已播 " + A.currentTime.toFixed(2) + " / 时长 " + (A.duration||0).toFixed(2) + "，暂停=" + A.paused);
+    w("");
+  }, 1500);
+};
+
+document.getElementById("b2").onclick = function(){
+  w("— 播放器状态 —");
+  w("  src：" + (A.src||"（空）").replace("https://dict.youdao.com/dictvoice?audio=","").replace("&type=2",""));
+  w("  时长：" + (A.duration||0).toFixed(2));
+  w("  已播：" + A.currentTime.toFixed(2));
+  w("  暂停：" + A.paused);
+  w("  网络状态：" + A.networkState);
+  w("  就绪状态：" + A.readyState);
+  w("  错误：" + (A.error ? "码 " + A.error.code : "无"));
+  w("  音量：" + A.volume + "  静音：" + A.muted);
+  w("");
+};
+
+document.getElementById("b3").onclick = function(){
+  w("— 清缓存重试 —");
+  A.pause();
+  A.removeAttribute("src");
+  A.load();
+  setTimeout(function(){
+    A.src = "https://dict.youdao.com/dictvoice?audio=product&type=2&t=" + Date.now();
+    A.play().then(function(){ w("  ✓ 重试播放被接受"); }).catch(function(e){ w("  ✗ " + e.name + " — " + e.message); });
+    setTimeout(function(){ w("  已播 " + A.currentTime.toFixed(2) + " 秒"); w(""); }, 1500);
+  }, 300);
+};
+</script>
+</body></html>
