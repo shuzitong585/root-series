@@ -179,6 +179,9 @@ body.playing .foot{display:none}
 .pctl button.pri{background:var(--pink);border-color:var(--pink);color:#fff;min-width:88px;font-weight:600}
 .pctl button:hover{transform:translateY(-1px)}
 .pctl button.pri:hover{background:var(--pink-d)}
+.pctl button.on{background:var(--pink-xl);border-color:var(--pink)}
+@keyframes muspulse{0%,100%{opacity:1}50%{opacity:.55}}
+.pctl button.on{animation:muspulse 2.4s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -14396,6 +14399,96 @@ function playMin(){ return Math.max(1, Math.round((NP * 10.6) / 60)); }
 function quizMin(){ return Math.max(1, Math.round((TOTALQ * 15) / 60)); }
 var P = { wi:0, act:0, t:null, typer:null, speed:1, paused:false, sound:false };
 
+/* ===== 背景音乐（Web Audio 实时合成，无音频文件、无版权问题） ===== */
+var BG = { ctx:null, on:false, master:null, duck:null, timer:null, step:0, nextT:0, restoreT:null };
+function bgSupported(){ return !!(window.AudioContext || window.webkitAudioContext); }
+function bgInit(){
+  if (BG.ctx) return BG.ctx;
+  var AC = window.AudioContext || window.webkitAudioContext;
+  BG.ctx = new AC();
+  BG.master = BG.ctx.createGain();
+  BG.master.gain.value = 0;
+  BG.duck = BG.ctx.createGain();
+  BG.duck.gain.value = 1;
+  var lp = BG.ctx.createBiquadFilter();
+  lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.4;
+  BG.master.connect(BG.duck);
+  BG.duck.connect(lp);
+  lp.connect(BG.ctx.destination);
+  return BG.ctx;
+}
+/* 一个音：正弦 + 微弱的二次谐波，带柔和的起音和长衰减，像钢琴泛音 */
+function bgNote(freq, t, dur, vol){
+  var c = BG.ctx, o = c.createOscillator(), g = c.createGain(), o2 = c.createOscillator(), g2 = c.createGain();
+  o.type = "sine"; o.frequency.value = freq;
+  o2.type = "sine"; o2.frequency.value = freq * 2;
+  g2.gain.value = 0.16;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.035);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o2.connect(g2); g2.connect(g); o.connect(g); g.connect(BG.master);
+  o.start(t); o.stop(t + dur + 0.05);
+  o2.start(t); o2.stop(t + dur + 0.05);
+}
+/* 和弦进行：Am - F - C - G，四小节循环，每小节 3.2 秒 */
+var BG_CHORDS = [
+  [220.00, 261.63, 329.63],
+  [174.61, 220.00, 261.63],
+  [196.00, 261.63, 329.63],
+  [196.00, 246.94, 293.66]
+];
+var BG_LEAD = [659.25, 587.33, 523.25, 493.88, 523.25, 587.33, 659.25, 783.99];
+function bgTick(){
+  if (!BG.on) return;
+  var now = BG.ctx.currentTime;
+  while (BG.nextT < now + 0.6){
+    var bar = Math.floor(BG.step / 4) % 4;
+    var beat = BG.step % 4;
+    var t = BG.nextT;
+    if (beat === 0){
+      BG_CHORDS[bar].forEach(function(f, i){ bgNote(f * (i === 2 ? 2 : 1), t + i * 0.04, 3.4, 0.052); });
+    } else if (beat === 2){
+      bgNote(BG_CHORDS[bar][0] * 2, t, 1.8, 0.022);
+    }
+    if (BG.step % 8 === 4){
+      bgNote(BG_LEAD[(Math.floor(BG.step / 8) * 3) % BG_LEAD.length], t, 2.2, 0.018);
+    }
+    BG.step++;
+    BG.nextT += 0.8;
+  }
+}
+function bgStart(){
+  if (!bgSupported()) return false;
+  bgInit();
+  if (BG.ctx.state === "suspended") BG.ctx.resume();
+  BG.on = true; BG.step = 0; BG.nextT = BG.ctx.currentTime + 0.15;
+  BG.master.gain.cancelScheduledValues(BG.ctx.currentTime);
+  BG.master.gain.setValueAtTime(0.0001, BG.ctx.currentTime);
+  BG.master.gain.exponentialRampToValueAtTime(0.9, BG.ctx.currentTime + 2.2);
+  if (BG.timer) clearInterval(BG.timer);
+  bgTick();
+  BG.timer = setInterval(bgTick, 250);
+  return true;
+}
+function bgStop(){
+  BG.on = false;
+  if (BG.timer){ clearInterval(BG.timer); BG.timer = null; }
+  if (BG.ctx && BG.master){
+    var t = BG.ctx.currentTime;
+    BG.master.gain.cancelScheduledValues(t);
+    BG.master.gain.setValueAtTime(BG.master.gain.value || 0.0001, t);
+    BG.master.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
+  }
+}
+/* 念单词时把音乐压低，念完抬回来 */
+function bgDuck(on){
+  if (!BG.on || !BG.duck) return;
+  var t = BG.ctx.currentTime;
+  BG.duck.gain.cancelScheduledValues(t);
+  BG.duck.gain.setValueAtTime(BG.duck.gain.value, t);
+  BG.duck.gain.linearRampToValueAtTime(on ? 0.28 : 1, t + (on ? 0.18 : 0.9));
+}
+
 function playClear(){
   if (P.t){ clearTimeout(P.t); P.t = null; }
   if (P.typer){ clearInterval(P.typer); P.typer = null; }
@@ -14420,6 +14513,8 @@ function playDots(cur){
 function playBoot(){
   playClear();
   P.wi = 0; P.act = 0; P.paused = false; P.sound = false;
+  var wantBgm = false;
+  try { wantBgm = (localStorage.getItem("rs_bgm") === "1"); } catch(e){}
   if (document.getElementById("pw")) document.getElementById("pw").remove();
   document.body.classList.add("playing");
   document.body.insertAdjacentHTML("beforeend",
@@ -14434,6 +14529,7 @@ function playBoot(){
         '<button id="pnext">下一词 ▶</button>' +
         '<button id="pspeed">1×</button>' +
         '<button id="psound">🔇</button>' +
+        (bgSupported() ? '<button id="pmusic" title="背景音乐">🎵</button>' : '') +
         '<button id="pexit">✕</button>' +
       '</div>' +
     '</div>');
@@ -14453,6 +14549,21 @@ function playBoot(){
     P.sound = !P.sound;
     this.textContent = P.sound ? "🔊" : "🔇";
   };
+  var mb = document.getElementById("pmusic");
+  if (mb){
+    if (wantBgm && bgStart()){ mb.classList.add("on"); }
+    mb.onclick = function(){
+      if (BG.on){
+        bgStop(); mb.classList.remove("on");
+        try { localStorage.setItem("rs_bgm", "0"); } catch(e){}
+      } else {
+        if (bgStart()){
+          mb.classList.add("on");
+          try { localStorage.setItem("rs_bgm", "1"); } catch(e){}
+        }
+      }
+    };
+  }
   document.getElementById("pexit").onclick = function(){ playClose(); S.phase = "intro"; render(); };
   var dh = "";
   for (var di = 0; di < WORDS.length; di++) dh += "<i></i>";
@@ -14462,6 +14573,7 @@ function playBoot(){
 }
 function playClose(){
   playClear(); P.paused = false;
+  bgStop();
   if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch(e){} }
   var el = document.getElementById("pw"); if (el) el.remove();
   document.body.classList.remove("playing");
@@ -14481,8 +14593,14 @@ function speakWord(t){
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(t);
     u.lang = "en-US"; u.rate = 0.88;
+    bgDuck(true);
+    if (BG.restoreT) clearTimeout(BG.restoreT);
+    /* 兜底：onend 在部分设备不触发，按词长估算时间强制恢复 */
+    BG.restoreT = setTimeout(function(){ bgDuck(false); }, Math.max(1200, t.length * 220));
+    u.onend = function(){ if (BG.restoreT) clearTimeout(BG.restoreT); bgDuck(false); };
+    u.onerror = function(){ if (BG.restoreT) clearTimeout(BG.restoreT); bgDuck(false); };
     window.speechSynthesis.speak(u);
-  } catch(e){}
+  } catch(e){ bgDuck(false); }
 }
 function playType(txt){
   var el = document.getElementById("pstory");
