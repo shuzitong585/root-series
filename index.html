@@ -14471,14 +14471,24 @@ function bgTick(){
 function bgStart(){
   if (!bgSupported()) return false;
   bgInit();
-  if (BG.ctx.state === "suspended") BG.ctx.resume();
-  BG.on = true; BG.step = 0; BG.nextT = BG.ctx.currentTime + 0.15;
-  BG.master.gain.cancelScheduledValues(BG.ctx.currentTime);
-  BG.master.gain.setValueAtTime(0.0001, BG.ctx.currentTime);
-  BG.master.gain.exponentialRampToValueAtTime(0.62, BG.ctx.currentTime + 2.2);
-  if (BG.timer) clearInterval(BG.timer);
-  bgTick();
-  BG.timer = setInterval(bgTick, 250);
+  /* iOS / 部分安卓：AudioContext 被挂起，必须等 resume 真的完成再排音符 */
+  var go = function(){
+    BG.on = true; BG.step = 0; BG.nextT = BG.ctx.currentTime + 0.12;
+    var t0 = BG.ctx.currentTime;
+    BG.master.gain.cancelScheduledValues(t0);
+    BG.master.gain.setValueAtTime(0.0001, t0);
+    BG.master.gain.exponentialRampToValueAtTime(0.62, t0 + 1.6);
+    if (BG.timer) clearInterval(BG.timer);
+    bgTick();
+    BG.timer = setInterval(bgTick, 250);
+  };
+  if (BG.ctx.state === "suspended"){
+    var pr = BG.ctx.resume();
+    if (pr && pr.then) pr.then(go).catch(function(){ go(); });
+    else go();
+  } else {
+    go();
+  }
   return true;
 }
 function bgStop(){
