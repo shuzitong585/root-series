@@ -14388,7 +14388,7 @@ function renderIntro(){
   app.innerHTML = s;
   bindChnav();
   document.getElementById("go").onclick = function(){ resetRun(); S.phase = "quiz"; render(); };
-  document.getElementById("play").onclick = playBoot;
+  document.getElementById("play").onclick = function(){ auUnlock(); playBoot(); };
   document.getElementById("home").onclick = function(){ S.phase = "home"; render(); };
 }
 
@@ -14399,73 +14399,28 @@ function playMin(){ return Math.max(1, Math.round((NP * 10.6) / 60)); }
 function quizMin(){ return Math.max(1, Math.round((TOTALQ * 15) / 60)); }
 var P = { wi:0, act:0, t:null, typer:null, speed:1, paused:false, sound:false };
 
-/* ===== 真人发音（有道词典音频 + IndexedDB 缓存；拿不到就保持安静，不用机器音） ===== */
-var AU = { el:null, db:null, trying:false };
+/* ===== 真人发音（有道词典音频；拿不到就保持安静，绝不用机器音） ===== */
+var AU = { el:null, trying:false };
 function auEl(){
   if (!AU.el){
     AU.el = new Audio();
-    AU.el.preload = "none";
+    AU.el.preload = "auto";
   }
   return AU.el;
 }
-function auDB(){
-  if (AU.db || AU.db === false) return Promise.resolve(AU.db);
-  return new Promise(function(res){
-    try {
-      var rq = indexedDB.open("rs_tts", 1);
-      rq.onupgradeneeded = function(e){ e.target.result.createObjectStore("mp3"); };
-      rq.onsuccess = function(e){ AU.db = e.target.result; res(AU.db); };
-      rq.onerror = function(){ AU.db = false; res(false); };
-    } catch(e){ AU.db = false; res(false); }
-  });
-}
-function auGet(word){
-  return auDB().then(function(db){
-    if (!db) return null;
-    return new Promise(function(res){
-      try {
-        var tx = db.transaction("mp3").objectStore("mp3").get(word);
-        tx.onsuccess = function(){ res(tx.result || null); };
-        tx.onerror = function(){ res(null); };
-      } catch(e){ res(null); }
-    });
-  });
-}
-function auPut(word, blob){
-  return auDB().then(function(db){
-    if (!db) return;
-    try { db.transaction("mp3","readwrite").objectStore("mp3").put(blob, word); } catch(e){}
-  });
-}
-/* 播放：先查缓存，没有就请求网络，存缓存再播；失败保持安静 */
+/* 播放：直接把 URL 交给 audio 元素（不走 fetch，避免被跨域拦截）
+   注意：有道接口不返回 CORS 头，fetch/XHR 读不了，但 <audio> 直接播不受此限 */
 function auSpeak(word){
-  if (AU.trying){ try { auEl().pause(); } catch(e){} }
-  AU.trying = true;
-  return auGet(word).then(function(blob){
-    var play = function(b){
-      try {
-        var url = URL.createObjectURL(b);
-        var el = auEl();
-        el.src = url;
-        el.onended = el.onerror = function(){
-          AU.trying = false;
-          bgDuck(false);
-          setTimeout(function(){ try { URL.revokeObjectURL(url); } catch(e){} }, 3000);
-        };
-        bgDuck(true);
-        el.play().catch(function(){ AU.trying = false; bgDuck(false); });
-      } catch(e){ AU.trying = false; bgDuck(false); }
-    };
-    if (blob){ play(blob); return; }
-    fetch("https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(word) + "&type=2")
-      .then(function(r){ if (!r.ok) throw 0; return r.blob(); })
-      .then(function(b){
-        AU.trying = false;
-        auPut(word, b);
-        play(b);
-      })
-      .catch(function(){ AU.trying = false; bgDuck(false); });
-  });
+  try {
+    var el = auEl();
+    el.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(word) + "&type=2";
+    AU.trying = true;
+    el.onended = function(){ AU.trying = false; bgDuck(false); };
+    el.onerror = function(){ AU.trying = false; bgDuck(false); };
+    bgDuck(true);
+    var pr = el.play();
+    if (pr && pr.catch) pr.catch(function(){ AU.trying = false; bgDuck(false); });
+  } catch(e){ bgDuck(false); }
 }
 
 /* ===== 背景音乐（Web Audio 实时合成，无音频文件、无版权问题） ===== */
@@ -14644,6 +14599,12 @@ function playBoot(){
   };
   var sb0 = document.getElementById("psound");
   if (sb0) sb0.textContent = P.sound ? "🔊" : "🔇";
+  /* 进播放模式就后台预取整期发音 */
+  try {
+    P.sound = P.sound || false;
+    auUnlock();
+    if (WORDS.length) auPrefetch(WORDS.map(function(x){ return x.w; }));
+  } catch(e){}
   var mb = document.getElementById("pmusic");
   if (mb){
     if (wantBgm && bgStart()){ mb.classList.add("on"); }
@@ -14682,6 +14643,49 @@ function playToggle(){
     P.paused = true; b.textContent = "继续"; playClear();
   }
 }
+/* 在用户点击的瞬间「解锁」音频播放权限：
+   手机浏览器只允许在用户操作后立即播放声音，之后代码自己触发的播放会被静默拦截。
+   做法是趁点击这一刻放一段极短的静音音频，把这个 Audio 元素标记为「已获许可」，
+   后续自动播放换 src 就能出声。 */
+function auUnlock(){
+  AU.unlockAt = Date.now();
+  try {
+    var el = auEl();
+    if (AU.trying) return;   /* 正在播词就不要打断 */
+    /* 44 字节的静音 wav，几乎瞬间播完 */
+    el.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";
+    var pr = el.play();
+    if (pr && pr.catch) pr.catch(function(){});
+    setTimeout(function(){ try { if (!AU.trying) el.pause(); } catch(e){} }, 80);
+  } catch(e){}
+  /* 同时解锁 Web Audio 上下文 */
+  try { if (BG.ctx && BG.ctx.state === "suspended") BG.ctx.resume(); } catch(e){}
+}
+
+/* 预取整期发音：用隐藏的 audio 元素逐个加载，让浏览器把它放进缓存。
+   不能用 fetch（有道不返回跨域头，读不到内容），但 <audio preload> 可以正常拉取。 */
+function auPrefetch(words){
+  var list = words.slice(0, 20);
+  var i = 0;
+  function next(){
+    if (i >= list.length) return;
+    var w = list[i++];
+    try {
+      var a = new Audio();
+      a.preload = "auto";
+      a.muted = true;
+      a.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(w) + "&type=2";
+      a.onloadeddata = a.onerror = function(){
+        try { a.src = ""; } catch(e){}
+        next();
+      };
+      setTimeout(next, 2500);  /* 兜底，避免卡住 */
+      a.load();
+    } catch(e){ next(); }
+  }
+  next();
+}
+
 function speakWord(t){
   if (!P.sound) return;
   auSpeak(t);
