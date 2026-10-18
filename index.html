@@ -14399,25 +14399,74 @@ function playMin(){ return Math.max(1, Math.round((NP * 10.6) / 60)); }
 function quizMin(){ return Math.max(1, Math.round((TOTALQ * 15) / 60)); }
 var P = { wi:0, act:0, t:null, typer:null, speed:1, paused:false, sound:false };
 
-/* 预加载语音列表：手机上首次朗读常因语音列表未就绪而静默失败 */
-var VOICES = [];
-function loadVoices(){
-  if (!window.speechSynthesis || !window.speechSynthesis.getVoices) return;
-  try {
-    VOICES = window.speechSynthesis.getVoices() || [];
-    if (VOICES.length){
-      var en = VOICES.filter(function(v){ return /^en/i.test(v.lang); });
-      if (en.length) P.enVoice = en.filter(function(v){ return /en-US/i.test(v.lang); })[0] || en[0];
-    }
-  } catch(e){}
+/* ===== 真人发音（有道词典音频 + IndexedDB 缓存；拿不到就保持安静，不用机器音） ===== */
+var AU = { el:null, db:null, trying:false };
+function auEl(){
+  if (!AU.el){
+    AU.el = new Audio();
+    AU.el.preload = "none";
+  }
+  return AU.el;
 }
-loadVoices();
-if (window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined){
-  window.speechSynthesis.onvoiceschanged = loadVoices;
+function auDB(){
+  if (AU.db || AU.db === false) return Promise.resolve(AU.db);
+  return new Promise(function(res){
+    try {
+      var rq = indexedDB.open("rs_tts", 1);
+      rq.onupgradeneeded = function(e){ e.target.result.createObjectStore("mp3"); };
+      rq.onsuccess = function(e){ AU.db = e.target.result; res(AU.db); };
+      rq.onerror = function(){ AU.db = false; res(false); };
+    } catch(e){ AU.db = false; res(false); }
+  });
 }
-/* 有些浏览器要求先有一次用户手势才允许朗读，第一次点击时补一次 */
-document.addEventListener("touchend", loadVoices, {once:true, passive:true});
-document.addEventListener("click", loadVoices, {once:true});
+function auGet(word){
+  return auDB().then(function(db){
+    if (!db) return null;
+    return new Promise(function(res){
+      try {
+        var tx = db.transaction("mp3").objectStore("mp3").get(word);
+        tx.onsuccess = function(){ res(tx.result || null); };
+        tx.onerror = function(){ res(null); };
+      } catch(e){ res(null); }
+    });
+  });
+}
+function auPut(word, blob){
+  return auDB().then(function(db){
+    if (!db) return;
+    try { db.transaction("mp3","readwrite").objectStore("mp3").put(blob, word); } catch(e){}
+  });
+}
+/* 播放：先查缓存，没有就请求网络，存缓存再播；失败保持安静 */
+function auSpeak(word){
+  if (AU.trying){ try { auEl().pause(); } catch(e){} }
+  AU.trying = true;
+  return auGet(word).then(function(blob){
+    var play = function(b){
+      try {
+        var url = URL.createObjectURL(b);
+        var el = auEl();
+        el.src = url;
+        el.onended = el.onerror = function(){
+          AU.trying = false;
+          bgDuck(false);
+          setTimeout(function(){ try { URL.revokeObjectURL(url); } catch(e){} }, 3000);
+        };
+        bgDuck(true);
+        el.play().catch(function(){ AU.trying = false; bgDuck(false); });
+      } catch(e){ AU.trying = false; bgDuck(false); }
+    };
+    if (blob){ play(blob); return; }
+    fetch("https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(word) + "&type=2")
+      .then(function(r){ if (!r.ok) throw 0; return r.blob(); })
+      .then(function(b){
+        AU.trying = false;
+        auPut(word, b);
+        play(b);
+      })
+      .catch(function(){ AU.trying = false; bgDuck(false); });
+  });
+}
 
 /* ===== 背景音乐（Web Audio 实时合成，无音频文件、无版权问题） ===== */
 var BG = { ctx:null, on:false, master:null, duck:null, timer:null, step:0, nextT:0, restoreT:null };
@@ -14620,7 +14669,7 @@ function playBoot(){
 function playClose(){
   playClear(); P.paused = false;
   bgStop();
-  if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch(e){} }
+  try { if (AU.el) { AU.el.pause(); AU.el.src = ""; } } catch(e){}
   var el = document.getElementById("pw"); if (el) el.remove();
   document.body.classList.remove("playing");
 }
@@ -14634,34 +14683,8 @@ function playToggle(){
   }
 }
 function speakWord(t){
-  if (!P.sound || !window.speechSynthesis) return;
-  try {
-    /* 不在 cancel 之后立刻 speak：部分浏览器（含 iOS Safari / 安卓 WebView）
-       会把紧随 cancel 的 speak 静默丢弃，表现为自动播放时永远不发音，
-       但手动点按钮时（有间隔）又能正常读。这里延后一帧再发。 */
-    try { if (window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel(); } catch(e){}
-    /* 语音列表为空说明引擎还没就绪，此时 speak 会被静默丢弃 —— 先拉一次 */
-    if (!VOICES.length) loadVoices();
-    var fire = function(){
-      try {
-        var u = new SpeechSynthesisUtterance(t);
-        u.lang = "en-US"; u.rate = 0.88; u.volume = 1;
-        if (P.enVoice) u.voice = P.enVoice;
-        else if (VOICES.length){
-          for (var vi = 0; vi < VOICES.length; vi++){
-            if (/^en/i.test(VOICES[vi].lang)){ u.voice = VOICES[vi]; break; }
-          }
-        }
-        bgDuck(true);
-        if (BG.restoreT) clearTimeout(BG.restoreT);
-        BG.restoreT = setTimeout(function(){ bgDuck(false); }, Math.max(1400, t.length * 240));
-        u.onend = function(){ if (BG.restoreT) clearTimeout(BG.restoreT); bgDuck(false); };
-        u.onerror = function(){ if (BG.restoreT) clearTimeout(BG.restoreT); bgDuck(false); };
-        window.speechSynthesis.speak(u);
-      } catch(e){ bgDuck(false); }
-    };
-    setTimeout(fire, 60);
-  } catch(e){ bgDuck(false); }
+  if (!P.sound) return;
+  auSpeak(t);
 }
 function playType(txt){
   var el = document.getElementById("pstory");
@@ -14896,13 +14919,7 @@ function bindSpeak(){
   Array.prototype.forEach.call(document.querySelectorAll("[data-speak]"), function(el){
     el.onclick = function(){
       var w = el.getAttribute("data-speak");
-      if (!window.speechSynthesis) return;
-      try {
-        window.speechSynthesis.cancel();
-        var u = new SpeechSynthesisUtterance(w);
-        u.lang = "en-US"; u.rate = 0.9;
-        window.speechSynthesis.speak(u);
-      } catch(e){}
+      auSpeak(w);
     };
   });
 }
