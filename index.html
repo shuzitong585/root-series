@@ -14413,13 +14413,15 @@ function auEl(){
 function auSpeak(word){
   try {
     var el = auEl();
+    var seq = (AU.seq = (AU.seq || 0) + 1);
+    el.onended = el.onerror = null;   /* 先摘掉上一轮回调，避免旧事件干扰新播放 */
     el.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(word) + "&type=2";
     AU.trying = true;
-    el.onended = function(){ AU.trying = false; bgDuck(false); };
-    el.onerror = function(){ AU.trying = false; bgDuck(false); };
+    el.onended = function(){ if (seq !== AU.seq) return; AU.trying = false; bgDuck(false); };
+    el.onerror = function(){ if (seq !== AU.seq) return; AU.trying = false; bgDuck(false); };
     bgDuck(true);
     var pr = el.play();
-    if (pr && pr.catch) pr.catch(function(){ AU.trying = false; bgDuck(false); });
+    if (pr && pr.catch) pr.catch(function(){ if (seq === AU.seq){ AU.trying = false; bgDuck(false); } });
   } catch(e){ bgDuck(false); }
 }
 
@@ -14648,15 +14650,14 @@ function playToggle(){
    做法是趁点击这一刻放一段极短的静音音频，把这个 Audio 元素标记为「已获许可」，
    后续自动播放换 src 就能出声。 */
 function auUnlock(){
-  AU.unlockAt = Date.now();
+  /* 用一个独立的临时元素解锁，绝不碰主播放器（AU.el 一旦被静音片段占用，
+     后续换 src 在部分手机上会卡住不出声） */
   try {
-    var el = auEl();
-    if (AU.trying) return;   /* 正在播词就不要打断 */
-    /* 44 字节的静音 wav，几乎瞬间播完 */
-    el.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";
-    var pr = el.play();
+    var u = new Audio();
+    u.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";
+    var pr = u.play();
     if (pr && pr.catch) pr.catch(function(){});
-    setTimeout(function(){ try { if (!AU.trying) el.pause(); } catch(e){} }, 80);
+    setTimeout(function(){ try { u.pause(); u.src = ""; } catch(e){} }, 100);
   } catch(e){}
   /* 同时解锁 Web Audio 上下文 */
   try { if (BG.ctx && BG.ctx.state === "suspended") BG.ctx.resume(); } catch(e){}
