@@ -179,9 +179,6 @@ body.playing .foot{display:none}
 .pctl button.pri{background:var(--pink);border-color:var(--pink);color:#fff;min-width:88px;font-weight:600}
 .pctl button:hover{transform:translateY(-1px)}
 .pctl button.pri:hover{background:var(--pink-d)}
-.pctl button.on{background:var(--pink-xl);border-color:var(--pink)}
-@keyframes muspulse{0%,100%{opacity:1}50%{opacity:.55}}
-.pctl button.on{animation:muspulse 2.4s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -14388,153 +14385,16 @@ function renderIntro(){
   app.innerHTML = s;
   bindChnav();
   document.getElementById("go").onclick = function(){ resetRun(); S.phase = "quiz"; render(); };
-  document.getElementById("play").onclick = function(){ auUnlock(); playBoot(); };
+  document.getElementById("play").onclick = playBoot;
   document.getElementById("home").onclick = function(){ S.phase = "home"; render(); };
 }
 
 /* ================= ▶ 演播模式：纯字幕，无人声 ================= */
 var ACTNAME = ["hook","word","split","story","mean","family"];
-var ACTMS = { hook:4200, word:1600, split:2000, story:3600, mean:1700, family:2400 };
+var ACTMS = { hook:4200, word:900, split:2000, story:3600, mean:1700, family:2400 };
 function playMin(){ return Math.max(1, Math.round((NP * 10.6) / 60)); }
 function quizMin(){ return Math.max(1, Math.round((TOTALQ * 15) / 60)); }
 var P = { wi:0, act:0, t:null, typer:null, speed:1, paused:false, sound:false };
-
-/* ===== 真人发音（有道词典音频；拿不到就保持安静，绝不用机器音） ===== */
-var AU = { el:null, trying:false };
-function auEl(){
-  if (!AU.el){
-    AU.el = new Audio();
-    AU.el.preload = "auto";
-  }
-  return AU.el;
-}
-/* 播放：直接把 URL 交给 audio 元素（不走 fetch，避免被跨域拦截）
-   注意：有道接口不返回 CORS 头，fetch/XHR 读不了，但 <audio> 直接播不受此限 */
-function auSpeak(word){
-  try {
-    var el = auEl();
-    var seq = (AU.seq = (AU.seq || 0) + 1);
-    el.onended = el.onerror = null;   /* 先摘掉上一轮回调，避免旧事件干扰新播放 */
-    el.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(word) + "&type=2";
-    AU.trying = true;
-    el.onended = function(){ if (seq !== AU.seq) return; AU.trying = false; bgDuck(false); };
-    el.onerror = function(){ if (seq !== AU.seq) return; AU.trying = false; bgDuck(false); };
-    bgDuck(true);
-    var pr = el.play();
-    if (pr && pr.catch) pr.catch(function(){ if (seq === AU.seq){ AU.trying = false; bgDuck(false); } });
-  } catch(e){ bgDuck(false); }
-}
-
-/* ===== 背景音乐（Web Audio 实时合成，无音频文件、无版权问题） ===== */
-var BG = { ctx:null, on:false, master:null, duck:null, timer:null, step:0, nextT:0, restoreT:null };
-function bgSupported(){ return !!(window.AudioContext || window.webkitAudioContext); }
-function bgInit(){
-  if (BG.ctx) return BG.ctx;
-  var AC = window.AudioContext || window.webkitAudioContext;
-  BG.ctx = new AC();
-  BG.master = BG.ctx.createGain();
-  BG.master.gain.value = 0;
-  BG.duck = BG.ctx.createGain();
-  BG.duck.gain.value = 1;
-  var lp = BG.ctx.createBiquadFilter();
-  lp.type = "lowpass"; lp.frequency.value = 3600; lp.Q.value = 0.4;
-  /* 轻微高架补偿：手机小喇叭低频弱，抬一点中高频让人耳更容易感知 */
-  var hs = BG.ctx.createBiquadFilter();
-  hs.type = "highshelf"; hs.frequency.value = 1400; hs.gain.value = 3.5;
-  BG.master.connect(BG.duck);
-  BG.duck.connect(lp);
-  lp.connect(hs);
-  hs.connect(BG.ctx.destination);
-  return BG.ctx;
-}
-/* 一个音：正弦 + 微弱的二次谐波，带柔和的起音和长衰减，像钢琴泛音 */
-function bgNote(freq, t, dur, vol){
-  var c = BG.ctx, o = c.createOscillator(), g = c.createGain(), o2 = c.createOscillator(), g2 = c.createGain();
-  o.type = "sine"; o.frequency.value = freq;
-  o2.type = "sine"; o2.frequency.value = freq * 2;
-  g2.gain.value = 0.16;
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(vol, t + 0.12);
-  g.gain.setValueAtTime(vol, t + Math.max(0.13, dur * 0.35));
-  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-  o2.connect(g2); g2.connect(g); o.connect(g); g.connect(BG.master);
-  o.start(t); o.stop(t + dur + 0.05);
-  o2.start(t); o2.stop(t + dur + 0.05);
-}
-/* 和弦进行：Am - F - C - G，四小节循环，每小节 3.2 秒 */
-var BG_CHORDS = [
-  [220.00, 261.63, 329.63],
-  [174.61, 220.00, 261.63],
-  [196.00, 261.63, 329.63],
-  [196.00, 246.94, 293.66]
-];
-var BG_LEAD = [659.25, 587.33, 523.25, 493.88, 523.25, 587.33, 659.25, 783.99];
-function bgTick(){
-  if (!BG.on) return;
-  var now = BG.ctx.currentTime;
-  while (BG.nextT < now + 0.6){
-    var bar = Math.floor(BG.step / 4) % 4;
-    var beat = BG.step % 4;
-    var t = BG.nextT;
-    if (beat === 0){
-      /* 和弦：起音柔和、拖满整小节，避免声音断成一块一块 */
-      BG_CHORDS[bar].forEach(function(f, i){ bgNote(f * (i === 2 ? 2 : 1), t + i * 0.05, 4.2, 0.10); });
-      bgNote(BG_CHORDS[bar][0] / 2, t, 4.0, 0.13);
-    } else {
-      /* 中间两拍补一层和弦余韵，保持音色连续 */
-      bgNote(BG_CHORDS[bar][1] * 2, t, 2.6, 0.045);
-    }
-    if (beat === 2){
-      bgNote(BG_CHORDS[bar][2] * 2, t, 2.2, 0.05);
-    }
-    if (BG.step % 8 === 4){
-      bgNote(BG_LEAD[(Math.floor(BG.step / 8) * 3) % BG_LEAD.length], t, 3.0, 0.038);
-    }
-    BG.step++;
-    BG.nextT += 0.8;
-  }
-}
-function bgStart(){
-  if (!bgSupported()) return false;
-  bgInit();
-  /* iOS / 部分安卓：AudioContext 被挂起，必须等 resume 真的完成再排音符 */
-  var go = function(){
-    BG.on = true; BG.step = 0; BG.nextT = BG.ctx.currentTime + 0.12;
-    var t0 = BG.ctx.currentTime;
-    BG.master.gain.cancelScheduledValues(t0);
-    BG.master.gain.setValueAtTime(0.0001, t0);
-    BG.master.gain.exponentialRampToValueAtTime(0.62, t0 + 1.6);
-    if (BG.timer) clearInterval(BG.timer);
-    bgTick();
-    BG.timer = setInterval(bgTick, 250);
-  };
-  if (BG.ctx.state === "suspended"){
-    var pr = BG.ctx.resume();
-    if (pr && pr.then) pr.then(go).catch(function(){ go(); });
-    else go();
-  } else {
-    go();
-  }
-  return true;
-}
-function bgStop(){
-  BG.on = false;
-  if (BG.timer){ clearInterval(BG.timer); BG.timer = null; }
-  if (BG.ctx && BG.master){
-    var t = BG.ctx.currentTime;
-    BG.master.gain.cancelScheduledValues(t);
-    BG.master.gain.setValueAtTime(BG.master.gain.value || 0.0001, t);
-    BG.master.gain.exponentialRampToValueAtTime(0.0001, t + 0.7);
-  }
-}
-/* 念单词时把音乐压低，念完抬回来 */
-function bgDuck(on){
-  if (!BG.on || !BG.duck) return;
-  var t = BG.ctx.currentTime;
-  BG.duck.gain.cancelScheduledValues(t);
-  BG.duck.gain.setValueAtTime(BG.duck.gain.value, t);
-  BG.duck.gain.linearRampToValueAtTime(on ? 0.28 : 1, t + (on ? 0.18 : 0.9));
-}
 
 function playClear(){
   if (P.t){ clearTimeout(P.t); P.t = null; }
@@ -14548,9 +14408,8 @@ function playStep(){
   P.act++;
   if (P.act >= ACTNAME.length){ P.act = 0; P.wi++; }
   if (P.wi > 0 && P.act === 0) P.act = 1;
-  try { playRender(); } catch(e){}
-  /* 无论渲染过程出什么问题，都必须续上下一格，否则整个播放会停住 */
-  if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]] || 1500);
+  playRender();
+  if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]]);
 }
 function playDots(cur){
   var ds = document.querySelectorAll("#pdots i");
@@ -14560,11 +14419,7 @@ function playDots(cur){
 }
 function playBoot(){
   playClear();
-  P.wi = 0; P.act = 0; P.paused = false;
-  P.sound = true;
-  try { if (localStorage.getItem("rs_sound") === "0") P.sound = false; } catch(e){}
-  var wantBgm = false;
-  try { wantBgm = (localStorage.getItem("rs_bgm") === "1"); } catch(e){}
+  P.wi = 0; P.act = 0; P.paused = false; P.sound = false;
   if (document.getElementById("pw")) document.getElementById("pw").remove();
   document.body.classList.add("playing");
   document.body.insertAdjacentHTML("beforeend",
@@ -14579,7 +14434,6 @@ function playBoot(){
         '<button id="pnext">下一词 ▶</button>' +
         '<button id="pspeed">1×</button>' +
         '<button id="psound">🔇</button>' +
-        (bgSupported() ? '<button id="pmusic" title="背景音乐">🎵</button>' : '') +
         '<button id="pexit">✕</button>' +
       '</div>' +
     '</div>');
@@ -14598,31 +14452,7 @@ function playBoot(){
   document.getElementById("psound").onclick = function(){
     P.sound = !P.sound;
     this.textContent = P.sound ? "🔊" : "🔇";
-    try { localStorage.setItem("rs_sound", P.sound ? "1" : "0"); } catch(e){}
   };
-  var sb0 = document.getElementById("psound");
-  if (sb0) sb0.textContent = P.sound ? "🔊" : "🔇";
-  /* 进播放模式就后台预取整期发音 */
-  try {
-    P.sound = P.sound || false;
-    auUnlock();
-    if (WORDS.length) auPrefetch(WORDS.map(function(x){ return x.w; }));
-  } catch(e){}
-  var mb = document.getElementById("pmusic");
-  if (mb){
-    if (wantBgm && bgStart()){ mb.classList.add("on"); }
-    mb.onclick = function(){
-      if (BG.on){
-        bgStop(); mb.classList.remove("on");
-        try { localStorage.setItem("rs_bgm", "0"); } catch(e){}
-      } else {
-        if (bgStart()){
-          mb.classList.add("on");
-          try { localStorage.setItem("rs_bgm", "1"); } catch(e){}
-        }
-      }
-    };
-  }
   document.getElementById("pexit").onclick = function(){ playClose(); S.phase = "intro"; render(); };
   var dh = "";
   for (var di = 0; di < WORDS.length; di++) dh += "<i></i>";
@@ -14632,8 +14462,7 @@ function playBoot(){
 }
 function playClose(){
   playClear(); P.paused = false;
-  bgStop();
-  try { if (AU.el) { AU.el.pause(); AU.el.src = ""; } } catch(e){}
+  if (window.speechSynthesis) { try { window.speechSynthesis.cancel(); } catch(e){} }
   var el = document.getElementById("pw"); if (el) el.remove();
   document.body.classList.remove("playing");
 }
@@ -14646,57 +14475,14 @@ function playToggle(){
     P.paused = true; b.textContent = "继续"; playClear();
   }
 }
-/* 在用户点击的瞬间「解锁」音频播放权限：
-   手机浏览器只允许在用户操作后立即播放声音，之后代码自己触发的播放会被静默拦截。
-   做法是趁点击这一刻放一段极短的静音音频，把这个 Audio 元素标记为「已获许可」，
-   后续自动播放换 src 就能出声。 */
-function auUnlock(){
-  /* 用一个独立的临时元素解锁，绝不碰主播放器（AU.el 一旦被静音片段占用，
-     后续换 src 在部分手机上会卡住不出声） */
-  try {
-    var u = new Audio();
-    u.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=";
-    var pr = u.play();
-    if (pr && pr.catch) pr.catch(function(){});
-    setTimeout(function(){ try { u.pause(); u.src = ""; } catch(e){} }, 100);
-  } catch(e){}
-  /* 同时解锁 Web Audio 上下文 */
-  try { if (BG.ctx && BG.ctx.state === "suspended") BG.ctx.resume(); } catch(e){}
-}
-
-/* 预取整期发音：用隐藏的 audio 元素逐个加载，让浏览器把它放进缓存。
-   不能用 fetch（有道不返回跨域头，读不到内容），但 <audio preload> 可以正常拉取。 */
-function auPrefetch(words){
-  /* 逐个串行预热，每个词只走一次回调；任何一个环节出问题都不影响播放主流程 */
-  var list = words.slice(0, 16);
-  var i = 0;
-  function next(){
-    if (i >= list.length || !list.length) return;
-    var w = list[i++];
-    var done = false;
-    var finish = function(){
-      if (done) return;
-      done = true;
-      setTimeout(next, 60);
-    };
-    try {
-      var a = new Audio();
-      a.preload = "auto";
-      a.muted = true;
-      a.onloadeddata = finish;
-      a.onerror = finish;
-      a.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(w) + "&type=2";
-      setTimeout(finish, 3000);
-      a.load();
-    } catch(e){ finish(); }
-  }
-  try { setTimeout(next, 400); } catch(e){}
-}
-
 function speakWord(t){
-  /* 发音是附加功能，任何异常都不允许影响播放主流程 */
-  if (!P.sound) return;
-  try { auSpeak(t); } catch(e){}
+  if (!P.sound || !window.speechSynthesis) return;
+  try {
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(t);
+    u.lang = "en-US"; u.rate = 0.88;
+    window.speechSynthesis.speak(u);
+  } catch(e){}
 }
 function playType(txt){
   var el = document.getElementById("pstory");
@@ -14741,7 +14527,7 @@ function playRender(){
   if (act === "word"){
     st.innerHTML = '<div class="pword">' + esc(w.w) + '</div>' +
       '<div class="pfreq">真题频次 ' + w.f + ' 次</div>';
-    try { speakWord(w.w); } catch(e){}
+    speakWord(w.w);
     return;
   }
   if (act === "split"){
@@ -14931,7 +14717,13 @@ function bindSpeak(){
   Array.prototype.forEach.call(document.querySelectorAll("[data-speak]"), function(el){
     el.onclick = function(){
       var w = el.getAttribute("data-speak");
-      auSpeak(w);
+      if (!window.speechSynthesis) return;
+      try {
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(w);
+        u.lang = "en-US"; u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+      } catch(e){}
     };
   });
 }
