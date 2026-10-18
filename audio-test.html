@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>音频诊断</title>
+<style>
+body{margin:0;padding:24px 18px 60px;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+background:#FDF8FA;color:#3A2E33;font-size:16px;line-height:1.7}
+h2{font-size:19px;margin:26px 0 10px;color:#a75a75}
+.btn{display:block;width:100%;padding:16px;margin:12px 0;font-size:18px;font-family:inherit;
+background:#c2708c;color:#fff;border:none;border-radius:14px;font-weight:600}
+.btn.ghost{background:#fff;color:#a75a75;border:2px solid #EDD1D8}
+#log{background:#fff;border:2px solid #F0DDE5;border-radius:14px;padding:16px;
+font-family:ui-monospace,Consolas,monospace;font-size:13px;line-height:1.8;white-space:pre-wrap;
+min-height:220px;word-break:break-all}
+.ok{color:#3f8f5c}.bad{color:#c0392b}.warn{color:#b8860b}
+</style></head><body>
+
+<h2>音频诊断工具</h2>
+<p style="color:#8A7A81;font-size:14px;margin:0">在手机浏览器里打开，依次点下面两个按钮，把结果截图发我。</p>
+
+<button class="btn" id="t1">① 测试基础声音（应该听到 3 声嘀）</button>
+<button class="btn ghost" id="t2">② 测试音乐引擎（应该听到持续和弦）</button>
+
+<h2>检测结果</h2>
+<div id="log">等待开始…</div>
+
+<script>
+var logEl = document.getElementById("log");
+var lines = [];
+function w(t, cls){
+  lines.push((cls ? '<span class="'+cls+'">' : '') + t + (cls ? '</span>' : ''));
+  logEl.innerHTML = lines.join("\n");
+}
+
+var AC = window.AudioContext || window.webkitAudioContext;
+w("浏览器: " + navigator.userAgent.slice(0, 90));
+w("AudioContext 支持: " + (AC ? "是" : "否"), AC ? "ok" : "bad");
+w("是否微信/QQ内置: " + (/MicroMessenger|QQ\//i.test(navigator.userAgent) ? "是（会限制音频）" : "否"),
+   /MicroMessenger|QQ\//i.test(navigator.userAgent) ? "bad" : "ok");
+w("是否 iOS: " + (/iPhone|iPad|iPod/i.test(navigator.userAgent) ? "是" : "否"));
+
+/* ① 最基础的音：最简单的一段，用来排除"整个音频系统不行" */
+document.getElementById("t1").onclick = function(){
+  var ctx = new AC();
+  w("\n--- ① 基础声音测试 ---");
+  w("初始状态: " + ctx.state, ctx.state === "running" ? "ok" : "warn");
+  var doit = function(){
+    w("resume 后状态: " + ctx.state, ctx.state === "running" ? "ok" : "bad");
+    var out = function(i){
+      if (i >= 3){ w("三声已发出。如果没听到 → 手机静音/音量/静音开关问题"); return; }
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "square"; o.frequency.value = 880;
+      var t = ctx.currentTime;
+      g.gain.setValueAtTime(0.0, t);
+      g.gain.linearRampToValueAtTime(0.35, t + 0.02);
+      g.gain.linearRampToValueAtTime(0.0, t + 0.18);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(t); o.stop(t + 0.2);
+      setTimeout(function(){ out(i + 1); }, 420);
+    };
+    out(0);
+  };
+  if (ctx.state === "suspended"){
+    ctx.resume().then(function(){ doit(); }).catch(function(e){ w("resume 失败: " + e, "bad"); });
+  } else doit();
+};
+
+/* ② 完整音乐引擎：复刻产品里的链路 */
+document.getElementById("t2").onclick = function(){
+  w("\n--- ② 音乐引擎测试 ---");
+  var ctx = new AC();
+  w("初始状态: " + ctx.state);
+  var begin = function(){
+    w("resume 后: " + ctx.state, ctx.state === "running" ? "ok" : "bad");
+
+    var master = ctx.createGain(); master.gain.value = 0.62;
+    var duck   = ctx.createGain(); duck.gain.value = 1;
+    var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 3600; lp.Q.value = 0.4;
+    var hs = ctx.createBiquadFilter(); hs.type = "highshelf"; hs.frequency.value = 1400; hs.gain.value = 3.5;
+
+    /* 分析器：测量是否真的产生了信号 */
+    var an = ctx.createAnalyser(); an.fftSize = 2048;
+
+    master.connect(duck); duck.connect(lp); lp.connect(hs);
+    hs.connect(an); an.connect(ctx.destination);
+    w("链路已建立: master→duck→lowpass→highshelf→analyser→destination");
+
+    function note(f, t, dur, vol){
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + 0.12);
+      g.gain.setValueAtTime(vol, t + Math.max(0.13, dur * 0.35));
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t + dur + 0.05);
+    }
+
+    var CH = [[220,261.63,329.63],[174.61,220,261.63],[196,261.63,329.63],[196,246.94,293.66]];
+    var step = 0, nextT = ctx.currentTime + 0.1;
+    function tick(){
+      while (nextT < ctx.currentTime + 0.5){
+        var bar = Math.floor(step / 4) % 4, beat = step % 4, t = nextT;
+        if (beat === 0){
+          CH[bar].forEach(function(f,i){ note(f * (i===2?2:1), t + i*0.05, 4.2, 0.10); });
+          note(CH[bar][0]/2, t, 4.0, 0.13);
+        } else {
+          note(CH[bar][1]*2, t, 2.6, 0.045);
+        }
+        step++; nextT += 0.8;
+      }
+    }
+    tick();
+    var timer = setInterval(tick, 250);
+
+    /* 采样两次，看有没有真实信号 */
+    var n = 0;
+    var iv = setInterval(function(){
+      var buf = new Float32Array(an.fftSize);
+      an.getFloatTimeDomainData(buf);
+      var sum = 0, peak = 0;
+      for (var i = 0; i < buf.length; i++){ sum += buf[i]*buf[i]; if (Math.abs(buf[i])>peak) peak = Math.abs(buf[i]); }
+      var rms = Math.sqrt(sum / buf.length);
+      w("采样" + (++n) + "  RMS=" + rms.toFixed(4) + "  峰值=" + peak.toFixed(4) +
+        "  (" + (20*Math.log10(rms || 0.000001)).toFixed(1) + " dB)",
+        rms > 0.01 ? "ok" : "bad");
+      if (n >= 3) clearInterval(iv);
+    }, 1200);
+
+    w("和弦已开始循环，共 12 秒。", "ok");
+    setTimeout(function(){ clearInterval(timer); w("测试结束。"); }, 12000);
+  };
+  if (ctx.state === "suspended") ctx.resume().then(begin).catch(function(e){ w("resume 失败: "+e,"bad"); });
+  else begin();
+};
+</script>
+</body></html>
