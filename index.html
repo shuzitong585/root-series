@@ -14548,8 +14548,9 @@ function playStep(){
   P.act++;
   if (P.act >= ACTNAME.length){ P.act = 0; P.wi++; }
   if (P.wi > 0 && P.act === 0) P.act = 1;
-  playRender();
-  if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]]);
+  try { playRender(); } catch(e){}
+  /* 无论渲染过程出什么问题，都必须续上下一格，否则整个播放会停住 */
+  if (P.wi < WORDS.length) playSchedule(ACTMS[ACTNAME[P.act]] || 1500);
 }
 function playDots(cur){
   var ds = document.querySelectorAll("#pdots i");
@@ -14666,30 +14667,36 @@ function auUnlock(){
 /* 预取整期发音：用隐藏的 audio 元素逐个加载，让浏览器把它放进缓存。
    不能用 fetch（有道不返回跨域头，读不到内容），但 <audio preload> 可以正常拉取。 */
 function auPrefetch(words){
-  var list = words.slice(0, 20);
+  /* 逐个串行预热，每个词只走一次回调；任何一个环节出问题都不影响播放主流程 */
+  var list = words.slice(0, 16);
   var i = 0;
   function next(){
-    if (i >= list.length) return;
+    if (i >= list.length || !list.length) return;
     var w = list[i++];
+    var done = false;
+    var finish = function(){
+      if (done) return;
+      done = true;
+      setTimeout(next, 60);
+    };
     try {
       var a = new Audio();
       a.preload = "auto";
       a.muted = true;
+      a.onloadeddata = finish;
+      a.onerror = finish;
       a.src = "https://dict.youdao.com/dictvoice?audio=" + encodeURIComponent(w) + "&type=2";
-      a.onloadeddata = a.onerror = function(){
-        try { a.src = ""; } catch(e){}
-        next();
-      };
-      setTimeout(next, 2500);  /* 兜底，避免卡住 */
+      setTimeout(finish, 3000);
       a.load();
-    } catch(e){ next(); }
+    } catch(e){ finish(); }
   }
-  next();
+  try { setTimeout(next, 400); } catch(e){}
 }
 
 function speakWord(t){
+  /* 发音是附加功能，任何异常都不允许影响播放主流程 */
   if (!P.sound) return;
-  auSpeak(t);
+  try { auSpeak(t); } catch(e){}
 }
 function playType(txt){
   var el = document.getElementById("pstory");
@@ -14734,7 +14741,7 @@ function playRender(){
   if (act === "word"){
     st.innerHTML = '<div class="pword">' + esc(w.w) + '</div>' +
       '<div class="pfreq">真题频次 ' + w.f + ' 次</div>';
-    speakWord(w.w);
+    try { speakWord(w.w); } catch(e){}
     return;
   }
   if (act === "split"){
