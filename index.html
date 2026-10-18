@@ -14411,10 +14411,14 @@ function bgInit(){
   BG.duck = BG.ctx.createGain();
   BG.duck.gain.value = 1;
   var lp = BG.ctx.createBiquadFilter();
-  lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.4;
+  lp.type = "lowpass"; lp.frequency.value = 3600; lp.Q.value = 0.4;
+  /* 轻微高架补偿：手机小喇叭低频弱，抬一点中高频让人耳更容易感知 */
+  var hs = BG.ctx.createBiquadFilter();
+  hs.type = "highshelf"; hs.frequency.value = 1400; hs.gain.value = 3.5;
   BG.master.connect(BG.duck);
   BG.duck.connect(lp);
-  lp.connect(BG.ctx.destination);
+  lp.connect(hs);
+  hs.connect(BG.ctx.destination);
   return BG.ctx;
 }
 /* 一个音：正弦 + 微弱的二次谐波，带柔和的起音和长衰减，像钢琴泛音 */
@@ -14424,7 +14428,8 @@ function bgNote(freq, t, dur, vol){
   o2.type = "sine"; o2.frequency.value = freq * 2;
   g2.gain.value = 0.16;
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(vol, t + 0.035);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.12);
+  g.gain.setValueAtTime(vol, t + Math.max(0.13, dur * 0.35));
   g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   o2.connect(g2); g2.connect(g); o.connect(g); g.connect(BG.master);
   o.start(t); o.stop(t + dur + 0.05);
@@ -14446,12 +14451,18 @@ function bgTick(){
     var beat = BG.step % 4;
     var t = BG.nextT;
     if (beat === 0){
-      BG_CHORDS[bar].forEach(function(f, i){ bgNote(f * (i === 2 ? 2 : 1), t + i * 0.04, 3.4, 0.052); });
-    } else if (beat === 2){
-      bgNote(BG_CHORDS[bar][0] * 2, t, 1.8, 0.022);
+      /* 和弦：起音柔和、拖满整小节，避免声音断成一块一块 */
+      BG_CHORDS[bar].forEach(function(f, i){ bgNote(f * (i === 2 ? 2 : 1), t + i * 0.05, 4.2, 0.10); });
+      bgNote(BG_CHORDS[bar][0] / 2, t, 4.0, 0.13);
+    } else {
+      /* 中间两拍补一层和弦余韵，保持音色连续 */
+      bgNote(BG_CHORDS[bar][1] * 2, t, 2.6, 0.045);
+    }
+    if (beat === 2){
+      bgNote(BG_CHORDS[bar][2] * 2, t, 2.2, 0.05);
     }
     if (BG.step % 8 === 4){
-      bgNote(BG_LEAD[(Math.floor(BG.step / 8) * 3) % BG_LEAD.length], t, 2.2, 0.018);
+      bgNote(BG_LEAD[(Math.floor(BG.step / 8) * 3) % BG_LEAD.length], t, 3.0, 0.038);
     }
     BG.step++;
     BG.nextT += 0.8;
@@ -14464,7 +14475,7 @@ function bgStart(){
   BG.on = true; BG.step = 0; BG.nextT = BG.ctx.currentTime + 0.15;
   BG.master.gain.cancelScheduledValues(BG.ctx.currentTime);
   BG.master.gain.setValueAtTime(0.0001, BG.ctx.currentTime);
-  BG.master.gain.exponentialRampToValueAtTime(0.9, BG.ctx.currentTime + 2.2);
+  BG.master.gain.exponentialRampToValueAtTime(0.62, BG.ctx.currentTime + 2.2);
   if (BG.timer) clearInterval(BG.timer);
   bgTick();
   BG.timer = setInterval(bgTick, 250);
@@ -14512,7 +14523,9 @@ function playDots(cur){
 }
 function playBoot(){
   playClear();
-  P.wi = 0; P.act = 0; P.paused = false; P.sound = false;
+  P.wi = 0; P.act = 0; P.paused = false;
+  P.sound = true;
+  try { if (localStorage.getItem("rs_sound") === "0") P.sound = false; } catch(e){}
   var wantBgm = false;
   try { wantBgm = (localStorage.getItem("rs_bgm") === "1"); } catch(e){}
   if (document.getElementById("pw")) document.getElementById("pw").remove();
@@ -14548,7 +14561,10 @@ function playBoot(){
   document.getElementById("psound").onclick = function(){
     P.sound = !P.sound;
     this.textContent = P.sound ? "🔊" : "🔇";
+    try { localStorage.setItem("rs_sound", P.sound ? "1" : "0"); } catch(e){}
   };
+  var sb0 = document.getElementById("psound");
+  if (sb0) sb0.textContent = P.sound ? "🔊" : "🔇";
   var mb = document.getElementById("pmusic");
   if (mb){
     if (wantBgm && bgStart()){ mb.classList.add("on"); }
