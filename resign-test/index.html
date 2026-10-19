@@ -607,7 +607,7 @@ function renderCover(){
      '<div class="card" style="text-align:left"><div class="k">交个底</div>' +
        '<div class="d">36 题 · 约 8 分钟 · 没有对错答案，凭直觉选。' +
        '不喜欢某条路就直说——「打死不干」和「这是我的梦」一样，都是有效数据。</div></div>' +
-     '<button class="btn main" onclick="startQuiz()">开始测试</button>' +
+     '<button class="btn main" data-act="start">开始测试</button>' +
    '</div>';
   window.scrollTo(0,0);
 }
@@ -636,12 +636,31 @@ function nextQ(){
   h += '<div class="hint" style="margin-bottom:6px">'+Q.lead+'</div>';
   h += '<h1 style="font-size:19px;margin-bottom:16px">'+Q.q+'</h1>';
   Q.opts.forEach(function(o,i){
-    h += '<div class="opt" id="opt'+i+'" onclick="choose('+i+')">' +
+    h += '<div class="opt" id="opt'+i+'" data-i="'+i+'">' +
          '<span class="idx">'+"ABCD"[i]+'</span>' +
          '<span class="tx">'+o.t+'<span class="sub">'+o.sub+'</span></span></div>';
   });
   h += '</div>';
   view.innerHTML = h;
+  /* 事件委托绑定：比内联 onclick 兼容性好，部分内置浏览器会过滤内联事件 */
+  Array.prototype.forEach.call(view.querySelectorAll('.opt'), function(el){
+    var i = parseInt(el.getAttribute('data-i'), 10);
+    var lastTouch = 0, sx = 0, sy = 0;
+    el.addEventListener('touchstart', function(e){
+      var t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+    }, {passive:true});
+    el.addEventListener('touchend', function(e){
+      var t = e.changedTouches[0];
+      /* 手指滑动超过 12px 视为滚动页面，不算点选 */
+      if (Math.abs(t.clientX - sx) > 12 || Math.abs(t.clientY - sy) > 12) return;
+      lastTouch = Date.now();
+      choose(i);
+    });
+    el.addEventListener('click', function(e){
+      if (Date.now() - lastTouch < 600) return;  /* 触摸后跟来的合成 click 不重复计 */
+      choose(i);
+    });
+  });
   window.scrollTo(0,0);
 }
 
@@ -657,10 +676,21 @@ function renderSection(si){
      '<div class="cn">第 '+(si+1)+' 部分 · 题 '+startN+'–'+endN+'</div>' +
      '<div class="ct">'+sec.t+'</div>' +
      '<div class="cd">'+sec.d+'</div>' +
-     '<button class="btn main" style="margin-top:30px" onclick="S.i=S.i;nextQ()">继续</button>' +
+     '<button class="btn main" data-act="next">继续</button>' +
    '</div>';
   window.scrollTo(0,0);
 }
+
+/* 全局事件委托：data-act 按钮 + .opt 选项（兼容过滤内联事件的内置浏览器） */
+document.addEventListener('click', function(e){
+  var t = e.target;
+  while (t && t !== document.body){
+    if (t.getAttribute && t.getAttribute('data-act') === 'start'){ startQuiz(); return; }
+    if (t.getAttribute && t.getAttribute('data-act') === 'next'){ nextQ(); return; }
+    if (t.getAttribute && t.getAttribute('data-act') === 'copy'){ copyShare(); return; }
+    t = t.parentNode;
+  }
+});
 
 function choose(i){
   var Q = FLAT[S.i], o = Q.opts[i];
@@ -759,10 +789,10 @@ function renderResult(){
     '% / 回学校 '+C.shares.exam+'% / 回去上班 '+C.shares.job+'%。你敢测一局吗？';
   h += '<div class="share"><div class="st">测完了</div>' +
        '<div class="sx">把你的路线发出去，看看你朋友辞职会走哪条。大部分人的结果，和他们的直觉不一样。</div>' +
-       '<button onclick="copyShare()" id="cpBtn">复制测试结果</button></div>';
+       '<button data-act="copy" id="cpBtn">复制测试结果</button></div>';
   S.shareTxt = shareTxt;
 
-  h += '<button class="btn main" onclick="startQuiz()">重新测一次</button>';
+  h += '<button class="btn main" data-act="start">重新测一次</button>';
   h += '<div class="hint" style="margin-top:14px;text-align:center">路线一共 16 条，题有 36 道。换几个答案，可能就是另一条人生。</div>';
   h += '</div>';
 
