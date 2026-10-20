@@ -75,6 +75,19 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .endtitle .st{font-size:11.5px;font-weight:800;letter-spacing:3px;color:#9AA6A1}
 .endtitle .en{font-size:28px;font-weight:900;color:#1F3D33;letter-spacing:2px;margin:6px 0 4px}
 .endtitle .ec{font-size:12.5px;color:#2E5947;font-weight:800;letter-spacing:.5px}
+
+/* ===== 结果页页内导航 ===== */
+.rnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+  margin:12px -20px 2px;padding:7px 20px 8px;
+  background:rgba(250,248,243,.97);border-bottom:1px solid #EDE7D8}
+.rnav::-webkit-scrollbar{display:none}
+.rnav b{flex:none;display:inline-flex;align-items:center;min-height:30px;
+  font-size:11.5px;font-weight:800;color:#3B4A44;letter-spacing:.2px;line-height:1.2;
+  background:#fff;border:1px solid #E0DACB;border-radius:16px;padding:0 12px;cursor:pointer;
+  white-space:nowrap;transition:background .12s,color .12s}
+.rnav b:active,.rnav b.on{background:#2E5947;color:#fff;border-color:#2E5947}
+#rsecTop,#rsecToday,#rsecGuide,#rsecPmts,#rsecPlan{scroll-margin-top:58px}
 .verdict{border:1.5px dashed #D3C39E;border-radius:12px;padding:14px 16px;margin:16px 0 18px;text-align:center;
   font-size:15px;font-weight:800;color:#7A5A33;line-height:1.85;background:#FBF6EA}
 .dossier{background:#fff;border:1px solid #E4E0D5;border-radius:14px;padding:16px;margin-bottom:12px}
@@ -92,7 +105,7 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .share .st{font-size:13.5px;font-weight:800;margin-bottom:8px;letter-spacing:.5px}
 .share .sx{font-size:12.5px;color:#C9C2AE;line-height:1.85;margin-bottom:12px}
 .share button{width:100%;border:none;border-radius:10px;background:#D9C9A8;color:#1F3D33;font-family:inherit;
-  font-size:13.5px;font-weight:900;padding:11px;cursor:pointer}
+  font-size:13.5px;font-weight:900;padding:11px;min-height:44px;cursor:pointer}
 
 /* ===== 三条推荐 ===== */
 .tri{background:#fff;border:1px solid #E4E0D5;border-radius:14px;padding:0;margin-bottom:12px;overflow:hidden}
@@ -123,7 +136,7 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .tri .start b{color:#2E5947;display:block;font-size:11px;letter-spacing:1.5px;margin-bottom:3px}
 .tri .planx{margin:2px 0 14px;border-top:1px dashed #E7E2D4;padding-top:10px}
 .tri .planx summary{list-style:none;cursor:pointer;font-size:12px;font-weight:800;color:#2E5947;
-  letter-spacing:.5px;outline:none}
+  letter-spacing:.5px;outline:none;padding:12px 0;min-height:44px}
 .tri .planx summary::-webkit-details-marker{display:none}
 .tri .planx summary::after{content:" ＋";font-weight:400;color:#9AA6A1}
 .tri .planx[open] summary::after{content:" －"}
@@ -131,6 +144,13 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
   font-size:12px;line-height:1.75;color:#4A5A54}
 .tri .planx .day:first-of-type{border-top:none;margin-top:8px}
 .tri .planx .day b{flex:none;width:36px;color:#9AA6A1;font-size:10px;letter-spacing:.5px}
+
+/* ===== 首推卡：今天先做这件事 ===== */
+.tri .firststep{margin:0 0 13px;background:#F2F6F0;border:1px solid #DAE4D8;border-radius:11px;padding:11px 13px}
+.tri .firststep .lb{display:block;font-size:10px;font-weight:900;letter-spacing:1.6px;
+  color:#2E5947;margin-bottom:5px}
+.tri .firststep .tx{font-size:13px;color:#1F3D33;line-height:1.75;font-weight:800}
+.tri .firststep .mod{display:block;font-size:11.5px;color:#7D8A84;font-weight:600;margin-top:2px;line-height:1.6}
 
 /* ===== 新增：7 天计划 ===== */
 .plan{background:#1F3D33;color:#EFEDE3;border-radius:14px;padding:18px 16px;margin-bottom:12px}
@@ -168,6 +188,9 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .gsec ul li:before{content:"";position:absolute;left:2px;top:8px;width:4px;height:4px;
   border-radius:50%;background:#9BB3A6}
 .gsec.tune{background:#F6F8F3;border-radius:10px;padding:12px 13px;border-top:none;margin:10px 0 4px}
+.gsec .zcost{margin-top:9px;font-size:12px;color:#5B5433;background:#FBF6E7;border:1px solid #E7DCC0;
+  border-radius:8px;padding:9px 11px;line-height:1.8}
+.gsec .zcost b{display:block;font-size:11px;color:#7A5A33;letter-spacing:.5px;margin-bottom:2px}
 .gsec.ai .aic{margin-top:9px;font-size:12px;color:#8A4A32;background:#FBF3EE;
   border-radius:7px;padding:9px 11px;line-height:1.8}
 .gsec.ai .aic b{color:#9C5230}
@@ -175,9 +198,12 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .gsec .gsub{font-size:11.5px;color:#8B978F;line-height:1.7;margin:-1px 0 10px}
 .pmt{border:1px solid #E9E4D6;border-radius:10px;margin-bottom:9px;overflow:hidden;background:#FCFBF7}
 .pmt .pmh{display:flex;justify-content:space-between;align-items:center;gap:10px;
-  padding:8px 11px;background:#F5F3EB;font-size:11.5px;font-weight:800;color:#3B4A44;letter-spacing:.3px}
-.pmt .pmh button{border:none;background:#2E5947;color:#fff;font-family:inherit;font-size:10.5px;
-  font-weight:800;padding:5px 11px;border-radius:6px;cursor:pointer;letter-spacing:.5px;white-space:nowrap}
+  padding:2px 7px 2px 11px;min-height:48px;background:#F5F3EB;font-size:11.5px;font-weight:800;
+  color:#3B4A44;letter-spacing:.3px}
+/* 触控热区：真实盒模型 44×56，不靠伪元素，保证任何浏览器都命中 */
+.pmt .pmh button{border:none;background:#2E5947;color:#fff;font-family:inherit;font-size:11.5px;
+  font-weight:800;min-height:44px;min-width:56px;padding:0 15px;border-radius:7px;cursor:pointer;
+  letter-spacing:.5px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center}
 .pmt .pmh button:active{background:#254A3B}
 .pmt .pmb{padding:10px 11px;font-size:12px;color:#4A5A54;line-height:1.88}
 .tri .gdx{margin-top:2px}
@@ -759,7 +785,7 @@ var SECTIONS = [
      { t:"3 小时以内，说不准", sub:"经常加班，临时有事就得停",
        w:{flea:2,cert:2,template:1}, m:{时间:-4} }
     ]},
-  { lead:"这笔钱是试错成本，亏了不能影响生活。",
+  { lead:"这笔钱是试错成本，亏了不能影响生活。", k:"budget",
     q:"你能拿出多少钱试错？",
     opts:[
      { t:"5000 以上", sub:"亏了不心疼，可以压货、可以投流",
@@ -1140,7 +1166,7 @@ function renderCover(){
 }
 
 function startQuiz(){
-  S = { i:0, secShown:{}, scores:{}, attrs:{}, urgent:1, log:[], hist:[], ev:{} };
+  S = { i:0, secShown:{}, scores:{}, attrs:{}, urgent:1, log:[], hist:[], ev:{}, budget:null, pmt:[] };
   ROUTES.forEach(function(r){ S.scores[r.id]=0; });
   KEYS.forEach(function(k){ S.attrs[k]=50; });
   nextQ();
@@ -1218,6 +1244,7 @@ document.addEventListener('click', function(e){
     if (t.getAttribute && t.getAttribute('data-act') === 'copy'){ copyShare(); return; }
     if (t.getAttribute && t.getAttribute('data-act') === 'pcopy'){ copyPmt(parseInt(t.getAttribute('data-i'),10), t); return; }
     if (t.getAttribute && t.getAttribute('data-act') === 'back'){ goBack(); return; }
+    if (t.getAttribute && t.getAttribute('data-act') === 'jump'){ jumpTo(t.getAttribute('data-to')); return; }
     t = t.parentNode;
   }
 });
@@ -1226,7 +1253,7 @@ function choose(i){
   var Q = FLAT[S.i], o = Q.opts[i];
   /* 存档：返回上一题时整份还原，避免扣分/加分残留 */
   S.hist.push({ i:S.i, scores:JSON.parse(JSON.stringify(S.scores)), attrs:JSON.parse(JSON.stringify(S.attrs)),
-                ev:JSON.parse(JSON.stringify(S.ev)), urgent:S.urgent, logLen:S.log.length });
+                ev:JSON.parse(JSON.stringify(S.ev)), urgent:S.urgent, budget:S.budget, logLen:S.log.length });
   document.querySelectorAll('.opt').forEach(function(el,j){
     if(j!==i) el.classList.add('dim');
   });
@@ -1238,6 +1265,8 @@ function choose(i){
   });
   Object.keys(o.m||{}).forEach(function(k){ S.attrs[k]=clamp(S.attrs[k]+o.m[k],15,95); });
   if (typeof o.u === 'number') S.urgent = o.u;
+  /* 预算题单独存原始选项：3 = 500 以内。这条信号独立于全卷累积分，不会被后面的题抵消 */
+  if (Q.k === 'budget') S.budget = i;
   S.log.push({ q:Q.q, c:o.t, i:i });
   setTimeout(function(){ S.i++; nextQ(); }, 300);
 }
@@ -1245,9 +1274,17 @@ function choose(i){
 function goBack(){
   if (!S || !S.hist.length) return;
   var h = S.hist.pop();
-  S.scores = h.scores; S.attrs = h.attrs; S.ev = h.ev; S.urgent = h.urgent; S.i = h.i;
+  S.scores = h.scores; S.attrs = h.attrs; S.ev = h.ev; S.urgent = h.urgent;
+  S.budget = h.budget; S.i = h.i;
   S.log.length = h.logLen;
   nextQ();
+}
+
+/* 低预算信号：明确选过「500 以内」就直接成立，不靠累积分；没答过那题才看累积分 */
+function lowCash(){
+  if (!S) return false;
+  if (S.budget === 3) return true;
+  return S.attrs["现金"] <= 48;
 }
 
 /* ==================== 匹配 ==================== */
@@ -1368,13 +1405,83 @@ function avoidWho(x){
   return "";
 }
 
+/* ==================== 按路线配置：零成本做法 / 零基础第一步 / 今天先做什么 ==================== */
+/* 低预算与零基础不再用一套话，每条路线写它真正花钱的地方和真正能上手的动作 */
+var ZC = {
+  designer:{ cost:"买新软件和报课", how:"先用你已经在用的那一个软件，旧作品重做 6 张，就是作品集" },
+  dawrite:{  cost:"写作课和排版工具", how:"手机备忘录写，免费文档排版，够用" },
+  video:{    cost:"会员、素材包、补光灯", how:"手机剪映免费版加手机原声，先剪 3 条" },
+  tutor:{    cost:"买教材和印传单", how:"用学生自己的课本加免费题库，家长群免费发" },
+  note:{     cost:"拍摄道具、模板、涨粉课", how:"手机实拍加免费排版，先连发 10 篇" },
+  shorts:{   cost:"麦克风、补光灯、设备", how:"手机加窗边自然光，先拍 5 条" },
+  template:{ cost:"设计软件和素材站会员", how:"用现有文档工具做，封面自己画" },
+  audio:{    cost:"麦克风和剪辑软件", how:"手机自带录音，不剪直接发" },
+  flea:{     cost:"保证金、加盟费、货源软件", how:"卖家里现成的，一分钱都不用交" },
+  dropship:{ cost:"加盟费、ERP、囤货", how:"手动上 10 个链接，一件都不囤" },
+  craft:{    cost:"批量买材料", how:"先用家里现成的材料做 3 件，卖出去再补料" },
+  groupbuy:{ cost:"平台加盟费和垫货款", how:"先做 10 单小团，货款现结不垫" },
+  career:{   cost:"简历模板和求职课", how:"免费文档改，案例自己攒" },
+  cert:{     cost:"包过班和代报名", how:"只用你已经有的证，没证先别投钱" },
+  consult:{  cost:"印名片、做官网、租工位", how:"一页纸就够，先免费聊 3 次" },
+  course:{   cost:"录课设备和平台年费", how:"微信群加手机录屏，先讲一节" }
+};
+
+var NEWBIE = {
+  designer:"只接一种活：抠图、证件照、菜单排版，选一个做 3 张，别接全案。",
+  dawrite:"选一个你天天看的行业，把 3 篇爆款拆成结构，照着结构写 1 篇。",
+  video:"用模板剪一条 15 秒，只练三个动作：切、加字幕、配音乐。",
+  tutor:"只教一个年级、一科，先免费试听一次，看你能不能讲明白。",
+  note:"先发 3 篇「我踩过的坑＋清单」，不学运营课，看哪篇有人看完。",
+  shorts:"拍 3 条 30 秒不露脸的，只练开头三秒能不能留住人。",
+  template:"先做一个 3 页的小东西：一份清单或一张表，别做大套系。",
+  audio:"对着手机讲 10 分钟，不剪辑直接发，先过「听见自己声音」这关。",
+  flea:"先卖自己家 5 件旧物，把拍照、描述、回话跑一遍。",
+  dropship:"先手动上 5 个链接，不用工具，跑通一单再谈放大。",
+  craft:"只做一种最简单的款式，先做 2 件，记下每件花多少小时。",
+  groupbuy:"先在自己业主群做一次 10 单的单品团，别同时开第二个品类。",
+  career:"先免费帮 2 个熟人改简历，只改一页，看对方有没有面试。",
+  cert:"这条必须持证。没有有效证就别接单，先确认报考条件——靠缩小服务范围绕不过资质要求。",
+  consult:"这条要真行业资历。先免费帮 1 个同行看一个具体问题，别急着收费。",
+  course:"先免费讲一节 60 分钟的小班，5 个人，别录全套。"
+};
+
+/* 今天先做这件事：全部取自该路线七天计划的 DAY 1，只压短句子，不改动作和数量，
+   避免首页和下面的七天计划两处说法打架 */
+var TODAY = {
+  designer:"翻出 6 张旧作品，把不满意的删掉",
+  dawrite:"选 2 个你最熟的行业，各写 1 篇 500 字样板",
+  video:"剪 3 条 30 秒样片：口播、产品、vlog",
+  tutor:"写下你能教什么：科目、年级，还是某项技能",
+  note:"选一个你被真实折磨过的具体问题，越具体越好",
+  shorts:"写 5 个你真有话说的题目，别管别人在拍什么",
+  template:"翻电脑，找出已经被别人开口要过的东西",
+  audio:"用手机录 15 分钟，讲你最想说的一件事",
+  flea:"翻家里，找出 10 件三个月没用过的东西",
+  dropship:"选一个你自己会买的品类，别选没用过的",
+  craft:"先做 3 件成品，不接单，把流程走一遍",
+  groupbuy:"选一个你自己会复购的品：水果、鸡蛋、牛奶",
+  career:"把自己的简历整理成一份改前改后的案例",
+  cert:"确认你的证还在有效期，执业范围是什么",
+  consult:"写下你最熟的 3 个业务问题，越具体越好",
+  course:"想清楚你能教会别人一件什么具体的事"
+};
+
+function todayOf(r, a, urgent){
+  var t = TODAY[r.id] || r.plan[0], mod = "";
+  if (a["时间"] <= 45) mod = "今晚半小时就够，做不完明天接着。";
+  else if (urgent >= 3) mod = "今晚弄完，明天就发出去。";
+  else if (r.needSkill >= 3 && a["技能"] <= 52) mod = "不用等学会，先做出来再说。";
+  else if (lowCash() && r.needCash >= 2) mod = "这一步一分钱都不用花。";
+  return { t:t, mod:mod };
+}
+
 /* ==================== 按你的情况调整（个性化，不编造未提供的信息） ==================== */
 function tuneOf(r, a, urgent){
-  var out = [];
+  var out = [], low = lowCash(), z = ZC[r.id];
 
-  /* 预算少的：只走不花钱的验证 */
-  if (a["现金"] <= 48){
-    out.push("你手上能动的钱不多，验证阶段一分钱都别花：先做出来、先免费给 5 个人用、先做预售，真的收到钱再买工具。");
+  /* 预算少的：说清这条路上真正花钱的地方，再指到第 04 节 */
+  if (low && z){
+    out.push("你说了启动资金不超过 500。这条路上真正会花钱的是"+z.cost+"，现在一分都别花，先按第 04 节走一遍。");
   } else if (r.needCash >= 3 && a["现金"] >= 62){
     out.push("你的预算够，工具和材料可以一次配齐，但只配第一单要用的，不要一次买全套。");
   }
@@ -1386,9 +1493,9 @@ function tuneOf(r, a, urgent){
     out.push("你时间相对宽裕，可以按完整节奏走，但同时只接一个人的活，别一上来接两单。");
   }
 
-  /* 零基础的：先做小一号 */
+  /* 零基础的：按这条路真正能上手的第一个动作，不用一句「做小一点」打天下 */
   if (r.needSkill >= 3 && a["技能"] <= 52){
-    out.push("你现在还接不住完整需求，第一个作品做小一号的：只做一个环节、只服务一种客户，不要接全案。");
+    out.push(NEWBIE[r.id] || "先只做一个环节，不要接完整需求。");
   } else if (r.needSkill >= 3 && a["技能"] >= 62){
     out.push("你手上的技能已经能直接换钱，不用先学新东西——把旧作品或旧经历整理出来，就是敲门砖。");
   } else if (r.needSkill <= 2){
@@ -1419,34 +1526,44 @@ function tuneOf(r, a, urgent){
 }
 
 /* ==================== 推荐理由（动态生成） ==================== */
-function whyOf(x, a, urgent, idx, firstName){
-  var r = x.r, out = [];
+/* 规则：有真实答案就先引用真实答案；条件句整份结果里同一句只用一次；
+   没有证据就明说依据有限，不编「你反复选了同一类」这种没出处的话 */
+function whyOf(x, a, urgent, idx, firstName, used){
+  var r = x.r, out = [], i;
+  used = used || {};
 
-  /* 第一条理由优先用你真实选过的答案做证据 */
+  /* 第一条理由优先用你真实选过的答案做证据（只认权重 >=2 的强信号） */
   var evs = (S && S.ev && S.ev[r.id]) || [];
   if (evs.length){
     var best = evs.slice().sort(function(p,q){ return q.w-p.w || q.n-p.n; })[0];
     out.push("你在第 "+best.n+" 题选了「"+best.t+"」");
   }
 
-  if (r.needCash <= 2 && a["现金"] <= 58) out.push("几乎不用投入本钱，亏了也不心疼");
-  if (r.needTime <= 2 && a["时间"] <= 58) out.push("每周两三个小时就能推进，不用等整块时间");
-  if (r.needSkill >= 4 && a["技能"] >= 62) out.push("你手上的技能正好对得上，不用从零学");
-  if (r.needSkill <= 2 && a["技能"] <= 52) out.push("门槛低，今天就能上手试第一单");
-  if (urgent >= 3 && r.speed >= 4) out.push("见效快，第一笔钱不用等三个月");
-  if (urgent <= 1 && r.speed <= 2) out.push("不必急着变现，正好适合慢慢攒");
-  if (a["人脉"] >= 65 && (r.group === "expert" || r.id === "groupbuy")) out.push("你手上有人，第一批客户不用从零找");
-  if (a["心力"] >= 68 && r.needTime >= 4) out.push("心力还够，撑得过前期没有回报的阶段");
-
-  /* 兜底：已经引用过你的答案，就不再补空泛的「反复选了同一类」 */
-  if (out.length < 2 && !evs.length){
-    if (x.base >= 6) out.push("你在前面十几道题里，反复选了跟它同一类的答案");
-    else if (idx === 1 && firstName) out.push("它和「"+firstName+"」是同一个赚法，第一条试得不顺，就从这条接力");
-    else if (idx === 1) out.push("跟第一条是同一个赚法，如果试完第一条不喜欢，可以从这条接着来");
-    else out.push("当备选放着：前三条试了一个月都不顺，再回来翻它");
+  var pool = [];
+  if (r.needCash <= 2 && a["现金"] <= 58) pool.push("几乎不用投入本钱，亏了也不心疼");
+  if (r.needTime <= 2 && a["时间"] <= 58) pool.push("每周两三个小时就能推进，不用等整块时间");
+  if (r.needSkill >= 4 && a["技能"] >= 62) pool.push("你手上的技能正好对得上，不用从零学");
+  if (r.needSkill <= 2 && a["技能"] <= 52) pool.push("门槛低，今天就能上手试第一单");
+  if (r.speed >= 4 && urgent >= 3) pool.push("见效快，第一笔钱不用等三个月");
+  if (r.speed <= 2 && urgent <= 1) pool.push("不必急着变现，正好适合慢慢攒");
+  if (a["人脉"] >= 65 && (r.group === "expert" || r.id === "groupbuy")) pool.push("你手上有人，第一批客户不用从零找");
+  if (a["心力"] >= 68 && r.needTime >= 4) pool.push("心力还够，撑得过前期没有回报的阶段");
+  for (i = 0; i < pool.length && out.length < (evs.length ? 3 : 2); i++){
+    if (used[pool[i]]) continue;
+    used[pool[i]] = 1;
+    out.push(pool[i]);
   }
+
+  /* 没有直接证据时把话说清楚，不硬凑个性化 */
+  if (!evs.length) out.push("这条没有哪道题的答案直接指向它，是按你的时间、预算和技能排的");
   if (out.length < 2){
-    out.push(idx === 0 ? "按你现在的条件，它不会把你逼到墙角" : "它跟你其他两条不一样，失败了一般不是同时失败");
+    if (idx === 1 && firstName && !used.__relay){
+      used.__relay = 1;
+      out.push("它和「"+firstName+"」是同一个赚法，第一条试得不顺，从这条接力");
+    } else if (!used.__backup){
+      used.__backup = 1;
+      out.push("当备选放着：前三条试满一个月都不顺，再回来翻它");
+    }
   }
   return out.slice(0, 3);
 }
@@ -1463,6 +1580,7 @@ function guideHTML(r, a, urgent){
   var g = GUIDE[r.id];
   if (!g) return "";
   var h = "";
+  var low = lowCash(), z = ZC[r.id];
   var rows = [["01","要准备什么", g.tools],
               ["02","第一个样品怎么做", g.sample],
               ["03","去哪找第一批客户", g.find],
@@ -1470,8 +1588,13 @@ function guideHTML(r, a, urgent){
               ["05","可以怎么收钱", g.money],
               ["06","什么时候该停", g.stop]];
   rows.forEach(function(row){
+    var extra = "";
+    if (row[0] === "04" && low && z){
+      extra = '<div class="zcost"><b>按你的预算（不超过 500）</b>'+
+              '这条路上最容易把钱花在'+z.cost+'上。'+z.how+'——验证收到钱之前，别买任何东西。</div>';
+    }
     h += '<div class="gsec"><div class="gk"><b>'+row[0]+'</b>'+row[1]+'</div>' +
-         '<div class="gt">'+row[2]+'</div></div>';
+         '<div class="gt">'+row[2]+'</div>'+extra+'</div>';
   });
 
   /* 个性化：按牌面调整 */
@@ -1510,6 +1633,15 @@ function renderResult(){
        '<div class="en">'+first.r.name+'</div>' +
        '<div class="ec">'+GROUPNAME[first.r.group]+' · 从这三条里先试第一条</div></div>';
 
+  /* 页内导航：手机端横向滑动，跳转位置避开吸顶条 */
+  h += '<nav class="rnav" id="rnav">' +
+       '<b data-act="jump" data-to="rsecTop">首推方向</b>' +
+       '<b data-act="jump" data-to="rsecToday">今天第一步</b>' +
+       '<b data-act="jump" data-to="rsecGuide">实施地图</b>' +
+       '<b data-act="jump" data-to="rsecPmts">AI 提示词</b>' +
+       '<b data-act="jump" data-to="rsecPlan">七天计划</b>' +
+       '</nav>';
+
   /* 一句结论：结合紧迫度给不同的话 */
   var line;
   if (urgent >= 3) line = "你急着要钱，所以下面三条都优先选了<b>能在一两个月内见到收入</b>的。那些要养半年才有回报的路，我先给你压下去了。";
@@ -1518,18 +1650,27 @@ function renderResult(){
   h += '<div class="verdict" style="text-align:left;font-weight:600;font-size:13.5px">'+line+'</div>';
 
   /* 三条推荐 */
-  h += '<div class="dossier" style="background:none;border:none;padding:0;margin-bottom:4px">' +
+  h += '<div class="dossier" id="rsecTop" style="background:none;border:none;padding:0;margin-bottom:4px">' +
        '<div class="dt">先 试 这 三 条</div></div>';
 
+  var usedWhy = {};
   T.forEach(function(x, idx){
-    var c = costOf(x.r), whys = whyOf(x, a, urgent, idx, T[0].r.name), av = avoidWho(x);
+    var c = costOf(x.r), whys = whyOf(x, a, urgent, idx, T[0].r.name, usedWhy), av = avoidWho(x);
     h += '<div class="tri'+(idx===0?' first':'')+'">';
     h += '<div class="hd"><span class="no">'+(idx+1)+'</span>' +
          '<span class="nm">'+x.r.name+'</span>' +
          '<span class="no2">'+GROUPNAME[x.r.group]+(idx===0?' · 首推':'')+'</span></div>';
     h += '<div class="bd">';
 
-    h += '<div class="why">'+whys.map(function(w){ return w; }).join("；")+'。</div>';
+    /* 首推卡第一行：今天就能做完的一件具体事 */
+    if (idx === 0){
+      var td = todayOf(x.r, a, urgent);
+      h += '<div class="firststep" id="rsecToday"><span class="lb">今 天 先 做 这 件 事</span>' +
+           '<span class="tx">'+td.t+'</span>' +
+           (td.mod ? '<span class="mod">'+td.mod+'</span>' : '') + '</div>';
+    }
+
+    h += '<div class="why">'+whys.join("；")+'。</div>';
 
     var cashNote = x.r.needCash <= 1 ? "，几乎是零成本启动" : (x.r.needCash >= 3 ? "，要先备一笔货" : "");
     h += '<div class="kv"><span class="k">启动成本</span><span class="v"><b>'+c.cash+'</b>'+cashNote+'</span></div>';
@@ -1568,14 +1709,14 @@ function renderResult(){
   }
 
   /* 实施指南：首推路线完整展开 */
-  h += '<div class="gd">' +
+  h += '<div class="gd" id="rsecGuide">' +
        '<div class="gdt">如 何 开 始 实 施</div>' +
        '<div class="gdn">下面整套做法是「'+first.r.name+'」的，已经按你的时间、预算和技能调过。想换一条，第 2、3 名卡片里也各有自己的一份。</div>' +
        guideHTML(first.r, a, urgent) +
        '</div>';
 
   /* 7 天计划 */
-  h += '<div class="plan">';
+  h += '<div class="plan" id="rsecPlan">';
   h += '<div class="pt">七 天 计 划</div>';
   h += '<div class="pn">从明天开始，做「'+first.r.name+'」</div>';
   first.r.plan.forEach(function(t, i){
@@ -1597,7 +1738,8 @@ function renderResult(){
   var meta = '你最大的牌是<b>「'+hi+'」</b>，最大的坑是<b>「'+lo+'」</b>。';
   if(a["时间"]<=42) meta += '<br><span class="warn">时间这张牌偏薄——别选要日更的路，你撑不过第三周。</span>';
   if(a["心力"]<=38) meta += '<br><span class="warn">心力偏低——副业多半死在第三周，不是死在没客户。</span>';
-  if(a["现金"]<=48) meta += '<br><span class="warn">现金偏薄——别碰要备货、要投流的，先卖时间。</span>';
+  if(S.budget === 3) meta += '<br><span class="warn">你在第 2 题选了「500 以内」——就按这个预算走，别碰要备货、要投流的。</span>';
+  else if(a["现金"]<=48) meta += '<br><span class="warn">现金偏薄——别碰要备货、要投流的，先卖时间。</span>';
   if(a["技能"]>=66) meta += '<br>技能很硬。卖时间这条路，你起步就比大部分人快。';
   if(a["人脉"]>=66) meta += '<br>人脉很厚。你的第一批客户不用从零开始找。';
   h += '<div class="dmeta">'+meta+'</div></div>';
@@ -1626,32 +1768,63 @@ function renderResult(){
   h += '</div>';
 
   view.innerHTML = h;
+  /* 首推路线实施指南里的「09 提示词」挂锚点；另外两条在折叠里，不参与导航 */
+  var pmSec = view.querySelector('.gd .gsec.pm');
+  if (pmSec) pmSec.id = 'rsecPmts';
   window.scrollTo(0,0);
+}
+
+/* 页内导航跳转：避开吸顶条高度，跳完短暂高亮 */
+function jumpTo(id){
+  var el = document.getElementById(id);
+  if (!el) return;
+  var nav = document.getElementById('rnav');
+  var off = (nav ? nav.offsetHeight : 44) + 10;
+  var top = el.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+  window.scrollTo(0, Math.max(0, top - off));
+  if (nav){
+    Array.prototype.forEach.call(nav.children, function(c){
+      c.className = (c.getAttribute('data-to') === id) ? 'on' : '';
+    });
+  }
 }
 
 function copyShare(){
   var t = S.shareTxt || "";
   var done = function(){ var b = document.getElementById('cpBtn'); if(b){ b.textContent = "已复制 ✓"; } };
-  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done, function(){ fallbackCopy(t); done(); }); }
-  else { fallbackCopy(t); done(); }
+  var bad  = function(){ var b = document.getElementById('cpBtn'); if(b){ b.textContent = "复制失败，请长按选中"; } };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done, function(){ fallbackCopy(t) ? done() : bad(); });
+  } else { fallbackCopy(t) ? done() : bad(); }
 }
 function copyPmt(i, btn){
   var t = (S.pmt || [])[i];
   if (!t) return;
+  var reset = function(){ if(btn){ btn.textContent = "复制"; btn.style.background = ""; } };
   var done = function(){
     if (!btn) return;
     btn.textContent = "已复制 ✓";
     btn.style.background = "#254A3B";
-    setTimeout(function(){ btn.textContent = "复制"; btn.style.background = ""; }, 1400);
+    setTimeout(reset, 1400);
   };
-  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done, function(){ fallbackCopy(t); done(); }); }
-  else { fallbackCopy(t); done(); }
+  var bad = function(){
+    if (!btn) return;
+    btn.textContent = "复制失败，长按选中";
+    btn.style.background = "#9C5230";
+    setTimeout(reset, 2200);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(done, function(){ fallbackCopy(t) ? done() : bad(); });
+  } else { fallbackCopy(t) ? done() : bad(); }
 }
 function fallbackCopy(t){
-  var ta = document.createElement('textarea'); ta.value = t; ta.style.position='fixed'; ta.style.left='-9999px';
+  var ok = false;
+  var ta = document.createElement('textarea'); ta.value = t;
+  ta.style.position='fixed'; ta.style.left='-9999px'; ta.style.top='0';
   document.body.appendChild(ta); ta.select();
-  try{ document.execCommand('copy'); }catch(e){}
+  try{ ok = document.execCommand('copy'); }catch(e){ ok = false; }
   document.body.removeChild(ta);
+  return ok;
 }
 
 renderCover();
