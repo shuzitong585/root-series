@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 时代的副业地图 · 兼「不辞职能干什么」测试品设计说明</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#EDEAE0;color:#22302B;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+#wrap{max-width:760px;margin:0 auto;background:#FAF8F3;padding:0 0 60px;box-shadow:0 0 40px rgba(31,61,51,.10)}
+
+header{background:#1F3D33;color:#EFEDE3;padding:44px 34px 38px}
+header .kicker{font-size:11.5px;font-weight:800;letter-spacing:3px;color:#D9C9A8;margin-bottom:14px}
+header h1{font-size:27px;font-weight:900;line-height:1.45;letter-spacing:1px}
+header .sub{margin-top:14px;font-size:13.5px;color:#BFC8C1;line-height:1.9}
+header .sub b{color:#D9C9A8}
+
+section{padding:34px 34px 6px}
+h2{font-size:20px;font-weight:900;color:#1F3D33;letter-spacing:.5px;margin-bottom:6px}
+h2 .num{color:#A8442C;margin-right:9px;font-size:15px;vertical-align:2px}
+h3{font-size:15.5px;font-weight:900;color:#1F3D33;margin:22px 0 8px}
+p{font-size:14.5px;color:#33423C;margin-bottom:13px;line-height:1.95}
+p b{color:#1F3D33;font-weight:800}
+p .hl{color:#A8442C;font-weight:800}
+.leadline{font-size:13px;color:#7D8A84;letter-spacing:.5px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px dashed #DDD8C9}
+
+.box{background:#fff;border:1px solid #E4E0D5;border-radius:13px;padding:18px 20px;margin:14px 0}
+.box .bt{font-size:11.5px;font-weight:800;letter-spacing:2px;color:#A8442C;margin-bottom:9px}
+.box p:last-child{margin-bottom:0}
+.warnbox{background:#FDF3F0;border:1px solid #EBC9BC;border-radius:13px;padding:18px 20px;margin:14px 0}
+.warnbox .bt{color:#A8442C}
+.verdict{border-left:3px solid #A8442C;padding:2px 0 2px 16px;margin:18px 0;font-size:15px;font-weight:800;color:#8A4A32;line-height:1.9}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;background:#fff}
+th{background:#1F3D33;color:#EFEDE3;font-weight:800;font-size:11.5px;letter-spacing:1px;padding:9px 10px;text-align:left}
+td{padding:9px 10px;border-bottom:1px solid #EDEAE0;color:#3B4A44;vertical-align:top;line-height:1.65}
+tr:last-child td{border-bottom:none}
+td.c{text-align:center;font-variant-numeric:tabular-nums}
+td.g1{color:#A8442C;font-weight:800;white-space:nowrap}
+td.g2{color:#1F5C46;font-weight:800;white-space:nowrap}
+td.g3{color:#8A6A2C;font-weight:800;white-space:nowrap}
+td.g4{color:#3A4A6B;font-weight:800;white-space:nowrap}
+td small{color:#8D9A94;font-size:11.5px}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:14px 0}
+.gcell{background:#fff;border:1px solid #E4E0D5;border-radius:12px;padding:14px 15px}
+.gcell .gn{font-size:11px;font-weight:800;letter-spacing:1.5px;color:#A8442C;margin-bottom:5px}
+.gcell .gt{font-size:14.5px;font-weight:900;color:#1F3D33;margin-bottom:5px}
+.gcell .gd{font-size:12.5px;color:#6E7B75;line-height:1.75}
+
+.foot{margin:34px 34px 0;padding-top:20px;border-top:1px solid #E4E0D5;font-size:12px;color:#9AA6A1;line-height:1.9}
+a{color:#A8442C}
+
+@media(max-width:560px){
+  header{padding:34px 22px 30px}
+  header h1{font-size:22px}
+  section{padding:26px 22px 4px}
+  .grid{grid-template-columns:1fr}
+  .foot{margin:26px 22px 0}
+  table{font-size:12px}
+  th,td{padding:7px 8px}
+}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+<header>
+  <div class="kicker">AI × 副业 × 产品设计</div>
+  <h1>AI 时代的副业地图<br>兼「不辞职能干什么」测试品设计说明</h1>
+  <div class="sub">
+    这份文档做两件事：<b>第一</b>，给出一个不按行业、按「AI 在其中扮演什么角色」的副业分法；
+    <b>第二</b>，交代 side-hustle 测试品（36 题 / 16 条路线）的完整设计逻辑与权重结构。
+  </div>
+</header>
+
+<section>
+  <h2><span class="num">01</span>先纠正一个分法</h2>
+  <div class="leadline">按行业分会列出一堆「AI 设计」「AI 写作」，听着新，其实还是老一套</div>
+
+  <p>市面上讲 AI 副业，基本都在按行业列清单：AI 绘画、AI 写作、AI 剪辑、AI 配音、AI 数字人。这个分法的问题是，它只能告诉你「有哪些活」，不能告诉你<b>「哪个活能活下来」</b>。</p>
+
+  <p>真正有区分度的问法是：这件事里，AI 到底是你的什么。</p>
+
+  <div class="verdict">AI 当苦力，你还是手艺人。<br>AI 当产品，你卖结果。<br>AI 当员工，你当老板。</div>
+
+  <p>三类之间的差别不是工具熟练度，是<b>定价权在谁手里</b>。</p>
+</section>
+
+<section>
+  <h2><span class="num">02</span>第一类 · AI 当苦力</h2>
+  <div class="leadline">设计出图 / 剪辑 / 写稿 / PPT / 表格 / 翻译字幕</div>
+
+  <p>AI 把「能不能做出来」这件事的成本压到接近零，于是值钱的部分往上移了一层——变成 <b>知道要做什么</b> 和 <b>改到客户能用</b>。</p>
+
+  <p>这类活现在的真实情况是：<span class="hl">单价在跌，但接单量能翻倍</span>。以前一天做一单两百，现在一天做得完三单，一单一百二。总收入涨了，时薪涨得更多。</p>
+
+  <div class="box">
+    <div class="bt">关键判断</div>
+    <p>这个窗口正在关。今年能靠这个吃饭的活，明年可能就不值钱了。所以做这类，<b>要把钱花在攒客户上，别花在练工具上</b>——工具三个月换一代，客户认的是你这个人。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">03</span>第二类 · AI 当产品</h2>
+  <div class="leadline">AI 写真头像 / 电商主图详情页 / 小红书配图 / 数字人口播 / 婚礼与宠物纪念影像</div>
+
+  <p>这一类是<b>纯新增市场</b>，五年前根本不存在。客户压根不关心你用什么工具，只关心像不像、好不好看、能不能上架。</p>
+
+  <p>所以报价必须<b>按结果报，不能按张报</b>。按张报价你会被工具卷死——客户随时能自己生成；按结果报价你才有定价权，因为你卖的是「交付合格品」这件事，不是「生成图片」这个动作。</p>
+
+  <div class="box">
+    <div class="bt">和第一类的分界</div>
+    <p>第一类是「客户知道自己要什么，只是自己做不动」，所以你卖工时。<br>第二类是「客户不知道能做到什么程度」，所以你卖判断。<br>定价权差在这里。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">04</span>第三类 · AI 当员工</h2>
+  <div class="leadline">内容工作室 / 虚拟资料工厂 / 独立小工具 / 跨境选品</div>
+
+  <p>一个人加一堆 AI，干一个小团队的活。这一类最像「副业」，因为它真能长成事业，而不是一直按件计酬。</p>
+
+  <p>判断标准很简单：<b>你停下来，收入会不会停。</b>第一类会停，第三类不会。虚拟资料就是典型——做一次卖无数次，睡觉的时候也在卖。</p>
+</section>
+
+<section>
+  <h2><span class="num">05</span>劝退区 · 教别人用 AI</h2>
+  <div class="leadline">AI 绘画课 / GPT 变现课 / AI 副业训练营</div>
+
+  <div class="warnbox">
+    <div class="bt">这个赛道只剩两个口子</div>
+    <p>两年前是蓝海，现在是红海，而且口碑已经烂了——买家大多是没赚到钱的人，退款率和差评率都高。</p>
+    <p>还有空间的只有两种：<b>教特定人群</b>（比如教四十多岁的会计用 AI 做报表），或者<b>教特定工作流</b>（帮装修公司搭一套出图流程）。</p>
+    <p>凡是「人人都能学」的 AI 课，别做。</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">06</span>反向机会 · AI 越强，什么越贵</h2>
+  <div class="leadline">真人出镜 / 真人手作 / 真人经验 / 需要信任的一对一 / 线下能上门的服务</div>
+
+  <p>原因很简单：AI 让内容供给爆炸，注意力变成稀缺资源，<b>真人反而成了筛选器</b>。</p>
+
+  <p>你在小红书刷到一百条 AI 生成的笔记，突然刷到一条真人在厨房拍的，你会停下来。这不是审美偏好，是信息过载下的必然反应——你只能用「像不像真的」来降低判断成本。</p>
+
+  <p>所以咨询、教练、陪诊、上门服务这类「必须有个真人在场」的活，价格会往上走。这不是怀旧，是结构性稀缺。</p>
+</section>
+
+<section>
+  <h2><span class="num">07</span>落到产品 · side-hustle 测试品</h2>
+  <div class="leadline">36 题 · 16 条路线 · 四组赚法 · 线上可玩</div>
+
+  <p>产品链接：<a href="https://shuzitong585.github.io/root-series/side-hustle/">shuzitong585.github.io/root-series/side-hustle/</a></p>
+
+  <h3>为什么是 36 题，不是 48 题</h3>
+  <p>覆盖率不靠题目数量堆，靠结构。<b>做题数 = 阶段数 × 每阶段探测点</b>，不是 = 行业数 × 每行业题数。16 条路线按「钱怎么来的」分成四组，每组 4 条，一组题就能同时覆盖同组的所有路线。</p>
+
+  <div class="grid">
+    <div class="gcell"><div class="gn">GROUP 1 · 卖时间</div><div class="gt">一单一结，卖完就没</div><div class="gd">设计修图 / 文案代写 / 剪辑代做 / 家教陪练</div></div>
+    <div class="gcell"><div class="gn">GROUP 2 · 做内容</div><div class="gt">一对多，积累资产</div><div class="gd">小红书图文 / 短视频口播 / 虚拟资料 / 播客有声</div></div>
+    <div class="gcell"><div class="gn">GROUP 3 · 卖货</div><div class="gt">低买高卖，现金流转</div><div class="gd">闲鱼二手 / 无货源 / 手工定制 / 社区团购</div></div>
+    <div class="gcell"><div class="gn">GROUP 4 · 卖专业</div><div class="gt">卖信任，卖身份</div><div class="gd">简历辅导 / 兼职会计 / 行业顾问 / 课程训练营</div></div>
+  </div>
+
+  <h3>36 题的四个部分</h3>
+  <table>
+    <tr><th>部分</th><th class="c">题量</th><th>测什么</th></tr>
+    <tr><td class="g1">一 · 你现在这份班</td><td class="c">6</td><td>每天能用的时间、工资缺口、主业能否长出可带走的手艺、上班空隙、家人态度、身体余量</td></tr>
+    <tr><td class="g2">二 · 副业的真实成本</td><td class="c">6</td><td>三十天零收入、被同事刷到、被免费白嫖、快钱诱惑、最坏结局、一年后什么叫成功</td></tr>
+    <tr><td class="g3">三 · 十六条路一条条问</td><td class="c">16</td><td>每条路线一个真实场景（剪辑第九版、闲鱼一天十件、团长被追退货），不喜直说也是数据</td></tr>
+    <tr><td class="g4">四 · 最后八个问题</td><td class="c">8</td><td>熬多久、怕什么、一个人还是搭伙、作息、人情债、最后一问</td></tr>
+  </table>
+
+  <h3>六张底牌</h3>
+  <p>每个选项除了给路线加权，还会改动六张底牌：<b>时间 / 心力 / 技能 / 现金 / 人脉 / 表达</b>。结果页会指出你最大的牌和最大的坑，并在时间、心力、现金过低时给出明确警告（比如「时间这张牌偏薄——别选要日更的路，你撑不过第三周」）。</p>
+
+  <h3>权重是怎么校准的</h3>
+  <p>第一版的权重表有严重缺陷：<b>「小红书图文号」和「虚拟资料」被当成兜底选项</b>塞进了几乎所有题目，导致模拟 3000 局的结果有 78% 集中在这两条路上——等于所有人测出来都一样。</p>
+  <p>修正方法是重排整张权重表，让每题的四个选项大致对应四种赚法。校准后的指标：</p>
+
+  <table>
+    <tr><th>指标</th><th class="c">校准前</th><th class="c">校准后</th></tr>
+    <tr><td>16 条路线期望得分区间</td><td class="c">4.75 – 13.00</td><td class="c">6.25 – 11.25</td></tr>
+    <tr><td>最高频路线占比（随机 3000 局）</td><td class="c">40.6%</td><td class="c">约 20%</td></tr>
+    <tr><td>能成为第一名的路线数</td><td class="c">14 / 16</td><td class="c">16 / 16</td></tr>
+    <tr><td>十种典型人格的一致性</td><td class="c">5 / 10</td><td class="c">8 / 10，余下两处为同组偏好重叠</td></tr>
+  </table>
+  <p><small>「期望得分」= 每题所有选项对该路线权重的均值之和，用于检测哪条路线被系统性高估。「人格一致性」= 给定一个人偏好某条路线，按该偏好答题后是否测回这条路线。</small></p>
+
+  <h3>AI 该怎么进这个产品</h3>
+  <div class="verdict">AI 不是第 17 条路，它是所有路上的一个杠杆。</div>
+  <p>硬塞「AI 出图接单」「AI 工作流搭建」两条进去，会打乱已校准的权重，而且这两条本质上是「设计修图」和「行业顾问」的变种。</p>
+  <p>更该加的是结果页上的一行字——在五条推荐路线的每一条下面，写清楚 <b>AI 干得掉什么，干不掉什么</b>：</p>
+
+  <div class="box">
+    <div class="bt">示例文案</div>
+    <p><b>剪辑代做</b>——AI 能出字幕、能做粗剪、能配数字人口播，干不掉客户第九版的「还是第一版的感觉对」。<br><br>
+    <b>虚拟资料</b>——AI 能排版、能配图、能生成目录，干不掉你对考研那套东西的理解。<br><br>
+    <b>简历辅导</b>——AI 能改措辞、能套格式，干不掉「这个人到底该往哪个岗位投」的判断。</p>
+  </div>
+
+  <p>这一行的价值比多加两条路大得多。因为目标用户最怕的不是「不知道干什么」，是 <span class="hl">「我准备干的这件事会不会两年后就没了」</span>。在结果页直接把这个恐惧回答掉，产品就从「测着玩」变成「能拿主意」。</p>
+</section>
+
+<section>
+  <h2><span class="num">08</span>需要评估的三个问题</h2>
+  <div class="leadline">如果要给这个产品提意见，请集中在这三点</div>
+
+  <p><b>一、16 条路线的分组是否有遗漏。</b>现在的四组是「钱怎么来的」，有没有哪类副业既不属于卖时间、也不属于做内容、卖货、卖专业？（已知边界案例：陪诊、宠物寄养、摆摊、代抢代跑，目前被归入卖时间。）</p>
+
+  <p><b>二、36 题够不够撑起「测出你真能干哪一条」这个承诺。</b>第三部分每题只问一个场景，会不会对路线的区分度不足？是否需要把 16 道场景题扩成每条路 2 题（总题数变 52）？</p>
+
+  <p><b>三、结果页的「匹配度 34%」这类低数值会不会削弱说服力。</b>当前口径是四组占比之和为 100%，单组天然不会高。是否应改成「相对第一名的接近度」（第一名固定 100%）？</p>
+</section>
+
+<div class="foot">
+  side-hustle 测试品 · 36 题 · 16 条路线 · 2026-10-20<br>
+  产品地址：shuzitong585.github.io/root-series/side-hustle/
+</div>
+
+</div>
+</body>
+</html>
