@@ -60,13 +60,13 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .chapter{text-align:center;padding:56px 22px}
 .chapter .cn{font-size:13px;font-weight:800;letter-spacing:4px;color:#A8442C;margin-bottom:8px}
 .chapter .ct{font-size:24px;font-weight:900;color:#1F3D33;letter-spacing:1px;margin-bottom:6px}
-.chapter .cs{font-size:13px;color:#7A7A84;color:#7D8A84;letter-spacing:1px}
+.chapter .cs{font-size:13px;color:#7D8A84;letter-spacing:1px}
 .chapter .cd{font-size:13.5px;color:#5C6A64;line-height:1.9;margin-top:16px}
 
 .endwrap{padding:22px 20px 10px}
 .endtitle{text-align:center;margin-bottom:6px}
 .endtitle .st{font-size:11.5px;font-weight:800;letter-spacing:3px;color:#9AA6A1}
-.endtitle .en{font-size:30px;font-weight:900;color:#1F3D33;letter-spacing:3px;margin:6px 0 4px}
+.endtitle .en{font-size:28px;font-weight:900;color:#1F3D33;letter-spacing:2px;margin:6px 0 4px}
 .endtitle .ec{font-size:12.5px;color:#A8442C;font-weight:800;letter-spacing:.5px}
 .verdict{border:1.5px dashed #C9A08C;border-radius:12px;padding:14px 16px;margin:16px 0 18px;text-align:center;
   font-size:15px;font-weight:800;color:#8A4A32;line-height:1.85;background:#FDF7F3}
@@ -86,6 +86,51 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .share .sx{font-size:12.5px;color:#C9C2AE;line-height:1.85;margin-bottom:12px}
 .share button{width:100%;border:none;border-radius:10px;background:#D9C9A8;color:#1F3D33;font-family:inherit;
   font-size:13.5px;font-weight:900;padding:11px;cursor:pointer}
+
+/* ===== 新增：三条推荐 ===== */
+.tri{background:#fff;border:1px solid #E4E0D5;border-radius:14px;padding:0;margin-bottom:12px;overflow:hidden}
+.tri.first{border-color:#C9A08C;box-shadow:0 2px 10px rgba(168,68,44,.09)}
+.tri .hd{display:flex;align-items:center;gap:10px;padding:13px 16px;background:#F7F4EC}
+.tri.first .hd{background:#A8442C}
+.tri .no{width:24px;height:24px;flex:none;border-radius:50%;background:#1F3D33;color:#EFEDE3;
+  font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.tri.first .no{background:#fff;color:#A8442C}
+.tri .nm{flex:1;font-size:15px;font-weight:900;color:#1F3D33;letter-spacing:.5px;line-height:1.4}
+.tri.first .nm{color:#fff}
+.tri .no2{font-size:11.5px;font-weight:800;color:#8D7A5E;white-space:nowrap}
+.tri.first .no2{color:#F2DCD3}
+.tri .bd{padding:14px 16px 4px}
+.tri .why{font-size:13.5px;color:#3B4A44;line-height:1.9;margin-bottom:12px}
+.tri .why em{font-style:normal;background:#FBF0EA;color:#A8442C;font-weight:800;padding:0 3px;border-radius:3px}
+.tri .kv{display:flex;gap:9px;font-size:12.5px;line-height:1.8;margin-bottom:9px}
+.tri .kv .k{flex:none;width:56px;color:#9AA6A1;font-weight:700;letter-spacing:.5px}
+.tri .kv .v{flex:1;color:#4A5A54}
+.tri .kv .v b{color:#1F3D33}
+.tri .kv.risk .v{color:#8A4A32}
+.tri .start{margin:4px 0 14px;background:#F6F7F3;border-left:3px solid #1F3D33;padding:10px 12px;
+  font-size:12.5px;color:#3B4A44;line-height:1.85;border-radius:0 6px 6px 0}
+.tri .start b{color:#1F3D33;display:block;font-size:11px;letter-spacing:1.5px;margin-bottom:3px}
+
+/* ===== 新增：7 天计划 ===== */
+.plan{background:#1F3D33;color:#EFEDE3;border-radius:14px;padding:18px 16px;margin-bottom:12px}
+.plan .pt{font-size:11.5px;font-weight:800;letter-spacing:2px;color:#D9C9A8;margin-bottom:4px}
+.plan .pn{font-size:16px;font-weight:900;letter-spacing:.5px;margin-bottom:14px;line-height:1.5}
+.day{display:flex;gap:10px;padding:9px 0;border-top:1px solid #33544A}
+.day:first-of-type{border-top:none}
+.day .d{flex:none;width:38px;font-size:11px;font-weight:900;color:#D9C9A8;letter-spacing:.5px;padding-top:2px}
+.day .t{flex:1;font-size:13px;color:#E6E2D6;line-height:1.75}
+.plan .pfoot{margin-top:13px;padding-top:11px;border-top:1px dashed #3A5A4E;font-size:11.5px;color:#A8B2AB;line-height:1.8}
+
+/* ===== 新增：被现实压下去的提示 ===== */
+.downgrade{background:#FBF6E9;border:1px solid #E3D3AE;border-radius:12px;padding:13px 15px;margin:14px 0;
+  font-size:12.5px;color:#6B5A2E;line-height:1.85}
+.downgrade b{color:#4A3E1C}
+
+@media(max-width:400px){
+  .dbar .nm{width:76px}
+  .tri .hd{padding:12px 13px}
+  .tri .bd{padding:12px 13px 4px}
+}
 </style>
 </head>
 <body>
@@ -97,23 +142,216 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 <script>
 /* ==================== 16 条副业路线 ==================== */
 /* 四组不是行业分类，是「钱怎么来的」：卖时间 / 做内容 / 卖货 / 卖专业 */
+/* 五维现实属性用于匹配过滤：needTime 每周时间需求 / needCash 启动资金 / needSkill 技能门槛
+   / speed 见钱速度（5=最快） ，取值 1-5，数字越大要求越高 / 越快 */
 var ROUTES = [
- { id:"designer", name:"设计 / 修图接单",      group:"time",    menmen:"改稿到凌晨两点，第二天照常上班" },
- { id:"dawrite",  name:"文案代写 / 代运营",    group:"time",    menmen:"甲方半夜发需求，你在被窝里改" },
- { id:"video",    name:"剪辑 / 短视频代做",    group:"time",    menmen:"按条计费，改到第九版才过" },
- { id:"tutor",    name:"家教 / 陪练 / 一对一", group:"time",    menmen:"周末排满，比上班那五天更累" },
- { id:"note",     name:"小红书图文号",         group:"content", menmen:"前三个月没流量，全靠自己给自己打气" },
- { id:"shorts",   name:"短视频 / 口播号",      group:"content", menmen:"要么露脸，要么想清楚不露脸怎么活" },
- { id:"template", name:"虚拟资料 / 模板",      group:"content", menmen:"做一次卖无数次，前提是先做出来" },
- { id:"audio",    name:"播客 / 有声书",        group:"content", menmen:"涨粉最慢，变现最晚，最像存款" },
- { id:"flea",     name:"闲鱼 / 二手转卖",      group:"goods",   menmen:"一天发十件，问的人多买的人少" },
- { id:"dropship", name:"无货源 / 一件代发",    group:"goods",   menmen:"不用出门，但价格战打到骨头里" },
- { id:"craft",    name:"手工 / 定制",          group:"goods",   menmen:"出货慢，买家天天催" },
- { id:"groupbuy", name:"社区团购 / 团长",      group:"goods",   menmen:"靠邻里关系吃饭，退货全找你" },
- { id:"career",   name:"简历 / 面试辅导",      group:"expert",  menmen:"你的履历就是招牌，改不了" },
- { id:"cert",     name:"兼职会计 / 兼职 HR",   group:"expert",  menmen:"用资格证换钱，最稳也最闷" },
- { id:"consult",  name:"行业咨询 / 顾问",      group:"expert",  menmen:"按小时收费，客户是同事的同事" },
- { id:"course",   name:"课程 / 训练营",        group:"expert",  menmen:"把知道的东西，卖成一套东西" }
+ { id:"designer", name:"设计 / 修图接单", group:"time",
+   menmen:"改稿到凌晨两点，第二天照常上班",
+   needTime:3, needCash:2, needSkill:4, speed:4,
+   risk:"改稿没有上限，单价正在被 AI 压低，越往后越难涨价",
+   start:"整理 6 张最能代表你水平的老作品，发到接单群，报价比市场低 20% 接前三单",
+   plan:["翻出 6 张最能代表你水平的旧作品，把不满意的删掉",
+         "给每张写清改前改后和你的思路，别只放成品",
+         "定三个价位：简单、标准、复杂，写在纸上",
+         "在闲鱼和两个接单群各发一次，报价比市场低 20%",
+         "私信 20 个可能需要的人，只说一句「我能做这个，看作品」",
+         "接第一单，先谈清改稿次数：三次以内免费",
+         "交付后要一句评价，截图存下来当案例"] },
+
+ { id:"dawrite", name:"文案代写 / 代运营", group:"time",
+   menmen:"甲方半夜发需求，你在被窝里改",
+   needTime:4, needCash:1, needSkill:3, speed:4,
+   risk:"甲方随时改需求，边界难守，容易被拖成半个员工",
+   start:"选两个你最熟的行业各写一篇 500 字样板，私信 10 个本地小商家",
+   plan:["选 2 个你最熟的行业，各写一篇 500 字样板",
+         "把样板做成一张改前改后的对比图",
+         "定报价：单篇多少、包月多少，写清楚",
+         "翻 10 个本地小商家的账号，挑出写得最差的 3 个",
+         "私信这 3 个，附上你替他们重写的一段",
+         "接第一单，先收 50% 定金才开始",
+         "交付后问一句「下次还找我吗」，存进通讯录"] },
+
+ { id:"video", name:"剪辑 / 短视频代做", group:"time",
+   menmen:"按条计费，改到第九版才过",
+   needTime:4, needCash:2, needSkill:3, speed:4,
+   risk:"按条计费没有上限，客户一句「还是第一版」就白干三小时",
+   start:"剪三条 30 秒样片放主页，去接单群蹲单，先接 50 元一条的",
+   plan:["剪 3 条 30 秒样片：口播、产品、vlog 各一条",
+         "把样片拼成一个 1 分钟的作品集",
+         "定三个套餐：纯剪辑、剪辑加字幕、全包",
+         "去剪辑接单群和闲鱼发帖，先接 50 元一条的",
+         "接一单，全程记录实际花了多少小时",
+         "算一次真实时薪，低于 30 元就调价",
+         "让客户把你推荐给一个人，哪怕只是转发"] },
+
+ { id:"tutor", name:"家教 / 陪练 / 一对一", group:"time",
+   menmen:"周末排满，比上班那五天更累",
+   needTime:3, needCash:1, needSkill:3, speed:5,
+   risk:"周末全被占满，家长按结果考核你，学生不提分就换人",
+   start:"在小区群发一条试听信息，先免费试听一次再定价",
+   plan:["想清楚你能教什么：科目、年级、还是某项技能",
+         "写一条 100 字的介绍，说清你能帮到哪一步",
+         "在小区群、家长群各发一条试听信息",
+         "免费试听一次，观察学生反应，别急着报价",
+         "定价：按次还是按月，一次多久，写清楚",
+         "让第一个家长帮你介绍一个，给点感谢",
+         "把每次课的问题记下来，做成自己的教案"] },
+
+ { id:"note", name:"小红书图文号", group:"content",
+   menmen:"前三个月没流量，全靠自己给自己打气",
+   needTime:3, needCash:1, needSkill:2, speed:1,
+   risk:"前三个月几乎没有回报，80% 的人死在第二个月",
+   start:"选一个你被折磨过的具体问题，连发 10 篇同主题，中途不换赛道",
+   plan:["选一个你被真实折磨过的具体问题，越具体越好",
+         "翻 10 篇同题爆款，只记它们的开头怎么写",
+         "写 3 个标题、3 个开头，选一个最不装的",
+         "发第一篇，配图用手机实拍，别用模板",
+         "发第二篇，同一个主题换一个角度",
+         "看后台两个数：点开率、看完率，别只看赞",
+         "定下接下来 10 篇的选题，写下来，别中途换"] },
+
+ { id:"shorts", name:"短视频 / 口播号", group:"content",
+   menmen:"要么露脸，要么想清楚不露脸怎么活",
+   needTime:4, needCash:2, needSkill:3, speed:1,
+   risk:"起号周期长，露脸压力大，很多人拍到第五个就停了",
+   start:"先拍五条不露脸的，测出哪个选题有人看完再决定要不要出镜",
+   plan:["写 5 个你真有话说的题目，别看别人在拍什么",
+         "挑一个，写 100 字稿，读三遍改到顺口",
+         "手机架窗边拍第一条，不修不剪直接发",
+         "拍第二条，只换开头方式，其他不变",
+         "看哪条完播率高，就照那条的节奏再拍三条",
+         "决定露不露脸，定下来，别再摇摆",
+         "把最好的一条置顶，开始想第二个系列"] },
+
+ { id:"template", name:"虚拟资料 / 模板", group:"content",
+   menmen:"做一次卖无数次，前提是先做出来",
+   needTime:3, needCash:1, needSkill:3, speed:2,
+   risk:"三个周末做出来可能只卖几十块，复利在三个月后才开始",
+   start:"把你电脑里已经被别人问过要的东西整理成一份能直接用的成品",
+   plan:["翻你自己的电脑，找出已经被别人开口要过的东西",
+         "选一个，整理成能直接用的成品，不是草稿",
+         "做一张封面图，写清「包含什么、适合谁」",
+         "挂到小红书和闲鱼，先定低价跑量",
+         "卖出第一单，追问一句「还缺什么」",
+         "按反馈补一版，做成 2.0 再挂一次",
+         "开始做第二个，凑成同系列，别只做一个"] },
+
+ { id:"audio", name:"播客 / 有声书", group:"content",
+   menmen:"涨粉最慢，变现最晚，最像存款",
+   needTime:3, needCash:1, needSkill:3, speed:1,
+   risk:"涨粉最慢、变现最晚，一年之内基本没有收入",
+   start:"用手机录三期 15 分钟的，不买设备，先看有没有人听完",
+   plan:["用手机录 15 分钟，讲你最想说的一件事",
+         "听一遍，把废话全部剪掉",
+         "写一段 50 字的节目介绍，别写成自我感动",
+         "发到小宇宙和喜马拉雅，别买任何设备",
+         "录第二期，固定一个开头语，形成识别",
+         "看完播率，不要看播放量",
+         "定下更新频率，选你能坚持的那个，不是理想的那个"] },
+
+ { id:"flea", name:"闲鱼 / 二手转卖", group:"goods",
+   menmen:"一天发十件，问的人多买的人少",
+   needTime:2, needCash:2, needSkill:1, speed:5,
+   risk:"客服占八成时间，单件利润薄，退货和纠纷都算你的",
+   start:"先卖家里十件三个月没用过的东西，把发布和话术跑通",
+   plan:["翻家里，找出 10 件三个月没用过的东西",
+         "拍照：白底、正面、瑕疵也拍出来，别藏",
+         "写标题：品牌加型号加成色加价格",
+         "一次发 5 件，定价比同类低 10%",
+         "回复所有「在吗」，用统一话术，别现编",
+         "成交第一单，记下买家到底问了什么",
+         "把问最多的问题写进描述，再发另外 5 件"] },
+
+ { id:"dropship", name:"无货源 / 一件代发", group:"goods",
+   menmen:"不用出门，但价格战打到骨头里",
+   needTime:3, needCash:3, needSkill:2, speed:4,
+   risk:"同行随时降价，你的利润被吃光，平台规则一变就归零",
+   start:"选一个你自己会买的品类，找三个供应商比价，先上十个链接测款",
+   plan:["选一个你自己会买的品类，别选你没用过的",
+         "找 3 个供应商比价，要实拍样品图",
+         "上 10 个链接，标题照爆款改写，别照抄",
+         "看 3 天数据：哪个有浏览没成交",
+         "把有浏览的那个降 2 元，测试价格弹性",
+         "出一单，算清真实利润：含运费和退货",
+         "决定继续还是换品，一周内必须做决定"] },
+
+ { id:"craft", name:"手工 / 定制", group:"goods",
+   menmen:"出货慢，买家天天催",
+   needTime:5, needCash:3, needSkill:4, speed:3,
+   risk:"工时被严重低估，单件利润低，赶不上工期就要赔",
+   start:"先做三件成品不接单，记录每件花了多少小时和材料钱",
+   plan:["先做 3 件成品，不要接单，先把流程跑一遍",
+         "记录每件花了多少小时、多少材料钱",
+         "算出一个不亏的定价，工时按最低时薪算",
+         "拍图，重点拍细节和手，别只拍整体",
+         "发出去，写清「预售，7 天内发货」",
+         "接第一单，严格按承诺时间交付，宁可多加两天",
+         "问买家愿不愿意定制，试一次定制流程"] },
+
+ { id:"groupbuy", name:"社区团购 / 团长", group:"goods",
+   menmen:"靠邻里关系吃饭，退货全找你",
+   needTime:4, needCash:3, needSkill:2, speed:3,
+   risk:"售后全找你，坏一件赔一件，做不好连邻里关系都伤",
+   start:"在业主群做一次单品团，只收十单，先把一次履约跑通",
+   plan:["选一个你自己会复购的品：水果、鸡蛋、牛奶",
+         "找 2 个供货商，问清起送量和售后规则",
+         "在业主群发一次试团，说明白什么时候到",
+         "只收 10 单，先跑通一次完整履约",
+         "到货当天亲自分拣，坏的当场换，别解释",
+         "收集反馈，问下一次想要什么品",
+         "定下固定开团日，一周一次，别随叫随开"] },
+
+ { id:"career", name:"简历 / 面试辅导", group:"expert",
+   menmen:"你的履历就是招牌，改不了",
+   needTime:2, needCash:1, needSkill:4, speed:4,
+   risk:"需要真实职场资历撑着，包装有过界风险，编经历会砸招牌",
+   start:"免费帮三个熟人改简历，攒三个改前改后案例再开始收费",
+   plan:["把自己的简历整理成一份改前改后的案例",
+         "免费帮 3 个熟人改简历，先别谈钱",
+         "记录每个人改了什么、后来有没有面试",
+         "把 3 个案例做成一张图，去掉隐私信息",
+         "定价格：单改多少、加模拟面试多少",
+         "在小红书或脉脉发一条「免费看 5 份简历」",
+         "从免费里挑 1 个转付费，跑通一次完整交付"] },
+
+ { id:"cert", name:"兼职会计 / 兼职 HR", group:"expert",
+   menmen:"用资格证换钱，最稳也最闷",
+   needTime:3, needCash:1, needSkill:5, speed:4,
+   risk:"必须持证且证书在有效期内，报税出错要担责",
+   start:"先确认证书有效期和执业范围，接一家小公司的记账跑完一个完整月",
+   plan:["确认你的证还在有效期，执业范围是什么",
+         "列出你能接的活：记账、报税、社保、招聘",
+         "问 3 个同行现在收多少，别自己猜",
+         "告诉身边 10 个开公司的朋友你在接",
+         "接第一家，先只做记账，别碰报税",
+         "跑完一个完整月，记录实际花了多少小时",
+         "算时薪，决定最多接几家，写下来当红线"] },
+
+ { id:"consult", name:"行业咨询 / 顾问", group:"expert",
+   menmen:"按小时收费，客户是同事的同事",
+   needTime:2, needCash:1, needSkill:5, speed:3,
+   risk:"要有真行业资历，极容易踩到前东家的保密红线",
+   start:"把最熟的三个问题各写一页方案，发给十个同行试探需求",
+   plan:["写下你最熟的 3 个业务问题，越具体越好",
+         "每个问题写一页纸的解决思路，不涉及公司机密",
+         "找出 10 个可能有问题的人：同行、前同事、旧客户",
+         "发一条「最近在帮人看 XX 问题」，不推销",
+         "有人来问，先免费聊 30 分钟，问清他的真实问题",
+         "聊完给一份两页的建议，这一次不收钱",
+         "问对方「如果收费，你觉得值多少」，记下这个数"] },
+
+ { id:"course", name:"课程 / 训练营", group:"expert",
+   menmen:"把知道的东西，卖成一套东西",
+   needTime:4, needCash:1, needSkill:4, speed:2,
+   risk:"没有受众就做课，基本卖不动，录完课没人买最常见",
+   start:"先开一期五到八人的免费小班，讲完收集反馈再定价",
+   plan:["想清楚你能教会别人一件什么具体的事",
+         "写一节课的大纲，不是整个课，就一节课",
+         "找 5 个人，免费讲这一节，别等准备好",
+         "讲完收集三个问题：哪里没听懂",
+         "按反馈改大纲，加上练习和作业",
+         "定一个低价开第一期，9.9 到 39 都行",
+         "收完第一期，问要不要报下一期，再决定做不做全套"] }
 ];
 var GROUPNAME = { time:"卖时间", content:"做内容", goods:"卖货", expert:"卖专业" };
 var GROUPVERDICT = {
@@ -124,96 +362,84 @@ var GROUPVERDICT = {
 };
 var KEYS = ["时间","心力","技能","现金","人脉","表达"];
 
-/* ==================== 题库：4 部分 × 36 题 ==================== */
-/* 每个选项：t=选项 sub=小字 w=路线权重 m=六张底牌变化 */
+/* ==================== 题库：4 部分 × 28 题 ==================== */
+/* u 字段 = 收入紧迫度（3 很急 / 2 有点急 / 1 不急 / 0 不为钱），只出现在第一部分第 4 题 */
 var SECTIONS = [
-{ t:"你现在这份班", d:"副业不是从零开始的。它长在你现在的生活里——你几点能下班、卡里剩多少、手上有什么手艺，这些早就决定了你能干哪一类。",
+{ t:"你的现实条件", d:"副业不是从零开始的。你一周能挤出几小时、能拿出多少钱试错、手上有没有能换钱的技能——这三件事，比「你想干什么」更决定结果。",
   qs:[
-  { lead:"先算清楚你每天真正能用的时间。",
-    q:"工作日晚上，你几点开始真正属于自己？",
+  { lead:"先算清楚你真正能用的时间。",
+    q:"工作日晚上加周末，你一周能真正投入几小时？",
     opts:[
-     { t:"八点前，下班就算自由了", sub:"你还有三个小时可以赌",
-       w:{designer:2,dawrite:1,video:1}, m:{时间:3} },
-     { t:"九点半，吃完饭瘫一会儿才缓过来", sub:"能干，但只能干不费脑的",
-       w:{flea:2,dropship:2}, m:{时间:1,心力:-1} },
-     { t:"十一点以后，家里事忙完才算", sub:"你只有一小时，还得是状态好的时候",
-       w:{note:1,template:2,audio:1}, m:{时间:-2,心力:1} },
-     { t:"说不准，加班是常态", sub:"别选要日更的路，你撑不住",
-       w:{cert:2,consult:2,career:1}, m:{时间:-3} }
+     { t:"15 小时以上", sub:"每天两三小时，周末还能搭进去半天",
+       w:{designer:2,dawrite:2,video:1}, m:{时间:4} },
+     { t:"8 到 15 小时", sub:"晚上挤一挤，加半个周末",
+       w:{note:2,template:2,flea:1}, m:{时间:2} },
+     { t:"3 到 8 小时", sub:"基本只有周末能干活",
+       w:{craft:2,tutor:2,cert:1}, m:{时间:-2} },
+     { t:"3 小时以内，说不准", sub:"经常加班，临时有事就得停",
+       w:{flea:2,cert:2,template:1}, m:{时间:-4} }
     ]},
-  { lead:"副业的第一笔本钱，往往来自主业。",
-    q:"你现在的工资，够不够？",
+  { lead:"这笔钱是试错成本，亏了不能影响生活。",
+    q:"你能拿出多少钱试错？",
     opts:[
-     { t:"够花，还能存下一部分", sub:"你有本钱慢慢来",
-       w:{audio:2,template:1,note:1}, m:{现金:3} },
-     { t:"刚好，月底清零", sub:"副业必须自己养自己",
-       w:{designer:2,dawrite:2,tutor:1}, m:{现金:1} },
-     { t:"不够，每个月都在补窟窿", sub:"第一个月就得见到钱",
-       w:{flea:2,dropship:2,tutor:1}, m:{现金:-2} },
-     { t:"够，但我想要的不只是钱", sub:"你要的是另一条路，不是一个红包",
-       w:{course:3,consult:1,shorts:1}, m:{心力:2} }
+     { t:"5000 以上", sub:"亏了不心疼，可以压货、可以投流",
+       w:{dropship:2,craft:2,groupbuy:2}, m:{现金:4} },
+     { t:"1000 到 5000", sub:"够买点设备或者进一小批货",
+       w:{flea:2,craft:1,shorts:1}, m:{现金:2} },
+     { t:"500 到 1000", sub:"只能买工具，不能压货",
+       w:{designer:1,template:2,course:1}, m:{现金:-1} },
+     { t:"500 以内，最好零成本", sub:"先不花钱，把流程跑通再说",
+       w:{note:2,tutor:2,flea:2,consult:1}, m:{现金:-4} }
     ]},
   { lead:"这一题决定你能卖什么。",
-    q:"你现在的工作，能不能顺手长出一门手艺？",
+    q:"你手上有没有能直接换钱的技能？",
     opts:[
-     { t:"能，我手上就有能接活的技能", sub:"设计、写、剪、算账、教——都算",
-       w:{designer:3,video:2,dawrite:1,cert:1}, m:{技能:3} },
-     { t:"能接触到人，客户资源在我手里", sub:"你的资产是人，不是技能",
-       w:{consult:3,career:2,groupbuy:1}, m:{人脉:3} },
-     { t:"能学到东西，但带不出去", sub:"你缺的是一份能拿走的作品",
-       w:{note:2,craft:2,audio:1}, m:{技能:-1,心力:1} },
-     { t:"不能，这份工作什么也留不下", sub:"那就别从主业里找副业",
-       w:{flea:2,tutor:2,shorts:1,dropship:1}, m:{技能:-2} }
+     { t:"有，而且有人为它付过钱", sub:"哪怕只是兼职、帮朋友做过",
+       w:{designer:2,dawrite:2,video:2,cert:1}, m:{技能:4} },
+     { t:"有，但只是自己用用", sub:"没接过单，不确定能不能卖",
+       w:{note:2,template:2,craft:1}, m:{技能:1} },
+     { t:"没有硬技能，但我懂某个行业", sub:"你的资产是人脉和判断，不是手艺",
+       w:{consult:2,career:2,groupbuy:1}, m:{人脉:3,技能:-1} },
+     { t:"都没有，但我愿意学", sub:"那就先选门槛低的，别一上来就啃硬的",
+       w:{flea:2,tutor:2,shorts:1,dropship:1}, m:{技能:-3,心力:2} }
     ]},
-  { lead:"摸鱼时间也是一笔收入。",
-    q:"上班的时候，你有多少能自己支配的空隙？",
+  { lead:"这题直接决定该不该给你推「慢路」。",
+    q:"你多需要副业这笔钱？",
     opts:[
-     { t:"不少，能回消息，能剪个片子", sub:"这叫带薪做副业",
-       w:{dawrite:2,groupbuy:2,dropship:1}, m:{时间:3} },
-     { t:"有，但很碎，干不了正事", sub:"只够回消息，不够做东西",
-       w:{groupbuy:2,flea:2,dropship:1}, m:{时间:1} },
-     { t:"几乎没有，一直被盯着", sub:"你的副业只能在下班后",
-       w:{note:1,video:2,craft:2}, m:{时间:-2} },
-     { t:"我不打算用上班时间做私活", sub:"这条边界你守得住",
-       w:{course:2,consult:1,career:1,cert:1}, m:{心力:2} }
+     { t:"很急，三个月内必须见到钱", sub:"不能等，先解决现金流",
+       w:{flea:2,tutor:2,designer:1,dawrite:1}, m:{心力:-2}, u:3 },
+     { t:"有点急，今年内能补上就行", sub:"可以先搭，但不能拖太久",
+       w:{video:1,cert:2,career:2}, m:{心力:1}, u:2 },
+     { t:"不急，想先做点自己的东西", sub:"能接受半年不赚钱",
+       w:{note:2,template:2,audio:1,shorts:1}, m:{心力:3}, u:1 },
+     { t:"不为了钱，我想找第二条路", sub:"钱是结果，不是目的",
+       w:{course:2,consult:1,craft:2}, m:{心力:2}, u:0 }
     ]},
-  { lead:"副业从来不是一个人的事。",
-    q:"家里 / 伴侣对你「下班还折腾」的态度：",
+  { lead:"副业最真实的成本是「空转」。",
+    q:"如果三个月一分钱没赚到，你会：",
     opts:[
-     { t:"不拦我，还帮我看后台", sub:"这份默许比启动资金值钱",
-       w:{shorts:2,audio:2,note:1,craft:1}, m:{心力:3} },
-     { t:"不反对，但也不帮忙", sub:"你只能一个人扛",
-       w:{designer:1,dawrite:1,career:1}, m:{心力:1} },
-     { t:"天天说我不务正业", sub:"你得偷偷干，或者先做出成绩",
-       w:{flea:2,dropship:2,groupbuy:2}, m:{心力:-2} },
-     { t:"家里需要我照应，时间卡得很死", sub:"你只能选能碎片化的路",
-       w:{template:2,cert:2,audio:1}, m:{时间:-2,心力:1} }
-    ]},
-  { lead:"身体是最诚实的账本。",
-    q:"上完一天班，你身上还剩多少余量？",
-    opts:[
-     { t:"还能再干三小时，我扛得住", sub:"你能选最耗人的那几条路",
-       w:{video:2,craft:2,dawrite:1,groupbuy:1}, m:{心力:3} },
-     { t:"晚上只能干轻的，重活留给周末", sub:"周末是你的主战场",
-       w:{note:2,audio:2,career:1,template:1}, m:{心力:1,时间:-1} },
-     { t:"下班就废了，只有周末能干活", sub:"节奏慢，但一年也能做出东西",
-       w:{craft:2,tutor:3,flea:1}, m:{心力:-2,时间:-1} },
-     { t:"我身体已经在报警了", sub:"那你要先解决的不是副业",
-       w:{template:1,cert:2,consult:1}, m:{心力:-3} }
+     { t:"立刻换方向，不能一直空转", sub:"你要的是结果，不是坚持本身",
+       w:{flea:2,dropship:2}, m:{心力:-1} },
+     { t:"再撑三个月看看", sub:"给自己一个明确的期限",
+       w:{designer:1,note:1,cert:1}, m:{心力:1} },
+     { t:"会难受，但我知道这事有周期", sub:"你接受延迟回报",
+       w:{template:2,note:2,audio:1}, m:{心力:3} },
+     { t:"只要不亏钱，多久都行", sub:"你更怕亏本，不怕慢",
+       w:{craft:2,audio:2,course:1}, m:{心力:2} }
     ]}
   ]},
 
-{ t:"副业的真实成本", d:"副业不是多一份收入，是多一份成本。这一部分问的都是硬碰硬的问题——没人买、被同事刷到、被白嫖、快钱诱惑、你能接受哪种结局。",
+{ t:"副业的真实代价", d:"这一部分问的都是硬碰硬的问题——没人买、被同事刷到、被白嫖、快钱诱惑。你答得越诚实，结果越准。",
   qs:[
   { lead:"第一个月是最难的一个月。",
     q:"做了三十天，一分钱没进来。你：",
     opts:[
      { t:"接着做，我知道这事有延迟", sub:"你熬得住冷启动",
-       w:{note:3,audio:2,template:1}, m:{心力:3} },
+       w:{note:3,template:1,audio:1}, m:{心力:3} },
      { t:"换方向，找个更好卖的", sub:"及时止损也是一种能力",
-       w:{flea:2,dropship:2}, m:{心力:1,技能:-1} },
+       w:{flea:2,dropship:2}, m:{心力:1} },
      { t:"降价，先把第一单跑出来", sub:"有第一单和没第一单是两个世界",
-       w:{tutor:2,designer:2,craft:1}, m:{现金:-1,技能:1} },
+       w:{tutor:2,designer:2}, m:{现金:-1,技能:1} },
      { t:"算了，我果然干不了这个", sub:"这句话你今年说过几次了",
        w:{cert:2,career:1}, m:{心力:-3} }
     ]},
@@ -221,11 +447,11 @@ var SECTIONS = [
     q:"同事在推荐页刷到了你的号，截图发到群里：「这是你吧？」",
     opts:[
      { t:"是我，顺手推一波", sub:"同事后来成了你第一批客户",
-       w:{note:3,shorts:2,consult:1}, m:{人脉:3,心力:1} },
+       w:{note:2,shorts:2,career:1}, m:{人脉:3} },
      { t:"含糊过去，我不想让公司知道", sub:"你有顾虑，这很正常",
-       w:{flea:2,dropship:2,template:1}, m:{心力:1,人脉:-1} },
+       w:{flea:2,template:2}, m:{心力:1,人脉:-1} },
      { t:"当晚把同事全部屏蔽掉", sub:"你已经想得很清楚了",
-       w:{video:2,designer:1,dawrite:1}, m:{心力:2,人脉:-3} },
+       w:{dropship:2,dawrite:1,video:1}, m:{心力:2,人脉:-3} },
      { t:"第二天就把号注销了", sub:"怕被看见，是很多副业死掉的原因",
        w:{cert:2,career:1}, m:{心力:-3} }
     ]},
@@ -233,13 +459,13 @@ var SECTIONS = [
     q:"一个免费帮忙的请求来了，来自一个你不太好拒绝的人。",
     opts:[
      { t:"做，当攒人情", sub:"你信长期",
-       w:{consult:2,career:2,groupbuy:2}, m:{人脉:3,时间:-2} },
+       w:{consult:2,career:2,groupbuy:1}, m:{人脉:3,时间:-2} },
      { t:"报个价，从此被当成专业的人", sub:"免费的建议没人听",
-       w:{designer:3,dawrite:1,cert:1}, m:{技能:2,人脉:-1} },
+       w:{designer:2,dawrite:2,cert:1}, m:{技能:2,人脉:-1} },
      { t:"介绍给我认识的人，我搭个桥", sub:"你天生会当中介",
-       w:{groupbuy:2,flea:2,dropship:1}, m:{人脉:2,现金:1} },
+       w:{dropship:2,groupbuy:2}, m:{人脉:2,现金:1} },
      { t:"不接，我的时间有价", sub:"这条边界很难守，但值得",
-       w:{template:2,course:2,audio:1}, m:{时间:2,人脉:-2} }
+       w:{template:2,course:1,audio:1}, m:{时间:2,人脉:-2} }
     ]},
   { lead:"「一天两百，就是搬运、代发广告。」",
     q:"一条来钱快的路摆在面前。你：",
@@ -247,247 +473,187 @@ var SECTIONS = [
      { t:"先试一周，赚到钱再说", sub:"你知道有风险，但你想先见到钱",
        w:{dropship:2,flea:2}, m:{现金:2,心力:-2} },
      { t:"只做自己的东西，慢也认", sub:"名字比快钱值钱",
-       w:{note:2,audio:2,craft:2}, m:{心力:2,现金:-1} },
+       w:{note:2,template:2,craft:1}, m:{心力:2,现金:-1} },
      { t:"先看合不合规，合规就做", sub:"你不是不敢，是想先算清楚",
        w:{consult:2,cert:2,career:1}, m:{心力:1,现金:1} },
      { t:"不碰，这条路的味道不对", sub:"直觉替你挡掉过不少坑",
-       w:{course:2,shorts:1,craft:1}, m:{心力:2} }
-    ]},
-  { lead:"先想清楚，副业最坏能坏到哪。",
-    q:"如果副业做满一年，最坏的结局是：",
-    opts:[
-     { t:"钱没赚到，但手艺练出来了", sub:"这个结局你能接受",
-       w:{designer:2,dawrite:2,video:2,audio:1}, m:{技能:3} },
-     { t:"钱没赚到，还赔了本", sub:"赔掉的这笔钱，你睡得着吗",
-       w:{flea:2,craft:2,dropship:1}, m:{现金:-2,心力:1} },
-     { t:"被公司发现，工作也丢了", sub:"两头空的局，你敢不敢下",
-       w:{note:1,shorts:2,template:1}, m:{心力:-2} },
-     { t:"钱赚到了，人熬垮了", sub:"这笔账你算过没有",
-       w:{video:2,tutor:2,cert:1,groupbuy:1}, m:{心力:-3} }
+       w:{course:2,shorts:1}, m:{心力:2} }
     ]},
   { lead:"一年之后，什么算成功。",
     q:"副业做满一年，你觉得哪个结果最像成功：",
     opts:[
      { t:"能稳定覆盖房租，我就满足了", sub:"你要的是底气，不是翻身",
-       w:{tutor:3,dawrite:2,groupbuy:1}, m:{现金:2} },
+       w:{tutor:2,dawrite:2,groupbuy:1}, m:{现金:2} },
      { t:"有了一批只认我的人", sub:"人比钱重要",
-       w:{shorts:2,audio:2,note:1}, m:{人脉:3} },
+       w:{note:2,shorts:2,consult:1}, m:{人脉:3} },
      { t:"做出一个能拿走的东西", sub:"作品才是你真正的资产",
-       w:{craft:2,course:2,template:1}, m:{技能:3} },
+       w:{template:2,craft:2,course:1}, m:{技能:3} },
      { t:"收入超过工资，我就辞", sub:"你其实还是想走",
-       w:{course:2,consult:1,career:1}, m:{现金:2,心力:1} }
+       w:{shorts:2,course:2,dropship:1}, m:{现金:2,心力:1} }
     ]}
   ]},
 
-{ t:"十六条路，一条条问过去", d:"16 条副业路，每条的真实场景拿来问你一遍。不用讨好任何选项——不喜欢就是不喜欢，这本身就是数据。",
+{ t:"十六条路，四条一组", d:"每组是一个赚法，组里四条路必须挑出你更愿意干的那一条。这比「喜不喜欢」残酷，也准得多。",
   qs:[
-  { lead:"接单设计的一天。", tag:"场景 · 设计修图接单",
-    q:"客户说：「先出三版，我挑一个。」你知道他挑不出来，改到第五版还是会回到第一版。",
+  { lead:"卖时间 · 第一轮", tag:"如果一定要选一件，你干哪个",
+    q:"下面四件事，只能选一件，你选：",
     opts:[
-     { t:"只精做一版，把思路讲透", sub:"省力，但下次他可能找别人",
-       w:{designer:3}, m:{心力:2,技能:1} },
-     { t:"三版都做，累就累", sub:"他挑了第一版，你早知道",
-       w:{designer:2,dawrite:1}, m:{技能:2,心力:-2} },
-     { t:"套模板，快速交差", sub:"钱到手了，作品集里不放这条",
-       w:{dropship:2,flea:1}, m:{现金:2,技能:-2} },
-     { t:"这种客户，我不接", sub:"要么你有底气，要么你穷得不够",
-       w:{craft:2,template:1}, m:{心力:2,现金:-1} }
+     { t:"帮人修图做设计，按单收钱", sub:"一单一结，改稿到满意",
+       w:{designer:3}, m:{技能:2} },
+     { t:"帮人写文案，或者代管一个账号", sub:"按篇算，或者按月包",
+       w:{dawrite:3}, m:{技能:1,时间:-1} },
+     { t:"帮人剪视频，按条计费", sub:"一条一条结，改到过了为止",
+       w:{video:3}, m:{技能:2,心力:-1} },
+     { t:"周末上门教课，按小时收", sub:"见钱最快，但占死周末",
+       w:{tutor:3}, m:{现金:2,时间:-1} }
     ]},
-  { lead:"代运营的深夜。", tag:"场景 · 文案代写代运营",
-    q:"晚上十一点，甲方发来一句：「明天早上要，方向也改一下。」",
+  { lead:"做内容 · 第一轮", tag:"不用求人，靠作品说话",
+    q:"下面四种做法，你更愿意哪种？",
     opts:[
-     { t:"起来改，这单不能丢", sub:"改到两点，第二天照常上班",
-       w:{dawrite:3}, m:{现金:2,心力:-2} },
-     { t:"明早回，我下班后再弄", sub:"他会有意见，但你把边界立住了",
-       w:{dawrite:2,consult:1}, m:{心力:2,现金:-1} },
-     { t:"提价，把夜里的活算贵", sub:"他居然同意了",
-       w:{designer:1,cert:1}, m:{现金:2,技能:1} },
-     { t:"我最受不了这种节奏", sub:"你的时间不该由别人临睡前决定",
-       w:{cert:2,template:1}, m:{心力:1} }
+     { t:"做图文号，自己写字配图", sub:"一个人，一台电脑就够",
+       w:{note:3}, m:{心力:1} },
+     { t:"拍视频，对着镜头说话", sub:"要么露脸，要么想清楚怎么不露",
+       w:{shorts:3}, m:{心力:2,技能:1} },
+     { t:"做一份能反复卖的资料", sub:"做一次，卖很多次",
+       w:{template:3}, m:{技能:2} },
+     { t:"录音频，做播客或有声书", sub:"只听声音，不看脸",
+       w:{audio:3}, m:{心力:1,表达:2} }
     ]},
-  { lead:"按条计费的一天。", tag:"场景 · 剪辑代做",
-    q:"第九版了，客户说：「还是第一版的感觉对。」",
+  { lead:"卖货 · 第一轮", tag:"低买高卖，现金流转",
+    q:"如果要做买卖，你更愿意从哪种开始？",
     opts:[
-     { t:"改回去，然后把报价翻倍", sub:"他下次会先想清楚",
-       w:{video:2,designer:1}, m:{现金:2,心力:1} },
-     { t:"改，这行就这样", sub:"你算过这一条折成时薪多少吗",
-       w:{video:3}, m:{技能:2,心力:-3} },
-     { t:"定规矩：三次之内免费", sub:"说出口的那一刻，你专业了",
-       w:{consult:2,cert:1}, m:{技能:2,心力:2} },
-     { t:"我受不了，我要做自己的东西", sub:"那你要的不是接单",
-       w:{note:2,shorts:2}, m:{心力:2} }
+     { t:"先卖家里的旧东西，再收旧货转卖", sub:"零门槛，今天就能开张",
+       w:{flea:3}, m:{现金:1} },
+     { t:"找供货商代发，自己不压货", sub:"不用囤，但价格战很凶",
+       w:{dropship:3}, m:{现金:2} },
+     { t:"自己做手工，接定制单", sub:"出货慢，但没人能跟你比价",
+       w:{craft:3}, m:{技能:2,时间:-1} },
+     { t:"当团长，组织邻里一起买", sub:"靠关系吃饭，售后全找你",
+       w:{groupbuy:3}, m:{人脉:2} }
     ]},
-  { lead:"周末的家教。", tag:"场景 · 家教陪练",
-    q:"学生家长说：「孩子这次还是没进步，能不能多上一节课，不加钱。」",
+  { lead:"卖专业 · 第一轮", tag:"卖的不是时间，是信任",
+    q:"如果要用「你懂的东西」换钱，你选：",
     opts:[
-     { t:"加，家长口碑最重要", sub:"加了三次，你周末全没了",
-       w:{tutor:3}, m:{人脉:2,时间:-2} },
-     { t:"不加，但我把方法教给家长", sub:"有的家长听懂了，效果反而更好",
-       w:{tutor:1,consult:2}, m:{技能:2,心力:1} },
-     { t:"换学生，这个家庭不合适", sub:"筛客户比服务客户更省力",
-       w:{designer:1,groupbuy:1}, m:{心力:2,现金:-1} },
-     { t:"我不喜欢被人按月考核", sub:"这个答案很真实",
-       w:{career:2,template:1}, m:{心力:1} }
+     { t:"帮人改简历、练面试", sub:"用你的职场经历换钱",
+       w:{career:3}, m:{技能:1} },
+     { t:"用证书接兼职记账或人事", sub:"最稳，也最闷",
+       w:{cert:3}, m:{技能:2} },
+     { t:"给同行做顾问，按小时收费", sub:"客户是同事的同事",
+       w:{consult:3}, m:{技能:1,人脉:1} },
+     { t:"把自己的经验做成课卖", sub:"把知道的东西卖成一套东西",
+       w:{course:3}, m:{技能:2,表达:2} }
     ]},
-  { lead:"做号第三个月。", tag:"场景 · 小红书图文号",
-    q:"你发了 40 篇，最好的一篇 300 赞，最差的 4 个赞。你把这 40 篇翻了一遍。",
+  { lead:"卖时间 · 第二轮", tag:"换个真实场景，再选一次",
+    q:"下面四个深夜，哪个你受得了？",
     opts:[
-     { t:"拆对标，改选题，接着发", sub:"第 47 篇爆了，你想不到是那篇",
-       w:{note:3}, m:{技能:2,心力:1} },
-     { t:"停两周，想清楚再发", sub:"你要的是做下去，不是做爆款",
-       w:{template:2,course:1}, m:{心力:2} },
-     { t:"花钱投流，先试个水", sub:"数据好看两周，但你学会了看后台",
-       w:{shorts:1,dropship:1}, m:{现金:-2,技能:2} },
-     { t:"天天被数据审判，我过不了这日子", sub:"这不是怂，是自我认知",
-       w:{cert:2,career:2}, m:{心力:1} }
+     { t:"客户要三版选一，最后又回到第一版", sub:"你早就知道会这样",
+       w:{designer:3}, m:{心力:1} },
+     { t:"十一点，甲方说方向要改，明早要", sub:"改到两点，第二天照常上班",
+       w:{dawrite:3}, m:{心力:-1,现金:1} },
+     { t:"第九版了，客户说还是第一版对", sub:"你算过这一条折成时薪多少",
+       w:{video:3}, m:{心力:-1,技能:1} },
+     { t:"家长说孩子没进步，能不能多上一节不加钱", sub:"加了三次，周末没了",
+       w:{tutor:3}, m:{人脉:1,时间:-1} }
     ]},
-  { lead:"拍视频的第一周。", tag:"场景 · 短视频口播",
-    q:"手机架好，你对着镜头说了十二遍开头，每一遍都不像自己。",
+  { lead:"做内容 · 第二轮", tag:"三个月之后，还是没起色",
+    q:"下面四种处境，哪个你还能撑下去？",
     opts:[
-     { t:"不露脸，做图文和配音素材", sub:"省事，也少了一半机会",
-       w:{note:1,audio:2,template:1}, m:{技能:1,心力:2} },
-     { t:"硬着头皮发出去，丑就丑", sub:"第五个视频，有人开始留言",
-       w:{shorts:3}, m:{心力:2,技能:2} },
-     { t:"找个人一起拍，我做幕后", sub:"两个人的号，比一个人的好活",
-       w:{video:2,note:1}, m:{人脉:2} },
-     { t:"露脸这一关，我过不去", sub:"别勉强，做内容的形态有很多种",
-       w:{craft:2,template:1}, m:{心力:1} }
+     { t:"发了 40 篇，最好 300 赞，最差 4 赞", sub:"你把 40 篇翻了一遍",
+       w:{note:3}, m:{心力:1} },
+     { t:"对着镜头说十二遍开头，都不像自己", sub:"第五个视频才有人留言",
+       w:{shorts:3}, m:{心力:1,技能:1} },
+     { t:"三个周末做出来，七天卖 2 单赚 39 块", sub:"复利不在第一个月",
+       w:{template:3}, m:{技能:1,现金:1} },
+     { t:"六期播客，总播放 1200，订阅 47", sub:"有人留言说听睡着了",
+       w:{audio:3}, m:{心力:1} }
     ]},
-  { lead:"虚拟资料的第一周。", tag:"场景 · 虚拟资料模板",
-    q:"你花了三个周末做出第一份东西。挂上去七天，卖出 2 单，赚了 39 块。",
+  { lead:"卖货 · 第二轮", tag:"真做起来，都是麻烦",
+    q:"下面四种麻烦，哪个你能忍？",
     opts:[
-     { t:"接着做第二个，凑成一个系列", sub:"第十份做出来时，第一份开始自动卖",
-       w:{template:3}, m:{技能:2,现金:1} },
-     { t:"改标题改主图，先把这个卖好", sub:"同一个东西，卖法是另一半功力",
-       w:{note:2,dropship:1}, m:{技能:2} },
-     { t:"先免费送一波，攒点人", sub:"人攒到了，钱还要再等",
-       w:{consult:2,note:1}, m:{人脉:3,现金:-1} },
-     { t:"三个周末换 39 块，这效率我接受不了", sub:"你算得没错，但复利不在第一个月",
-       w:{designer:1,dawrite:1}, m:{心力:-2} }
+     { t:"挂 30 件，12 个人问在吗，成交 1 件", sub:"客服占八成时间",
+       w:{flea:3}, m:{技能:1} },
+     { t:"同行降到 9.9，你成本 12", sub:"跟就是白干，不跟就没流量",
+       w:{dropship:3}, m:{现金:1,心力:-1} },
+     { t:"客户定 8 件要打折，说帮你介绍", sub:"介绍来的人也都来要折扣",
+       w:{craft:3}, m:{技能:1,人脉:1} },
+     { t:"群里说橙子坏了三个，后面七条我也是", sub:"赔的钱自己出",
+       w:{groupbuy:3}, m:{人脉:1,心力:-1} }
     ]},
-  { lead:"播客的第六期。", tag:"场景 · 播客有声书",
-    q:"六期做下来，总播放 1,200，订阅 47。有人留言说：「你的声音让我睡着了。」",
+  { lead:"卖专业 · 第二轮", tag:"专业这两个字，是有代价的",
+    q:"下面四种处境，哪个你处理得来？",
     opts:[
-     { t:"那就继续做，睡觉也是需求", sub:"第 30 期的时候，有人开始付费",
-       w:{audio:3}, m:{心力:2,技能:1} },
-     { t:"改做有声书，按小时结算", sub:"稳一点，把爱好变成计件活",
-       w:{audio:2,cert:1}, m:{现金:2,心力:-1} },
-     { t:"剪成短片段，去人多的地方发", sub:"内容没变，渠道换了",
-       w:{shorts:2,note:1}, m:{技能:2} },
-     { t:"一年才 47 个订阅，我熬不了", sub:"这条路本来就是最慢的一条",
-       w:{flea:2,tutor:1}, m:{心力:-2} }
+     { t:"客户履历中间空了一年，让你「包装好点」", sub:"美化可以，编不行",
+       w:{career:3}, m:{心力:1} },
+     { t:"三家公司的账，报税截止日同一天", sub:"熬三个通宵，还怕出错",
+       w:{cert:3}, m:{技能:1,时间:-1} },
+     { t:"客户问你前东家具体怎么做", sub:"他想要的是那套东西",
+       w:{consult:3}, m:{技能:1,心力:1} },
+     { t:"课录完了，定价 199，卖 3 份，2 份是朋友买的", sub:"先免费开一期攒案例",
+       w:{course:3}, m:{技能:1,心力:-1} }
     ]},
-  { lead:"闲鱼的一天。", tag:"场景 · 闲鱼二手",
-    q:"你挂了 30 件，一天有 12 个人问「在吗」，最后成交 1 件。",
+  { lead:"如果时间只够做一件事",
+    q:"今晚只有两小时，你把它花在哪？",
     opts:[
-     { t:"整理话术，把回复模板化", sub:"转化率翻倍，你还省了一半时间",
-       w:{flea:3,dropship:1}, m:{技能:2,时间:1} },
-     { t:"拍更好的图，写更实的描述", sub:"同一件货，卖贵了 30 块",
-       w:{flea:2,note:1}, m:{技能:2} },
-     { t:"批量收货，做成一个小档口", sub:"从转卖变成生意",
-       w:{dropship:2,groupbuy:1}, m:{现金:-2,技能:2} },
-     { t:"回消息回到烦，我不适合做这个", sub:"客服占了八成时间，这很真实",
-       w:{cert:2,career:1}, m:{心力:-2} }
+   { t:"接一单，做完今晚就能收钱", sub:"先见到钱，心里才踏实",
+     w:{designer:1,dawrite:1,video:1,tutor:1}, m:{现金:2} },
+   { t:"做一份能反复卖的东西", sub:"今晚做完，以后一直卖",
+     w:{note:1,shorts:1,template:1,audio:1}, m:{技能:2} },
+   { t:"找一批货，试着挂出去", sub:"先把买卖流程跑通",
+     w:{flea:1,dropship:1,craft:1,groupbuy:1}, m:{现金:1} },
+   { t:"把自己懂的东西整理成体系", sub:"先想清楚你能教什么",
+     w:{career:1,cert:1,consult:1,course:1}, m:{技能:2} }
     ]},
-  { lead:"无货源的第二个月。", tag:"场景 · 无货源代发",
-    q:"同行把同款降到 9.9，你的成本是 12。",
+  { lead:"你更愿意跟谁打交道",
+    q:"副业里躲不开人，你更愿意面对哪种：",
     opts:[
-     { t:"换品，不跟这场价格战", sub:"换了三次品，你摸到门道了",
-       w:{dropship:2,flea:2}, m:{技能:2,现金:1} },
-     { t:"跟，先保住链接权重", sub:"卖了一千单，赚了两百",
-       w:{dropship:3}, m:{现金:1,心力:-3} },
-     { t:"做差异化：改包装、加赠品", sub:"贵 5 块也有人买",
-       w:{craft:2,designer:1}, m:{技能:3,现金:-1} },
-     { t:"这种卷法，我不干", sub:"价格战不是唯一的战场",
-       w:{consult:2,course:1}, m:{心力:2} }
+     { t:"客户，一单一结，干脆", sub:"有事说事，做完就散",
+       w:{designer:1,dawrite:1,video:1,tutor:1}, m:{技能:1} },
+     { t:"平台和算法，不用求人", sub:"数据好坏自己扛，不看人脸色",
+       w:{note:1,shorts:1,template:1,audio:1}, m:{心力:1} },
+     { t:"买家，讨价还价也行", sub:"一手交钱一手交货",
+       w:{flea:1,dropship:1,craft:1,groupbuy:1}, m:{现金:1} },
+     { t:"同行和企业，谈专业", sub:"对方认你的判断，不认你的工时",
+       w:{career:1,cert:1,consult:1,course:1}, m:{人脉:1} }
     ]},
-  { lead:"手工的第一个月。", tag:"场景 · 手工定制",
-    q:"有客户定了 8 件，说「能不能便宜点，我朋友多，可以帮你介绍」。",
+  { lead:"哪种累，你觉得能忍",
+    q:"副业的累和上班不一样，你最受得了哪种：",
     opts:[
-     { t:"给折扣，换介绍", sub:"介绍来了，但都是来要折扣的",
-       w:{craft:2,groupbuy:1}, m:{人脉:2,现金:-2} },
-     { t:"不降价，我卖的是手艺", sub:"他走了，留下来的客户都不砍价",
-       w:{craft:3}, m:{技能:2,心力:1} },
-     { t:"做小批量标准款，压单件工时", sub:"定制变成半定制，开始赚钱了",
-       w:{template:2,craft:1}, m:{技能:3} },
-     { t:"一个月做 8 件才赚两百，我不干了", sub:"手作的钱，在时间外面",
-       w:{dawrite:2,tutor:1,flea:1}, m:{心力:-2} }
+     { t:"反复改稿，改到客户满意", sub:"一条路走到黑",
+       w:{designer:1,dawrite:1,video:1,tutor:1}, m:{心力:2} },
+     { t:"天天更新，数据还可能很差", sub:"自己给自己打气",
+       w:{note:1,shorts:1,template:1,audio:1}, m:{心力:2} },
+     { t:"回消息、发快递、处理退货", sub:"琐碎，但当天就有结果",
+       w:{flea:1,dropship:1,craft:1,groupbuy:1}, m:{心力:1} },
+     { t:"被人质疑「你凭什么教我」", sub:"专业这条路要先受这一关",
+       w:{career:1,cert:1,consult:1,course:1}, m:{心力:2} }
     ]},
-  { lead:"团长的晚上。", tag:"场景 · 社区团购团长",
-    q:"群里有人说：「你家这个橙子坏了三个。」后面跟着七条「我也是」。",
+  { lead:"第一笔钱，你希望怎么来",
+    q:"副业的第一笔收入，你更希望是：",
     opts:[
-     { t:"挨个赔，钱我自己出", sub:"赔了 90 块，群里没有一个人退",
-       w:{groupbuy:3}, m:{人脉:3,现金:-2} },
-     { t:"找供货商要说法", sub:"谈下来一半，你学会了压供应商",
-       w:{consult:2,dropship:1}, m:{技能:2,人脉:1} },
-     { t:"拍照说明情况，公开处理", sub:"透明反而涨了信任",
-       w:{groupbuy:2,note:1}, m:{人脉:2,技能:1} },
-     { t:"这种邻里生意太琐碎，我干不了", sub:"团长赚的是人情钱",
-       w:{cert:2,career:1}, m:{心力:1} }
-    ]},
-  { lead:"接简历单的一天。", tag:"场景 · 简历面试辅导",
-    q:"客户说：「我这份履历，能不能帮我包装得好一点？」你看了看，中间空了一年。",
-    opts:[
-     { t:"美化可以，编不行", sub:"他不太高兴，但最后成了回头客",
-       w:{career:3}, m:{技能:2,心力:2} },
-     { t:"能写的都写上，反正没人查", sub:"钱赚了，这单你不太想提",
-       w:{dawrite:1,flea:1}, m:{现金:2,心力:-2} },
-     { t:"从简历之外给建议：先补一段经历", sub:"他半年后回来谢你",
-       w:{consult:2,course:1}, m:{人脉:2,技能:2} },
-     { t:"帮人包装这件事，我不太舒服", sub:"你的边界很清楚",
-       w:{cert:2,template:1}, m:{心力:1} }
-    ]},
-  { lead:"兼职会计的月底。", tag:"场景 · 兼职会计兼职HR",
-    q:"三家小公司的账，报税截止日都在同一天。",
-    opts:[
-     { t:"熬三个通宵，一次干完", sub:"干完了，你也怕出错",
-       w:{cert:3}, m:{现金:2,心力:-2} },
-     { t:"错开报税期，分批接", sub:"这家提前一周，那家推后一周",
-       w:{cert:2,consult:1}, m:{技能:2,心力:2} },
-     { t:"涨到我不累为止的价格", sub:"走了两家，留下那家给得更多",
-       w:{cert:1,course:1}, m:{现金:2,时间:1} },
-     { t:"为几百块担这个责任，不划算", sub:"风险你算得很清楚",
-       w:{career:1,template:1}, m:{心力:1} }
-    ]},
-  { lead:"做顾问的第一次。", tag:"场景 · 行业咨询顾问",
-    q:"客户问：「你们公司具体是怎么做的？」——他想要的是你前东家那套东西。",
-    opts:[
-     { t:"只讲通用方法，不碰公司的东西", sub:"他嫌不够具体，但你没越线",
-       w:{consult:3}, m:{技能:2,心力:2} },
-     { t:"该说的都说，反正没人知道", sub:"这单赚得多，你后来一直不太安心",
-       w:{dawrite:1,course:1}, m:{现金:3,心力:-2} },
-     { t:"先签保密协议，把边界写清楚", sub:"专业感一下就出来了",
-       w:{consult:2,cert:1}, m:{技能:3} },
-     { t:"踩线的事我不做", sub:"这条路你走得慢，但走得久",
-       w:{career:1,template:1}, m:{心力:2} }
-    ]},
-  { lead:"做课的第一个月。", tag:"场景 · 课程训练营",
-    q:"课录完了，定价 199，卖出去 3 份，其中两份是朋友买的。",
-    opts:[
-     { t:"免费开一期，攒口碑和案例", sub:"第二期收了 40 个人",
-       w:{course:3,note:1}, m:{人脉:3,现金:-1} },
-     { t:"降到底价 39，先跑量", sub:"卖了两百份，来了一堆售后",
-       w:{dropship:2,course:1}, m:{现金:1,心力:-2} },
-     { t:"拆成小课，按需卖", sub:"9.9 的入门课，带来了 199 的正课",
-       w:{course:2,template:2}, m:{技能:2,现金:1} },
-     { t:"我的东西还不够硬，先不卖", sub:"这句话可能会说三年",
-       w:{cert:1,tutor:1}, m:{心力:-1} }
+     { t:"这个月就有人付钱给我", sub:"哪怕只有两百",
+       w:{designer:1,dawrite:1,video:1,tutor:1}, m:{现金:2} },
+     { t:"三个月后有一笔稳定的", sub:"不求快，求稳",
+       w:{career:1,cert:1,consult:1,course:1}, m:{现金:1} },
+     { t:"半年后有一个能长大的", sub:"前期不赚钱也认",
+       w:{note:1,shorts:1,template:1,audio:1}, m:{心力:2} },
+     { t:"不确定，但我想先试试看", sub:"先做起来，钱后面再说",
+       w:{flea:1,dropship:1,craft:1,groupbuy:1}, m:{心力:1} }
     ]}
   ]},
 
-{ t:"最后八个问题", d:"前面问的是路线，这一部分问的是你。熬多久、怕什么、要不要搭伙、几点起床——这些细节会悄悄改写排名。",
+{ t:"最后六个问题", d:"前面问的是路，这一部分问的是你。熬多久、怕什么、要不要搭伙、几点起床——这些细节会悄悄改写排名。",
   qs:[
   { lead:"有人语重心长。",
     q:"「你现在这份工作挺好的，折腾什么。」你的真实想法：",
     opts:[
      { t:"他说得对，安稳就是我要的", sub:"那你要的是把主业做深，不是副业",
-       w:{cert:2,consult:1,career:2}, m:{心力:2} },
+       w:{cert:2,career:1}, m:{心力:2} },
      { t:"听听，但主意我自己拿", sub:"参考意见，不是决定",
-       w:{designer:1,dawrite:1}, m:{心力:1} },
+       w:{designer:1,note:1}, m:{心力:1} },
      { t:"劝我的人多了，我还在干", sub:"固执是你的一部分",
-       w:{shorts:2,craft:2,note:1}, m:{心力:2,人脉:-1} },
+       w:{shorts:2,craft:2}, m:{心力:2,人脉:-1} },
      { t:"我最怕的就是十年后还是这样", sub:"这句话就是你最早的启动资金",
-       w:{course:2,note:1,audio:1}, m:{心力:-1} }
+       w:{note:2,course:1,consult:1}, m:{心力:-1} }
     ]},
   { lead:"号被人截图嘲笑、第一单被退款、评论区有人骂你。",
     q:"一次公开的失败，你怎么消化：",
@@ -495,11 +661,11 @@ var SECTIONS = [
      { t:"复盘完就翻篇，第二天接着发", sub:"失败在你这儿是流程的一环",
        w:{note:2,shorts:2}, m:{心力:2,技能:1} },
      { t:"会难受很久，但我不会停", sub:"疼是真的，继续也是真的",
-       w:{craft:2,video:2,dawrite:1}, m:{心力:-1,技能:2} },
+       w:{craft:2,video:2}, m:{心力:-1,技能:2} },
      { t:"公开的失败，我消化不了", sub:"被围观比失败本身更重",
-       w:{flea:2,dropship:2}, m:{心力:-2} },
+       w:{flea:2,cert:2}, m:{心力:-2} },
      { t:"失败也是内容，我把它写出来", sub:"翻车现场就是你的素材",
-       w:{note:2,shorts:1,audio:2}, m:{人脉:2,心力:-1} }
+       w:{note:2,shorts:1,audio:1}, m:{人脉:2} }
     ]},
   { lead:"四选一，不许选「都不怕」。",
     q:"你更怕哪个：",
@@ -507,45 +673,21 @@ var SECTIONS = [
      { t:"没钱", sub:"钱的安全感是你的地基",
        w:{tutor:2,dropship:2,flea:1}, m:{现金:2} },
      { t:"没人看见我", sub:"被看见是你的氧气",
-       w:{shorts:2,note:2,audio:1}, m:{人脉:2} },
+       w:{shorts:2,note:2}, m:{人脉:2} },
      { t:"身体垮掉", sub:"你见过身体收账的样子",
-       w:{template:2,cert:2}, m:{心力:2} },
+       w:{template:2,cert:1}, m:{心力:2} },
      { t:"一辈子被别人安排", sub:"自由这个词对你是具体的",
-       w:{course:3,craft:2,consult:1}, m:{心力:2} }
-    ]},
-  { lead:"帮过你的人开口了。",
-    q:"带过你的前辈说：「我这边有个活，你帮我做一下，钱的事以后再说。」",
-    opts:[
-     { t:"做，人情比钱重要", sub:"这笔账你记得比谁都清",
-       w:{career:2,dawrite:2,consult:1}, m:{人脉:2,现金:-2} },
-     { t:"做，但得有个说法", sub:"不伤感情，也不白干",
-       w:{designer:2,cert:1,career:1}, m:{技能:2,人脉:1} },
-     { t:"介绍给别人，我搭个桥", sub:"你天生会当中间人",
-       w:{dropship:2,groupbuy:2}, m:{人脉:2,现金:1} },
-     { t:"人情债最重，我宁可明码标价", sub:"这句话会得罪人，也会筛出真客户",
-       w:{course:2,audio:1,template:1}, m:{心力:2,人脉:-1} }
-    ]},
-  { lead:"这个问题决定你适合哪一类路。",
-    q:"你愿意为一件事熬多久：",
-    opts:[
-     { t:"三个月不见钱就换", sub:"快速试错是你的生存策略",
-       w:{flea:3,dropship:2}, m:{现金:2,心力:-1} },
-     { t:"一年，给足一个完整周期", sub:"你尊重事情的规律",
-       w:{designer:2,video:2,dawrite:1}, m:{技能:2} },
-     { t:"三年起步，长期主义", sub:"你赌的是复利",
-       w:{note:2,template:1,course:2,audio:1}, m:{心力:2,现金:-1} },
-     { t:"不设期限，做到它成为我为止", sub:"这件事和你是同一件事",
-       w:{craft:3,shorts:2,audio:1}, m:{心力:2,技能:1} }
+       w:{craft:2,course:2}, m:{心力:2} }
     ]},
   { lead:"干法也是选路。",
     q:"一个人干，还是搭伙：",
     opts:[
      { t:"独处是刚需，一个人最好", sub:"合作对你是一种消耗",
-       w:{template:3,dawrite:2,audio:2}, m:{心力:2} },
+       w:{template:2,dawrite:2,audio:1}, m:{心力:2} },
      { t:"找个搭子，互相兜底", sub:"两个人的摊子比一个人热闹",
-       w:{flea:2,groupbuy:2,craft:1}, m:{人脉:3} },
+       w:{flea:2,groupbuy:2}, m:{人脉:3} },
      { t:"我要做一个小团队", sub:"你天然是组织者",
-       w:{course:2,craft:2,dropship:1}, m:{人脉:2,现金:-1} },
+       w:{dropship:2,course:1,craft:1}, m:{人脉:2,现金:-1} },
      { t:"跟对人比什么都重要", sub:"你在别人的体系里也发光",
        w:{consult:2,cert:1,career:1}, m:{人脉:2} }
     ]},
@@ -553,13 +695,13 @@ var SECTIONS = [
     q:"你状态最好的时间段是：",
     opts:[
      { t:"凌晨，全世界睡着的时候最清醒", sub:"夜是你的白天",
-       w:{video:2,dawrite:2,craft:2,audio:1}, m:{时间:2,心力:-1} },
+       w:{video:2,dawrite:2,craft:1}, m:{时间:2,心力:-1} },
      { t:"早上七点，规律即自由", sub:"上班前那两个小时是你的",
-       w:{note:2,template:2,cert:1,career:1}, m:{时间:2,心力:2} },
+       w:{note:2,template:1,cert:1,career:1}, m:{时间:2,心力:2} },
      { t:"下班后那一小时，硬挤出来的", sub:"短，但每天都有",
-       w:{flea:2,dropship:1,dawrite:1}, m:{时间:1} },
+       w:{flea:2,dropship:1}, m:{时间:1} },
      { t:"只有周末，平时一点力气都没有", sub:"你只能选能攒着做的路",
-       w:{craft:2,template:1,tutor:2,audio:2}, m:{时间:-2} }
+       w:{craft:2,tutor:1,audio:1}, m:{时间:-2} }
     ]},
   { lead:"最后一问。",
     q:"你现在这份工作，离你想要的生活有多近：",
@@ -588,6 +730,7 @@ var hud  = document.getElementById('hud');
 var S = null;
 
 function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+function R(id){ for(var i=0;i<ROUTES.length;i++){ if(ROUTES[i].id===id) return ROUTES[i]; } return null; }
 
 function renderCover(){
   hud.style.display='none';
@@ -598,17 +741,17 @@ function renderCover(){
      '<div class="lead" style="text-align:left;margin-top:18px">' +
        '所有人都在劝你「先别辞」。<br>' +
        '但没人告诉你——<b>不辞职，你还能干什么</b>。<br>' +
-       '36 道题，把 <b>16 条副业路</b>在你身上过一遍，' +
-       '测出你真能长期做下去的是哪一条。</div>' +
+       '28 道题，把 <b>16 条副业路</b>在你身上过一遍，' +
+       '再按你真实的<b>时间、钱、技能</b>筛一遍，告诉你先试哪三条。</div>' +
      '<div class="card" style="text-align:left"><div class="k">这个测试怎么算</div>' +
-       '<div class="d"><b>第一部分</b>（6 题）：你这份班，留给你多少时间、多少钱、多少余量。<br>' +
-       '<b>第二部分</b>（6 题）：副业的真实成本——没人买、被同事刷到、被白嫖、快钱诱惑。<br>' +
-       '<b>第三部分</b>（16 题）：16 条副业路，每条的真实场景问你一遍。' +
-       '剪辑改到第九版、闲鱼一天发十件、团长被邻居追着退货……<br>' +
-       '<b>第四部分</b>（8 题）：你这个人——熬得住吗，露不露脸，几点起床。<br><br>' +
-       '每个选项都在给路线加权，也在改你的六张底牌（时间 / 心力 / 技能 / 现金 / 人脉 / 表达）。</div></div>' +
+       '<div class="d"><b>第一部分</b>（5 题）：你的现实条件——一周能投入几小时、能拿出多少钱、手上有没有能换钱的技能、多需要这笔钱。<br>' +
+       '<b>第二部分</b>（5 题）：副业的真实代价——没人买、被同事刷到、被白嫖、快钱诱惑。<br>' +
+       '<b>第三部分</b>（12 题）：16 条路，四条一组，每组必须挑出你更愿意干的那一条。换两个场景，再挑两次。<br>' +
+       '<b>第四部分</b>（6 题）：你这个人——熬得住吗、怕什么、几点起床。<br><br>' +
+       '最后不是给你一条路，是给你<b>三条</b>：每条都写清为什么推它、要花多少钱、最大的坑在哪、第一步怎么迈。' +
+       '第一名还会生成一份<b>七天行动计划</b>。</div></div>' +
      '<div class="card" style="text-align:left"><div class="k">交个底</div>' +
-       '<div class="d">36 题 · 约 8 分钟 · 没有对错答案，凭直觉选。' +
+       '<div class="d">28 题 · 约 6 分钟 · 没有对错答案，凭直觉选。' +
        '不喜欢某条路就直说——「打死不干」和「这就是我想干的」一样，都是有效数据。</div></div>' +
      '<button class="btn main" data-act="start">开始测试</button>' +
    '</div>';
@@ -616,7 +759,7 @@ function renderCover(){
 }
 
 function startQuiz(){
-  S = { i:0, secShown:{}, scores:{}, attrs:{}, log:[] };
+  S = { i:0, secShown:{}, scores:{}, attrs:{}, urgent:1, log:[] };
   ROUTES.forEach(function(r){ S.scores[r.id]=0; });
   KEYS.forEach(function(k){ S.attrs[k]=50; });
   nextQ();
@@ -697,78 +840,201 @@ document.addEventListener('click', function(e){
 function choose(i){
   var Q = FLAT[S.i], o = Q.opts[i];
   document.querySelectorAll('.opt').forEach(function(el,j){
-    el.onclick=null;
     if(j!==i) el.classList.add('dim');
   });
   document.getElementById('opt'+i).classList.add('picked');
   Object.keys(o.w||{}).forEach(function(id){ S.scores[id]=(S.scores[id]||0)+o.w[id]; });
   Object.keys(o.m||{}).forEach(function(k){ S.attrs[k]=clamp(S.attrs[k]+o.m[k],15,95); });
-  S.log.push({ q:Q.q, c:o.t });
+  if (typeof o.u === 'number') S.urgent = o.u;
+  S.log.push({ q:Q.q, c:o.t, i:i });
   setTimeout(function(){ S.i++; nextQ(); }, 300);
 }
 
-/* ==================== 结算 ==================== */
+/* ==================== 匹配 ==================== */
+/* 第一层：兴趣加权分（S.scores）
+   第二层：现实可行性系数 fit —— 时间、钱、技能、见钱速度四道闸
+   最终分 = 兴趣分 × fit，排序取前三 */
+function fitOf(r, a, urgent){
+  var fit = 1, why = [];
+  var t = a["时间"], c = a["现金"], s = a["技能"];
+
+  /* 时间闸：这条路要的时间，明显超过你能给的时间 */
+  if (r.needTime >= 5 && t < 58){ fit *= 0.58; why.push("time"); }
+  else if (r.needTime === 4 && t < 48){ fit *= 0.74; why.push("time"); }
+  else if (r.needTime <= 2 && t >= 60){ fit *= 1.05; }
+
+  /* 资金闸：启动资金要求高于你手上的钱 */
+  if (r.needCash >= 4 && c < 60){ fit *= 0.58; why.push("cash"); }
+  else if (r.needCash === 3 && c < 46){ fit *= 0.76; why.push("cash"); }
+
+  /* 技能闸：门槛明显高于你现有的手艺 */
+  if (r.needSkill >= 5 && s < 64){ fit *= 0.52; why.push("skill"); }
+  else if (r.needSkill === 4 && s < 50){ fit *= 0.76; why.push("skill"); }
+
+  /* 紧迫度闸：急着要钱，就不该推慢路 */
+  if (urgent >= 3){
+    if (r.speed <= 1){ fit *= 0.30; why.push("slow"); }
+    else if (r.speed === 2){ fit *= 0.42; why.push("slow"); }
+    else if (r.speed >= 4){ fit *= 1.18; }
+  } else if (urgent === 2){
+    if (r.speed <= 1){ fit *= 0.60; why.push("slow"); }
+    else if (r.speed === 2){ fit *= 0.80; why.push("slow"); }
+    else if (r.speed >= 4){ fit *= 1.10; }
+  } else {
+    /* 不急的人，慢路反而合适 */
+    if (r.speed <= 2){ fit *= 1.10; }
+  }
+
+  return { fit: Math.max(0.28, fit), why: why };
+}
+
+/* 选前三：急需钱的人，慢路直接排除在推荐之外（快路有 11 条，够用） */
+function pickTop(arr, urgent){
+  var sorted = arr.slice().sort(function(a,b){ return b.final-a.final || (a.r.id<b.r.id?-1:1); });
+  if (urgent >= 3){
+    var fast = sorted.filter(function(x){ return x.r.speed >= 3; });
+    var slow = sorted.filter(function(x){ return x.r.speed < 3; });
+    return fast.concat(slow).slice(0,3);
+  }
+  return sorted.slice(0,3);
+}
+
 function compute(){
+  var arr = ROUTES.map(function(r){
+    var base = S.scores[r.id] || 0;
+    var f = fitOf(r, S.attrs, S.urgent);
+    return { r:r, base:base, fit:f.fit, final:base*f.fit, flags:f.why };
+  });
+  var byFinal = arr.slice().sort(function(a,b){ return b.final-a.final || (a.r.id<b.r.id?-1:1); });
+  var byBase  = arr.slice().sort(function(a,b){ return b.base-a.base  || (a.r.id<b.r.id?-1:1); });
+  var top3 = pickTop(arr, S.urgent);
+  var maxFinal = top3[0].final || 1;
+  top3.forEach(function(x){ x.pct = Math.round(x.final / maxFinal * 100); });
+  byFinal.forEach(function(x){ if (typeof x.pct === 'undefined') x.pct = Math.round(x.final / maxFinal * 100); });
+
+  /* 组倾向：用 final 分算，才算「考虑现实之后」的倾向 */
   var gSum={}, gCnt={};
   ROUTES.forEach(function(r){
-    gSum[r.group]=(gSum[r.group]||0)+S.scores[r.id];
+    gSum[r.group]=(gSum[r.group]||0)+ (S.scores[r.id]||0);
     gCnt[r.group]=(gCnt[r.group]||0)+1;
   });
   var gAvg={}, total=0;
   Object.keys(gSum).forEach(function(g){ gAvg[g]=gSum[g]/gCnt[g]; total+=gAvg[g]; });
   var shares={}, floorSum=0, rest=[];
   Object.keys(gAvg).forEach(function(g){
-    var exact = gAvg[g]/total*100;
+    var exact = total>0 ? gAvg[g]/total*100 : 25;
     shares[g] = Math.floor(exact);
     floorSum += shares[g];
     rest.push([g, exact-shares[g]]);
   });
   rest.sort(function(a,b){ return b[1]-a[1]; });
   for(var k=0; floorSum<100 && k<rest.length; k++, floorSum++){ shares[rest[k][0]]++; }
-  var ranked = ROUTES.slice().sort(function(a,b){ return S.scores[b.id]-S.scores[a.id] || (a.id<b.id?-1:1); });
-  return { gAvg:gAvg, shares:shares, ranked:ranked };
+
+  return { all:arr, top:top3, byBase:byBase, shares:shares, maxFinal:maxFinal };
 }
 
+/* ==================== 推荐理由（动态生成） ==================== */
+function whyOf(x, a, urgent, idx){
+  var r = x.r, out = [];
+
+  if (r.needCash <= 2 && a["现金"] <= 58) out.push("几乎不用投入本钱，亏了也不心疼");
+  if (r.needTime <= 2 && a["时间"] <= 58) out.push("每周两三个小时就能推进，不用等整块时间");
+  if (r.needTime >= 4 && a["时间"] >= 68) out.push("要的时间多，但你恰好给得起");
+  if (r.needSkill >= 4 && a["技能"] >= 62) out.push("你手上的技能正好对得上，不用从零学");
+  if (r.needSkill <= 2 && a["技能"] <= 52) out.push("门槛低，今天就能上手试第一单");
+  if (urgent >= 3 && r.speed >= 4) out.push("见效快，第一笔钱不用等三个月");
+  if (urgent <= 1 && r.speed <= 2) out.push("不必急着变现，正好适合慢慢攒");
+  if (a["人脉"] >= 65 && (r.group === "expert" || r.id === "groupbuy")) out.push("你手上有人，第一批客户不用从零找");
+  if (a["心力"] >= 68 && r.needTime >= 4) out.push("心力还够，撑得过前期没有回报的阶段");
+  if (a["表达"] >= 68 && r.group === "content") out.push("表达是你的长板，做内容比卖货顺");
+
+  /* 兜底：至少两条，按排名给不同的话，不说空话 */
+  if (out.length < 2){
+    if (x.base >= 6) out.push("你在前面十几道题里，反复选了跟它同一类的答案");
+    else if (idx === 1) out.push("跟第一条是同一个赚法，如果试完第一条不喜欢，可以从这条接着来");
+    else out.push("当备选放着：前三条试了一个月都不顺，再回来翻它");
+  }
+  if (out.length < 2){
+    out.push(idx === 0 ? "按你现在的条件，它不会把你逼到墙角" : "它跟你其他两条不一样，失败了一般不是同时失败");
+  }
+  return out.slice(0, 3);
+}
+
+/* 成本描述 */
+function costOf(r){
+  var cashTxt = ["", "基本不花钱", "五百以内", "一千到三千", "三千到八千", "八千以上"][r.needCash] || "看情况";
+  var timeTxt = ["", "每周两三小时", "每周三到六小时", "每周六到十小时", "每周十小时以上", "几乎占满业余时间"][r.needTime] || "看情况";
+  return { cash: cashTxt, time: timeTxt };
+}
+
+/* ==================== 结果页 ==================== */
 function renderResult(){
   hud.style.display='none';
   var C = compute();
-  var top = C.ranked[0], top5 = C.ranked.slice(0,5);
-  var maxScore = S.scores[top.id] || 1;
-  var a = S.attrs;
-
+  var T = C.top, first = T[0], a = S.attrs, urgent = S.urgent;
   var h = '<div class="endwrap">';
+
   h += '<div class="endtitle"><div class="st">测试结果 · 不辞职</div>' +
-       '<div class="en">'+top.name+'</div>' +
-       '<div class="ec">'+GROUPNAME[top.group]+' · 匹配度 '+C.shares[top.group]+'%</div></div>';
+       '<div class="en">'+first.r.name+'</div>' +
+       '<div class="ec">'+GROUPNAME[first.r.group]+' · 优先度 '+first.pct+'</div></div>';
 
-  h += '<div class="card"><div class="k">这条路的样子</div>' +
-       '<div class="v">'+top.menmen+'</div>' +
-       '<div class="d">'+GROUPVERDICT[top.group]+'</div></div>';
+  /* 一句结论：结合紧迫度给不同的话 */
+  var line;
+  if (urgent >= 3) line = "你急着要钱，所以下面三条都优先选了<b>能在一两个月内见到收入</b>的。那些要养半年才有回报的路，我先给你压下去了。";
+  else if (urgent === 2) line = "你有一点时间压力，但不算火烧眉毛。下面三条是<b>能起量、又不至于让你空转太久</b>的。";
+  else line = "你不急着变现，这是优势。下面三条都允许你<b>先做出来再想卖</b>，不用一开始就算账。";
+  h += '<div class="verdict" style="text-align:left;font-weight:600;font-size:13.5px">'+line+'</div>';
 
-  h += '<div class="verdict">测试只能测出你现在能干哪一类。<br>真正能干成的那条，要等你下班后真的动手。</div>';
+  /* 三条推荐 */
+  h += '<div class="dossier" style="background:none;border:none;padding:0;margin-bottom:4px">' +
+       '<div class="dt">先 试 这 三 条</div></div>';
 
-  // 四大方向
-  h += '<div class="dossier"><div class="dt">四 大 赚 法 倾 向</div>';
-  [["time","卖时间"],["content","做内容"],["goods","卖货"],["expert","卖专业"]].forEach(function(g){
-    var hot = (g[0]===top.group);
-    h += '<div class="dbar"><span class="nm">'+g[1]+'</span>' +
-         '<span class="track"><span class="fill'+(hot?' hot':'')+'" style="width:'+C.shares[g[0]]+'%"></span></span>' +
-         '<span class="v">'+C.shares[g[0]]+'%</span></div>';
+  T.forEach(function(x, idx){
+    var c = costOf(x.r), whys = whyOf(x, a, urgent, idx);
+    h += '<div class="tri'+(idx===0?' first':'')+'">';
+    h += '<div class="hd"><span class="no">'+(idx+1)+'</span>' +
+         '<span class="nm">'+x.r.name+'</span>' +
+         '<span class="no2">'+GROUPNAME[x.r.group]+' · '+x.pct+'</span></div>';
+    h += '<div class="bd">';
+
+    h += '<div class="why">'+whys.map(function(w){ return w; }).join("；")+'。</div>';
+
+    var cashNote = x.r.needCash <= 1 ? "，几乎是零成本启动" : (x.r.needCash >= 3 ? "，要先备一笔货" : "");
+    h += '<div class="kv"><span class="k">启动成本</span><span class="v"><b>'+c.cash+'</b>'+cashNote+'</span></div>';
+    h += '<div class="kv"><span class="k">投入时间</span><span class="v">'+c.time+ (x.r.needTime>=4 ? "，<b>会和你的休息时间抢</b>" : "，不至于占满晚上") +'</span></div>';
+    h += '<div class="kv risk"><span class="k">主要风险</span><span class="v">'+x.r.risk+'</span></div>';
+    h += '<div class="start"><b>新 手 第 一 步</b>'+x.r.start+'</div>';
+    h += '</div></div>';
   });
-  h += '<div class="dmeta">占比 = 你在这 36 题里对这类赚法的偏向程度，不是成功率。</div></div>';
 
-  // 最像的五条路
-  h += '<div class="dossier"><div class="dt">最 适 合 你 的 五 条 路</div>';
-  top5.forEach(function(r,idx){
-    var pct = Math.round(S.scores[r.id]/maxScore*100);
-    h += '<div class="dbar"><span class="nm">'+(idx+1)+'. '+r.name+'</span>' +
-         '<span class="track"><span class="fill'+(idx===0?' hot':'')+'" style="width:'+pct+'%"></span></span>' +
-         '<span class="v">'+pct+'%</span></div>';
-    h += '<div style="font-size:11.5px;color:#9AA6A1;margin:-4px 0 8px;padding-left:96px">'+r.menmen+'</div>';
+  /* 被现实压下去的那条 */
+  var topBase = C.byBase[0];
+  var firstBaseRank = C.top.map(function(x){ return x.r.id; }).indexOf(topBase.r.id);
+  if (topBase.r.id !== first.r.id && firstBaseRank !== 0){
+    var whyTxt = "";
+    if (topBase.flags.indexOf("slow") >= 0) whyTxt = "它见钱太慢，而你现在等不起";
+    else if (topBase.flags.indexOf("cash") >= 0) whyTxt = "它要先投一笔钱，你现在的预算不够";
+    else if (topBase.flags.indexOf("skill") >= 0) whyTxt = "它对技能门槛要求高，你现在还接不住";
+    else if (topBase.flags.indexOf("time") >= 0) whyTxt = "它要的时间比你给得起的多";
+    if (whyTxt){
+      h += '<div class="downgrade"><b>顺便说一句。</b>按你的兴趣，<b>'+topBase.r.name+
+           '</b>分数其实是最高的，我没有把它排第一——'+whyTxt+
+           '。等条件变了，它可以再捡起来。</div>';
+    }
+  }
+
+  /* 7 天计划 */
+  h += '<div class="plan">';
+  h += '<div class="pt">七 天 计 划</div>';
+  h += '<div class="pn">从明天开始，做「'+first.r.name+'」</div>';
+  first.r.plan.forEach(function(t, i){
+    h += '<div class="day"><span class="d">DAY '+(i+1)+'</span><span class="t">'+t+'</span></div>';
   });
+  h += '<div class="pfoot">七天做完，你会知道自己是不是真愿意干这件事。'+
+       '如果做到第三天就想放弃，那不是失败，是省下了三个月。</div>';
   h += '</div>';
 
-  // 牌面
+  /* 牌面 */
   h += '<div class="dossier"><div class="dt">你 现 在 的 牌 面</div>';
   KEYS.forEach(function(k){
     h += '<div class="dbar"><span class="nm">'+k+'</span>' +
@@ -778,7 +1044,7 @@ function renderResult(){
   var hi = KEYS.slice().sort(function(x,y){ return a[y]-a[x]; })[0];
   var lo = KEYS.slice().sort(function(x,y){ return a[x]-a[y]; })[0];
   var meta = '你最大的牌是<b>「'+hi+'」</b>，最大的坑是<b>「'+lo+'」</b>。';
-  if(a["时间"]<=38) meta += '<br><span class="warn">时间这张牌偏薄——别选要日更、要每天盯着的路，你撑不过第三周。</span>';
+  if(a["时间"]<=38) meta += '<br><span class="warn">时间这张牌偏薄——别选要日更的路，你撑不过第三周。</span>';
   if(a["心力"]<=38) meta += '<br><span class="warn">心力偏低——副业多半死在第三周，不是死在没客户。</span>';
   if(a["现金"]<=38) meta += '<br><span class="warn">现金偏薄——别碰要备货、要投流的，先卖时间。</span>';
   if(a["技能"]>=72) meta += '<br>技能很硬。卖时间这条路，你起步就比大部分人快。';
@@ -786,18 +1052,27 @@ function renderResult(){
   if(a["人脉"]>=72) meta += '<br>人脉很厚。你的第一批客户不用从零开始找。';
   h += '<div class="dmeta">'+meta+'</div></div>';
 
-  // 分享
-  var shareTxt = '做完 36 题的「不辞职我还能干什么」：我最适合的是【'+top.name+'】（'+GROUPNAME[top.group]+
-    '）。最像我的前三：'+top5.slice(0,3).map(function(r){ return r.name; }).join('、')+
-    '。四大赚法：卖时间 '+C.shares.time+'% / 做内容 '+C.shares.content+
-    '% / 卖货 '+C.shares.goods+'% / 卖专业 '+C.shares.expert+'%。你敢测一局吗？';
+  /* 四大赚法 */
+  h += '<div class="dossier"><div class="dt">四 大 赚 法 倾 向</div>';
+  [["time","卖时间"],["content","做内容"],["goods","卖货"],["expert","卖专业"]].forEach(function(g){
+    var hot = (g[0]===first.r.group);
+    h += '<div class="dbar"><span class="nm">'+g[1]+'</span>' +
+         '<span class="track"><span class="fill'+(hot?' hot':'')+'" style="width:'+C.shares[g[0]]+'%"></span></span>' +
+         '<span class="v">'+C.shares[g[0]]+'%</span></div>';
+  });
+  h += '<div class="dmeta">这是你答题时的兴趣倾向，还没算上现实条件。真正排序看上面那三条。</div></div>';
+
+  /* 分享 */
+  var shareTxt = '做完 28 题的「不辞职我还能干什么」：最该先试的是【'+first.r.name+
+    '】（'+GROUPNAME[first.r.group]+'），另外两条是'+T[1].r.name+'和'+T[2].r.name+
+    '。第一名还给了我一份七天计划。你测测你能干什么？';
   h += '<div class="share"><div class="st">测完了</div>' +
        '<div class="sx">把结果发出去，看看你朋友不辞职会干什么。大部分人的答案，和他们自己以为的不一样。</div>' +
        '<button data-act="copy" id="cpBtn">复制测试结果</button></div>';
   S.shareTxt = shareTxt;
 
   h += '<button class="btn main" data-act="start">重新测一次</button>';
-  h += '<div class="hint" style="margin-top:14px;text-align:center">路线一共 16 条，题有 36 道。换几个答案，可能就是另一种下班后的生活。</div>';
+  h += '<div class="hint" style="margin-top:14px;text-align:center">28 道题，16 条路。换几个答案，可能就是另一种下班后的生活。</div>';
   h += '</div>';
 
   view.innerHTML = h;
