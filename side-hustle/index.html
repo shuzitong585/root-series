@@ -57,6 +57,11 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .opt.picked .idx{background:#2E5947;color:#fff}
 .opt.dim{opacity:.45}
 
+/* 返回上一题 */
+.qback{display:inline-block;font-size:12px;font-weight:700;color:#8B978F;letter-spacing:.5px;
+  padding:4px 10px 4px 0;margin-bottom:8px;cursor:pointer}
+.qback:active{color:#2E5947}
+
 .chapter{min-height:calc(100vh - 40px);display:flex;flex-direction:column;justify-content:center;
   text-align:center;padding:40px 26px}
 .chapter .cn{font-size:13px;font-weight:800;letter-spacing:4px;color:#2E5947;margin-bottom:8px}
@@ -111,9 +116,21 @@ h1{font-size:23px;font-weight:900;letter-spacing:1.5px;color:#1F3D33;line-height
 .tri .kv.risk .v{color:#8A4A32}
 .tri .kv.fit .v{color:#2E5947;font-weight:600}
 .tri .kv.avoid .k,.tri .kv.avoid .v{color:#9C5230}
+.tri .kv .dots{letter-spacing:1.5px;font-size:10px;color:#D5CFC0;margin-right:2px}
+.tri .kv .dots i{font-style:normal;color:#2E5947}
 .tri .start{margin:4px 0 14px;background:#F6F7F3;border-left:3px solid #2E5947;padding:10px 12px;
   font-size:12.5px;color:#3B4A44;line-height:1.85;border-radius:0 6px 6px 0}
 .tri .start b{color:#2E5947;display:block;font-size:11px;letter-spacing:1.5px;margin-bottom:3px}
+.tri .planx{margin:2px 0 14px;border-top:1px dashed #E7E2D4;padding-top:10px}
+.tri .planx summary{list-style:none;cursor:pointer;font-size:12px;font-weight:800;color:#2E5947;
+  letter-spacing:.5px;outline:none}
+.tri .planx summary::-webkit-details-marker{display:none}
+.tri .planx summary::after{content:" ＋";font-weight:400;color:#9AA6A1}
+.tri .planx[open] summary::after{content:" －"}
+.tri .planx .day{display:flex;gap:9px;padding:7px 0;border-top:1px dashed #EFEBE0;
+  font-size:12px;line-height:1.75;color:#4A5A54}
+.tri .planx .day:first-of-type{border-top:none;margin-top:8px}
+.tri .planx .day b{flex:none;width:36px;color:#9AA6A1;font-size:10px;letter-spacing:.5px}
 
 /* ===== 新增：7 天计划 ===== */
 .plan{background:#1F3D33;color:#EFEDE3;border-radius:14px;padding:18px 16px;margin-bottom:12px}
@@ -752,10 +769,10 @@ function renderCover(){
        '<b>第二部分</b>（5 题）：副业的真实代价——没人买、被同事刷到、被白嫖、快钱诱惑。<br>' +
        '<b>第三部分</b>（12 题）：16 条路，四条一组，每组必须挑出你更愿意干的那一条。换两个场景，再挑两次。<br>' +
        '<b>第四部分</b>（6 题）：你这个人——熬得住吗、怕什么、几点起床。<br><br>' +
-       '最后不是给你一条路，是给你<b>三条</b>：每条都写清为什么推它、要花多少钱、最大的坑在哪、第一步怎么迈。' +
-       '第一名还会生成一份<b>七天行动计划</b>。</div></div>' +
+       '最后不是给你一条路，是给你<b>三条</b>：每条都写清为什么推它、适合谁、要花多少钱、多久能上手、最大的坑在哪、第一步怎么迈。<br>' +
+       '第一名附一份<b>七天行动计划</b>，另外两条也能展开看。</div></div>' +
      '<div class="card" style="text-align:left"><div class="k">交个底</div>' +
-       '<div class="d">28 题 · 约 6 分钟 · 没有对错答案，凭直觉选。' +
+       '<div class="d">28 题 · 约 6 分钟 · 没有对错答案，凭直觉选。选错了可以点「上一题」回去改。<br>' +
        '不喜欢某条路就直说——「打死不干」和「这就是我想干的」一样，都是有效数据。</div></div>' +
      '<button class="btn main" data-act="start">开始测试</button>' +
    '</div>';
@@ -763,7 +780,7 @@ function renderCover(){
 }
 
 function startQuiz(){
-  S = { i:0, secShown:{}, scores:{}, attrs:{}, urgent:1, log:[] };
+  S = { i:0, secShown:{}, scores:{}, attrs:{}, urgent:1, log:[], hist:[], ev:{} };
   ROUTES.forEach(function(r){ S.scores[r.id]=0; });
   KEYS.forEach(function(k){ S.attrs[k]=50; });
   nextQ();
@@ -781,6 +798,7 @@ function nextQ(){
     '<span class="step">第 '+(S.i+1)+' / '+FLAT.length+' 题</span></div>' +
     '<div class="track"><div class="fill" style="width:'+(S.i/FLAT.length*100)+'%"></div></div>';
   var h = '<div class="screen">';
+  if (S.i > 0) h += '<div class="qback" data-act="back">‹ 上一题</div>';
   if(Q.tag) h += '<div class="tag t-mid">'+Q.tag+'</div>';
   h += '<div class="hint" style="margin-bottom:6px">'+Q.lead+'</div>';
   h += '<h1 style="font-size:19px;margin-bottom:16px">'+Q.q+'</h1>';
@@ -826,6 +844,7 @@ function renderSection(si){
      '<div class="ct">'+sec.t+'</div>' +
      '<div class="cd">'+sec.d+'</div>' +
      '<button class="btn main" data-act="next">继续</button>' +
+     (si > 0 ? '<div class="qback" data-act="back" style="margin:18px auto 0;align-self:center">‹ 回到上一部分最后一题</div>' : '') +
    '</div>';
   window.scrollTo(0,0);
 }
@@ -837,21 +856,37 @@ document.addEventListener('click', function(e){
     if (t.getAttribute && t.getAttribute('data-act') === 'start'){ startQuiz(); return; }
     if (t.getAttribute && t.getAttribute('data-act') === 'next'){ nextQ(); return; }
     if (t.getAttribute && t.getAttribute('data-act') === 'copy'){ copyShare(); return; }
+    if (t.getAttribute && t.getAttribute('data-act') === 'back'){ goBack(); return; }
     t = t.parentNode;
   }
 });
 
 function choose(i){
   var Q = FLAT[S.i], o = Q.opts[i];
+  /* 存档：返回上一题时整份还原，避免扣分/加分残留 */
+  S.hist.push({ i:S.i, scores:JSON.parse(JSON.stringify(S.scores)), attrs:JSON.parse(JSON.stringify(S.attrs)),
+                ev:JSON.parse(JSON.stringify(S.ev)), urgent:S.urgent, logLen:S.log.length });
   document.querySelectorAll('.opt').forEach(function(el,j){
     if(j!==i) el.classList.add('dim');
   });
   document.getElementById('opt'+i).classList.add('picked');
-  Object.keys(o.w||{}).forEach(function(id){ S.scores[id]=(S.scores[id]||0)+o.w[id]; });
+  Object.keys(o.w||{}).forEach(function(id){
+    S.scores[id]=(S.scores[id]||0)+o.w[id];
+    /* 只记强信号（权重>=2），用作结果页的「为什么推你」证据 */
+    if (o.w[id] >= 2){ (S.ev[id] = S.ev[id] || []).push({ n:S.i+1, t:o.t, w:o.w[id] }); }
+  });
   Object.keys(o.m||{}).forEach(function(k){ S.attrs[k]=clamp(S.attrs[k]+o.m[k],15,95); });
   if (typeof o.u === 'number') S.urgent = o.u;
   S.log.push({ q:Q.q, c:o.t, i:i });
   setTimeout(function(){ S.i++; nextQ(); }, 300);
+}
+
+function goBack(){
+  if (!S || !S.hist.length) return;
+  var h = S.hist.pop();
+  S.scores = h.scores; S.attrs = h.attrs; S.ev = h.ev; S.urgent = h.urgent; S.i = h.i;
+  S.log.length = h.logLen;
+  nextQ();
 }
 
 /* ==================== 匹配 ==================== */
@@ -938,6 +973,14 @@ function compute(){
   return { all:arr, top:top3, byBase:byBase, shares:shares, maxFinal:maxFinal };
 }
 
+/* 入门难度：由技能门槛、时间投入、启动资金三项合成，只给档位，不编收益 */
+function diffOf(r){
+  var d = r.needSkill * 0.5 + r.needTime * 0.28 + r.needCash * 0.22;
+  var lv = Math.max(1, Math.min(5, Math.round(d)));
+  var label = ["", "很容易上手", "不难", "中等", "偏难", "门槛较高"][lv];
+  return { lv: lv, label: label };
+}
+
 /* ==================== 适合谁 / 先别碰（从牌面生成） ==================== */
 function fitWho(x, a){
   var r = x.r, out = [];
@@ -968,6 +1011,13 @@ function avoidWho(x){
 function whyOf(x, a, urgent, idx, firstName){
   var r = x.r, out = [];
 
+  /* 第一条理由优先用你真实选过的答案做证据 */
+  var evs = (S && S.ev && S.ev[r.id]) || [];
+  if (evs.length){
+    var best = evs.slice().sort(function(p,q){ return q.w-p.w || q.n-p.n; })[0];
+    out.push("你在第 "+best.n+" 题选了「"+best.t+"」");
+  }
+
   if (r.needCash <= 2 && a["现金"] <= 58) out.push("几乎不用投入本钱，亏了也不心疼");
   if (r.needTime <= 2 && a["时间"] <= 58) out.push("每周两三个小时就能推进，不用等整块时间");
   if (r.needSkill >= 4 && a["技能"] >= 62) out.push("你手上的技能正好对得上，不用从零学");
@@ -977,8 +1027,8 @@ function whyOf(x, a, urgent, idx, firstName){
   if (a["人脉"] >= 65 && (r.group === "expert" || r.id === "groupbuy")) out.push("你手上有人，第一批客户不用从零找");
   if (a["心力"] >= 68 && r.needTime >= 4) out.push("心力还够，撑得过前期没有回报的阶段");
 
-  /* 兜底：至少两条，第二名用「接力」逻辑，不说空话 */
-  if (out.length < 2){
+  /* 兜底：已经引用过你的答案，就不再补空泛的「反复选了同一类」 */
+  if (out.length < 2 && !evs.length){
     if (x.base >= 6) out.push("你在前面十几道题里，反复选了跟它同一类的答案");
     else if (idx === 1 && firstName) out.push("它和「"+firstName+"」是同一个赚法，第一条试得不顺，就从这条接力");
     else if (idx === 1) out.push("跟第一条是同一个赚法，如果试完第一条不喜欢，可以从这条接着来");
@@ -1032,10 +1082,17 @@ function renderResult(){
     var cashNote = x.r.needCash <= 1 ? "，几乎是零成本启动" : (x.r.needCash >= 3 ? "，要先备一笔货" : "");
     h += '<div class="kv"><span class="k">启动成本</span><span class="v"><b>'+c.cash+'</b>'+cashNote+'</span></div>';
     h += '<div class="kv"><span class="k">投入时间</span><span class="v">'+c.time+ (x.r.needTime>=4 ? "，<b>会和你的休息时间抢</b>" : "，不至于占满晚上") +'</span></div>';
+    var d = diffOf(x.r);
+    h += '<div class="kv"><span class="k">入门难度</span><span class="v"><span class="dots"><i>'+new Array(d.lv+1).join("●")+'</i>'+new Array(6-d.lv).join("○")+'</span> '+d.label+'</span></div>';
     h += '<div class="kv fit"><span class="k">适合谁</span><span class="v">'+fitWho(x, a)+'</span></div>';
     h += '<div class="kv risk"><span class="k">主要风险</span><span class="v">'+x.r.risk+'</span></div>';
     if (av) h += '<div class="kv avoid"><span class="k">先别碰</span><span class="v">'+av+'。</span></div>';
-    if (idx > 0) h += '<div class="start"><b>新 手 第 一 步</b>'+x.r.start+'</div>';
+    if (idx > 0){
+      h += '<div class="start"><b>新 手 第 一 步</b>'+x.r.start+'</div>';
+      h += '<details class="planx"><summary>看它的七天计划</summary>';
+      x.r.plan.forEach(function(t, i){ h += '<div class="day"><b>DAY '+(i+1)+'</b><span>'+t+'</span></div>'; });
+      h += '</details>';
+    }
     h += '</div></div>';
   });
 
