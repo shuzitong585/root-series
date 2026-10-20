@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>想做副业，却不知道自己适合什么？| 副业测试</title>
+<meta name="description" content="28 道题，16 个副业方向，按你真实的时间、预算、技能和目标筛一遍，告诉你先试哪三条，再给一套能照着做的实施地图和七天计划。">
+<meta property="og:title" content="想做副业，却不知道自己适合什么？">
+<meta property="og:description" content="28 道题 · 16 个副业方向 · 按你的时间预算技能筛一遍，告诉你先试哪三条。">
+<meta property="og:type" content="website">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:#EDEAE0}
+body{color:#22302B;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:15px;line-height:1.75;display:flex;justify-content:center;min-height:100vh;
+  -webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:520px;background:#FAF8F3;min-height:100vh;position:relative;
+  box-shadow:0 0 40px rgba(31,61,51,.10);overflow-x:hidden}
+
+/* ---------- 通用 ---------- */
+.sec{padding:0 22px}
+.wrap{padding:34px 22px 6px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:1.5px;
+  border-radius:5px;padding:3px 9px;background:#E8F0EC;color:#2E5947;margin-bottom:14px}
+.kicker{font-size:11.5px;font-weight:800;letter-spacing:2.5px;color:#9AA6A1;margin-bottom:10px}
+h2{font-size:19px;font-weight:900;letter-spacing:.8px;color:#1F3D33;line-height:1.5;margin-bottom:6px}
+.h2sub{font-size:13px;color:#7D8A84;line-height:1.85;margin-bottom:18px}
+hr.dash{border:none;border-top:1px dashed #E2DCCC;margin:32px 22px}
+
+.btn{display:block;width:100%;border:none;border-radius:12px;font-family:inherit;
+  font-size:15.5px;font-weight:800;padding:15px 16px;min-height:52px;cursor:pointer;
+  text-align:center;letter-spacing:.5px;text-decoration:none;line-height:1.4}
+.btn.main{background:#2E5947;color:#fff;box-shadow:0 3px 0 #1F4436}
+.btn.main:active{transform:translateY(2px);box-shadow:0 1px 0 #1F4436}
+.btn.ghost{background:#fff;border:1.5px solid #DDD8C9;color:#3B4A44;font-size:14.5px;
+  box-shadow:none;min-height:50px}
+.btn.ghost:active{background:#F4F1E8}
+.btnhint{font-size:11.5px;color:#9AA6A1;text-align:center;margin-top:10px;letter-spacing:.3px}
+
+/* ---------- 首屏 ---------- */
+.hero{padding:46px 22px 30px;text-align:center;position:relative}
+.hero:before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#2E5947 0%,#3F7059 46%,#D9C9A8 100%)}
+.hero h1{font-size:clamp(22px,6.4vw,27px);font-weight:900;letter-spacing:1.2px;
+  color:#1F3D33;line-height:1.52;margin:0 auto 14px;max-width:400px}
+.hero h1 em{font-style:normal;color:#2E5947;position:relative;white-space:nowrap}
+.hero h1 em:after{content:"";position:absolute;left:0;right:0;bottom:2px;height:6px;
+  background:rgba(217,201,168,.62);z-index:-1;border-radius:2px}
+.hero .sub{font-size:13.5px;color:#5C6A64;line-height:1.95;max-width:360px;margin:0 auto 24px}
+.hero .sub b{color:#2E5947;font-weight:800}
+.hero .meta{display:flex;justify-content:center;gap:0;margin-top:14px;
+  font-size:11.5px;font-weight:700;color:#8B978F;letter-spacing:.3px}
+.hero .meta span{padding:0 11px;position:relative}
+.hero .meta span+span:before{content:"";position:absolute;left:0;top:50%;width:1px;height:11px;
+  margin-top:-5.5px;background:#DDD8C9}
+
+/* 首屏下的三条小条 */
+.strip{display:flex;gap:8px;padding:0 22px 30px}
+.strip div{flex:1;background:#fff;border:1px solid #E4E0D5;border-radius:11px;padding:11px 8px;
+  text-align:center}
+.strip b{display:block;font-size:16px;font-weight:900;color:#2E5947;letter-spacing:.3px;
+  font-variant-numeric:tabular-nums}
+.strip span{display:block;font-size:10.5px;color:#8B978F;font-weight:700;margin-top:2px}
+
+/* ---------- 痛点 ---------- */
+.pain{background:#fff;border:1px solid #E4E0D5;border-radius:14px;padding:4px 16px;margin-bottom:12px}
+.pain .row{padding:15px 0;border-top:1px dashed #EDE7D8}
+.pain .row:first-child{border-top:none}
+.pain .row b{display:block;font-size:14.5px;font-weight:900;color:#1F3D33;margin-bottom:3px}
+.pain .row b i{font-style:normal;color:#A8442C;font-size:12px;font-weight:800;
+  letter-spacing:1.5px;margin-right:6px}
+.pain .row p{font-size:13px;color:#6E7B75;line-height:1.85}
+.painnote{border:1.5px dashed #D3C39E;background:#FBF6EA;border-radius:12px;padding:13px 15px;
+  font-size:13px;font-weight:700;color:#7A5A33;line-height:1.9;margin-top:14px}
+
+/* ---------- 功能 ---------- */
+.feat{display:block;background:#fff;border:1px solid #E4E0D5;border-radius:13px;
+  padding:15px 16px;margin-bottom:9px}
+.feat .fh{display:flex;align-items:baseline;gap:9px;margin-bottom:4px}
+.feat .fn{font-size:11px;font-weight:900;color:#B9C6BE;letter-spacing:1px;flex:none;
+  font-variant-numeric:tabular-nums}
+.feat .ft{font-size:14.5px;font-weight:900;color:#1F3D33;letter-spacing:.3px;line-height:1.5;flex:1}
+.feat .fd{font-size:12.5px;color:#6E7B75;line-height:1.85;padding-left:26px}
+.feat .fd b{color:#2E5947;font-weight:800}
+
+/* 结果预览 */
+.preview{background:#F7F4EC;border:1px solid #E7E1D2;border-radius:14px;padding:14px;margin-top:14px}
+.preview .pl{font-size:10.5px;font-weight:800;letter-spacing:1.8px;color:#9AA6A1;margin-bottom:9px}
+.pcard{background:#fff;border:1px solid #E4E0D5;border-radius:11px;padding:11px 12px;margin-bottom:7px}
+.pcard.first{background:#2E5947;border-color:#2E5947}
+.pcard .pr{display:flex;align-items:center;gap:8px}
+.pcard .pn{width:19px;height:19px;flex:none;border-radius:50%;background:#EFF3F0;color:#2E5947;
+  font-size:10.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.pcard.first .pn{background:#fff;color:#2E5947}
+.pcard .pt{font-size:13.5px;font-weight:900;color:#1F3D33;flex:1;line-height:1.5}
+.pcard.first .pt{color:#fff}
+.pcard .pg{font-size:10.5px;font-weight:800;color:#A39A82;white-space:nowrap}
+.pcard.first .pg{color:#C6D5CC}
+.pcard .pd{font-size:11.5px;color:#7D8A84;line-height:1.8;margin-top:4px;padding-left:27px}
+.pcard.first .pd{color:#C9DAD0}
+.preview .pf{font-size:11.5px;color:#9AA6A1;line-height:1.8;margin-top:8px;text-align:center}
+
+/* ---------- 适合人群 ---------- */
+.who{background:#fff;border:1px solid #E4E0D5;border-radius:14px;padding:6px 16px 14px;margin-bottom:10px}
+.who .wh{display:flex;align-items:center;gap:7px;padding:13px 0 9px}
+.who .wh b{font-size:13px;font-weight:900;color:#2E5947;letter-spacing:1px}
+.who .wh .dot{width:7px;height:7px;border-radius:50%;background:#2E5947;flex:none}
+.who .wi{display:flex;gap:9px;padding:7px 0;font-size:13.5px;color:#3B4A44;line-height:1.8}
+.who .wi .ck{flex:none;color:#2E5947;font-weight:900;font-size:12px;line-height:1.9}
+.who.no{border-color:#EADFD6}
+.who.no .wh b{color:#A8442C}
+.who.no .wh .dot{background:#A8442C}
+.who.no .wi{color:#6E7B75;font-size:13px}
+.who.no .wi .ck{color:#A8442C}
+
+/* ---------- FAQ ---------- */
+.faq{background:#fff;border:1px solid #E4E0D5;border-radius:14px;overflow:hidden}
+.faq details{border-top:1px solid #EDE7D8}
+.faq details:first-child{border-top:none}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:flex-start;gap:10px;
+  padding:15px 15px;min-height:52px;outline:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .qt{flex:1;font-size:13.5px;font-weight:800;color:#1F3D33;line-height:1.7}
+.faq summary .ar{flex:none;color:#B9C6BE;font-size:11px;font-weight:900;line-height:1.9;
+  transition:transform .18s}
+.faq details[open] summary .ar{transform:rotate(180deg);color:#2E5947}
+.faq details[open] summary .qt{color:#2E5947}
+.faq .ans{font-size:13px;color:#6E7B75;line-height:1.9;padding:0 15px 15px 15px;margin-top:-4px}
+.faq .ans b{color:#1F3D33;font-weight:800}
+
+/* ---------- 底部 CTA ---------- */
+.cta{margin:34px 22px 0;background:#1F3D33;border-radius:16px;padding:26px 20px 22px;text-align:center}
+.cta .ct{font-size:18px;font-weight:900;color:#fff;letter-spacing:.8px;line-height:1.6;margin-bottom:8px}
+.cta .cs{font-size:12.5px;color:#C9C2AE;line-height:1.9;margin-bottom:20px}
+.cta .btn.main{background:#D9C9A8;color:#1F3D33;box-shadow:0 3px 0 #B8A684}
+.cta .btn.main:active{box-shadow:0 1px 0 #B8A684}
+.cta .btnhint{color:#8FA396}
+.foot{text-align:center;padding:26px 22px 40px;font-size:11px;color:#A9B3AD;line-height:1.9;letter-spacing:.3px}
+
+/* 极窄屏 */
+@media (max-width:340px){
+  .wrap,.hero,.sec,.strip{padding-left:16px;padding-right:16px}
+  .cta{margin-left:16px;margin-right:16px}
+  hr.dash{margin-left:16px;margin-right:16px}
+  .hero{padding-top:38px}
+  .feat .fd{padding-left:0}
+  .pcard .pd{padding-left:0}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ 首屏 ============ -->
+  <section class="hero">
+    <div class="tag">副 业 测 试</div>
+    <h1>想做副业，<br>却不知道自己<em>适合什么</em>？</h1>
+    <p class="sub">根据自己的<b>时间、预算、技能和目标</b>，找到值得尝试的副业方向。</p>
+    <a class="btn main" href="./index.html">开始我的副业测试</a>
+    <div class="meta"><span>28 道题</span><span>约 6 分钟</span><span>现在免费</span></div>
+  </section>
+
+  <div class="strip">
+    <div><b>16</b><span>个副业方向</span></div>
+    <div><b>3</b><span>条优先推荐</span></div>
+    <div><b>7</b><span>天行动计划</span></div>
+  </div>
+
+  <!-- ============ 痛点 ============ -->
+  <section class="wrap">
+    <div class="kicker">先 说 你 的 情 况</div>
+    <h2>卡住你的，通常不是懒</h2>
+    <p class="h2sub">是没人帮你把「我能干什么」和「现在能干什么」对上。</p>
+
+    <div class="pain">
+      <div class="row"><b><i>01</i>方向太多</b>
+        <p>打开手机全是「月入过万」。收藏了四十个教程，一个都没开始。</p></div>
+      <div class="row"><b><i>02</i>不知道怎么选</b>
+        <p>别人做得好，不代表你做得了。你也不清楚自己手上到底有什么能换钱。</p></div>
+      <div class="row"><b><i>03</i>担心成本高</b>
+        <p>怕交了学费、进了货、买了设备，最后全砸在自己手里。</p></div>
+      <div class="row"><b><i>04</i>没有行动计划</b>
+        <p>就算心里选定了一条，也不知道明天晚上该干什么。</p></div>
+    </div>
+
+    <div class="painnote">这四件事，一个测试解决不了全部。<br>但它能帮你把那堆方向，压到三条具体的。</div>
+  </section>
+
+  <hr class="dash">
+
+  <!-- ============ 功能介绍 ============ -->
+  <section class="wrap" style="padding-top:0">
+    <div class="kicker">做 完 你 会 拿 到 什 么</div>
+    <h2>不是给你一句「你适合做内容」</h2>
+    <p class="h2sub">是一份能照着做的方案，具体到今晚先干哪件事。</p>
+
+    <div class="feat"><div class="fh"><span class="fn">01</span><span class="ft">16 个副业方向</span></div>
+      <div class="fd">不是罗列行业，是按<b>「钱怎么来的」</b>分四组：卖时间、做内容、卖货、卖专业。同样是想赚钱，这四种的活法完全不一样。</div></div>
+
+    <div class="feat"><div class="fh"><span class="fn">02</span><span class="ft">个性化推荐</span></div>
+      <div class="fd">28 道题问你的时间、预算、技能、有多急。先按现实条件过一遍筛子，再排优先级——<b>推给你的三条，是能在你现在这种条件下跑起来的</b>，不是听起来最体面的。</div></div>
+
+    <div class="feat"><div class="fh"><span class="fn">03</span><span class="ft">实施地图</span></div>
+      <div class="fd">第一条给一整套：要准备什么、第一个样品怎么做、去哪找第一批客户、怎么用最小成本验证、可以怎么收钱、<b>什么时候该停</b>。</div></div>
+
+    <div class="feat"><div class="fh"><span class="fn">04</span><span class="ft">AI 提示词</span></div>
+      <div class="fd">每条路配三条能直接复制的提示词，空着的地方填上你的信息就能用。不会写、不会剪、不会谈客户，都能先让 AI 出一版草稿。</div></div>
+
+    <div class="feat"><div class="fh"><span class="fn">05</span><span class="ft">七天行动计划</span></div>
+      <div class="fd">具体到每天做什么，不是「多学习、多积累」。而且会按你的情况压缩——<b>一周只有五个小时的人，只做三步也不会断</b>。</div></div>
+
+    <div class="preview">
+      <div class="pl">结 果 大 概 长 这 样</div>
+      <div class="pcard first"><div class="pr"><span class="pn">1</span><span class="pt">闲鱼卖二手</span><span class="pg">首推</span></div>
+        <div class="pd">几乎不用本钱 · 今晚就能开始</div></div>
+      <div class="pcard"><div class="pr"><span class="pn">2</span><span class="pt">虚拟资料</span><span class="pg">卖货</span></div>
+        <div class="pd">一次做好、反复卖，前期慢</div></div>
+      <div class="pcard"><div class="pr"><span class="pn">3</span><span class="pt">图文账号</span><span class="pg">做内容</span></div>
+        <div class="pd">起量慢，但能一直攒</div></div>
+      <div class="pf">示意，实际推什么取决于你的答案</div>
+    </div>
+  </section>
+
+  <hr class="dash">
+
+  <!-- ============ 适合人群 ============ -->
+  <section class="wrap" style="padding-top:0">
+    <div class="kicker">这 个 测 试 是 给 谁 做 的</div>
+    <h2>如果你是这几种人，会比较有用</h2>
+    <p class="h2sub">如果不是，做完也帮不上你，别浪费时间。</p>
+
+    <div class="who">
+      <div class="wh"><span class="dot"></span><b>适 合</b></div>
+      <div class="wi"><span class="ck">·</span><span>在职，想用下班和周末试一条副业，<b>但不打算裸辞</b></span></div>
+      <div class="wi"><span class="ck">·</span><span>零基础，手上没有能直接卖的作品或证书</span></div>
+      <div class="wi"><span class="ck">·</span><span>预算有限，最多能拿出几百块试错，亏了会心疼</span></div>
+      <div class="wi"><span class="ck">·</span><span>试过一两次没做成，说不清自己卡在哪一步</span></div>
+    </div>
+
+    <div class="who no">
+      <div class="wh"><span class="dot"></span><b>不 适 合</b></div>
+      <div class="wi"><span class="ck">·</span><span>想找「今天做、明天就有钱」的项目——这里最快的一条也要两三周</span></div>
+      <div class="wi"><span class="ck">·</span><span>想要刷单、代实名、走灰产的路子——这里一条都没有</span></div>
+      <div class="wi"><span class="ck">·</span><span>需要人替你决定、替你执行——测试只负责告诉你先试哪条</span></div>
+    </div>
+  </section>
+
+  <hr class="dash">
+
+  <!-- ============ FAQ ============ -->
+  <section class="wrap" style="padding-top:0">
+    <div class="kicker">常 见 问 题</div>
+    <h2>你可能想问的</h2>
+    <p class="h2sub">&nbsp;</p>
+
+    <div class="faq">
+      <details>
+        <summary><span class="qt">要花多久？中途能改答案吗？</span><span class="ar">▾</span></summary>
+        <div class="ans">28 道题，凭直觉选，大约 6 分钟。选错了可以点「上一题」回去改，改完后面的判断会跟着更新。</div>
+      </details>
+      <details>
+        <summary><span class="qt">要付费吗？</span><span class="ar">▾</span></summary>
+        <div class="ans">现在不用，做完直接看结果，也没有要留手机号才能解锁的环节。</div>
+      </details>
+      <details>
+        <summary><span class="qt">结果准吗？</span><span class="ar">▾</span></summary>
+        <div class="ans">它不算命。它做的是<b>排除</b>——按你真实的时间、预算、技能，把明显跑不起来的先筛掉，再排优先级。最后对不对，得你花两周去试。测试能替你省掉的是「选错方向」的那两周。</div>
+      </details>
+      <details>
+        <summary><span class="qt">我什么都不会，能测吗？</span><span class="ar">▾</span></summary>
+        <div class="ans">能。16 条路里有一半不吃过往经验，测试会按你的情况只推这些，并且把第一个作品拆到「小一号」的程度。</div>
+      </details>
+      <details>
+        <summary><span class="qt">会不会推要囤货、要交加盟费的？</span><span class="ar">▾</span></summary>
+        <div class="ans">如果你明确说了启动资金在 500 以内，方案会优先走<b>零成本验证</b>，不让你先掏钱：先做出来、先免费给几个人用、先收预售，真收到钱再谈投入。</div>
+      </details>
+      <details>
+        <summary><span class="qt">会计、教师这类要资质的，会不会教人绕过去？</span><span class="ar">▾</span></summary>
+        <div class="ans">不会。要证的路线会直接写明必须持证、执业范围是什么，没证就不推这条。缩小服务范围绕开资质要求这种事，我们不写。</div>
+      </details>
+      <details>
+        <summary><span class="qt">手机上能做吗？结果会保存吗？</span><span class="ar">▾</span></summary>
+        <div class="ans">全程手机上就能做完。结果页可以把摘要复制下来存给自己；网页关掉不会自动保存，想留就先复制。</div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 底部 CTA ============ -->
+  <div class="cta">
+    <div class="ct">先别想了，选一次看看</div>
+    <div class="cs">你现在缺的不是更多教程，<br>是有人把范围缩到三条，再告诉你今晚先干哪件事。</div>
+    <a class="btn main" href="./index.html">开始我的副业测试</a>
+    <div class="btnhint">28 题 · 约 6 分钟 · 现在免费</div>
+  </div>
+
+  <div class="foot">结果仅供参考，不构成收入承诺。<br>任何副业都要自己花时间试，没有躺着赚钱的路。</div>
+
+</div>
+</body>
+</html>
