@@ -942,11 +942,13 @@ function compute(){
 function fitWho(x, a){
   var r = x.r, out = [];
   if (r.needCash <= 1) out.push("手头紧也能起步");
-  else if (r.needCash >= 3 && a["现金"] >= 58) out.push("你的预算撑得起前期投入");
+  else if (r.needCash >= 3 && a["现金"] >= 46) out.push("你的预算撑得起前期投入");
   if (r.needTime <= 2) out.push("时间碎的人也排得开");
-  else if (r.needTime >= 4 && a["时间"] >= 55) out.push("你的空闲时间喂得饱它");
+  else if (r.needTime >= 5 && a["时间"] >= 58) out.push("你的空闲时间喂得饱它");
+  else if (r.needTime === 4 && a["时间"] >= 48) out.push("你的空闲时间喂得饱它");
   if (r.needSkill <= 2) out.push("零基础照着第一步做就行");
-  else if (r.needSkill >= 4 && a["技能"] >= 55) out.push("你现有的手艺直接用得上");
+  else if (r.needSkill >= 5 && a["技能"] >= 64) out.push("你现有的手艺直接用得上");
+  else if (r.needSkill === 4 && a["技能"] >= 50) out.push("你现有的手艺直接用得上");
   if (r.speed >= 4) out.push("一两个月内能看到第一笔钱");
   else if (r.speed <= 2) out.push("急用钱的人别选它，不急的正好慢慢攒");
   if (!out.length) out.push("跟你现在的几张牌不冲突");
